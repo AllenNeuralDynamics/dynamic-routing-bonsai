@@ -1,0 +1,807 @@
+{
+  "$defs": {
+    "AindBehaviorDynamicRoutingBonsaiRig": {
+      "properties": {
+        "aind_behavior_services_pkg_version": {
+          "default": "0.12.5",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
+          "title": "aind_behavior_services package version",
+          "type": "string"
+        },
+        "version": {
+          "const": "0.0.0-rc0",
+          "default": "0.0.0-rc0",
+          "title": "Version",
+          "type": "string"
+        },
+        "computer_name": {
+          "description": "Computer name",
+          "title": "Computer Name",
+          "type": "string"
+        },
+        "rig_name": {
+          "description": "Rig name",
+          "title": "Rig Name",
+          "type": "string"
+        },
+        "harp_behavior": {
+          "$ref": "#/$defs/HarpBehavior",
+          "description": "Harp behavior"
+        },
+        "harp_sound_card": {
+          "$ref": "#/$defs/HarpSoundCard",
+          "description": "Harp sound card"
+        },
+        "screen": {
+          "$ref": "#/$defs/Screen",
+          "default": {
+            "device_type": "Screen",
+            "device_name": "Screen",
+            "additional_settings": null,
+            "calibration": {
+              "center": {
+                "extrinsics": {
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "translation": {
+                    "x": 0.0,
+                    "y": 1.309016,
+                    "z": -13.27
+                  }
+                },
+                "intrinsics": {
+                  "display_height": 15.0,
+                  "display_width": 20.0,
+                  "frame_height": 1080,
+                  "frame_width": 1920
+                }
+              },
+              "left": {
+                "extrinsics": {
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 1.0472,
+                    "z": 0.0
+                  },
+                  "translation": {
+                    "x": -16.6917756,
+                    "y": 1.309016,
+                    "z": -3.575264
+                  }
+                },
+                "intrinsics": {
+                  "display_height": 15.0,
+                  "display_width": 20.0,
+                  "frame_height": 1080,
+                  "frame_width": 1920
+                }
+              },
+              "right": {
+                "extrinsics": {
+                  "rotation": {
+                    "x": 0.0,
+                    "y": -1.0472,
+                    "z": 0.0
+                  },
+                  "translation": {
+                    "x": 16.6917756,
+                    "y": 1.309016,
+                    "z": -3.575264
+                  }
+                },
+                "intrinsics": {
+                  "display_height": 15.0,
+                  "display_width": 20.0,
+                  "frame_height": 1080,
+                  "frame_width": 1920
+                }
+              }
+            },
+            "display_index": 1,
+            "target_render_frequency": 60.0,
+            "target_update_frequency": 120.0,
+            "texture_assets_directory": "Textures",
+            "brightness": 0.0,
+            "contrast": 1.0
+          },
+          "description": "Screen settings"
+        }
+      },
+      "required": [
+        "rig_name",
+        "harp_behavior",
+        "harp_sound_card"
+      ],
+      "title": "AindBehaviorDynamicRoutingBonsaiRig",
+      "type": "object"
+    },
+    "AindBehaviorDynamicRoutingBonsaiTaskLogic": {
+      "additionalProperties": false,
+      "description": "Main task logic model for the dynamic-routing-bonsai task.",
+      "properties": {
+        "name": {
+          "const": "AindBehaviorDynamicRoutingBonsai",
+          "default": "AindBehaviorDynamicRoutingBonsai",
+          "description": "Name of the task logic",
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "description": "Description of the task.",
+          "title": "Description",
+          "type": "string"
+        },
+        "task_parameters": {
+          "$ref": "#/$defs/AindBehaviorDynamicRoutingBonsaiTaskParameters",
+          "description": "Parameters of the task logic"
+        },
+        "version": {
+          "const": "0.0.0-rc0",
+          "default": "0.0.0-rc0",
+          "title": "Version",
+          "type": "string"
+        },
+        "stage_name": {
+          "default": null,
+          "description": "Optional stage name the `Task` object instance represents.",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Stage Name"
+        }
+      },
+      "required": [
+        "task_parameters"
+      ],
+      "title": "AindBehaviorDynamicRoutingBonsaiTaskLogic",
+      "type": "object"
+    },
+    "AindBehaviorDynamicRoutingBonsaiTaskParameters": {
+      "additionalProperties": true,
+      "description": "Complete parameter specification for the dynamic-routing-bonsai task.",
+      "properties": {
+        "rng_seed": {
+          "default": null,
+          "description": "Seed of the random number generator",
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Rng Seed"
+        },
+        "aind_behavior_services_pkg_version": {
+          "default": "0.12.5",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
+          "title": "aind_behavior_services package version",
+          "type": "string"
+        }
+      },
+      "title": "AindBehaviorDynamicRoutingBonsaiTaskParameters",
+      "type": "object"
+    },
+    "AindBehaviorSessionModel": {
+      "properties": {
+        "aind_behavior_services_pkg_version": {
+          "default": "0.12.5",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
+          "title": "aind_behavior_services package version",
+          "type": "string"
+        },
+        "version": {
+          "const": "0.12.5",
+          "default": "0.12.5",
+          "title": "Version",
+          "type": "string"
+        },
+        "experiment": {
+          "default": null,
+          "description": "Name of the experiment",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Experiment"
+        },
+        "experimenter": {
+          "default": [],
+          "description": "Name of the experimenter",
+          "items": {
+            "type": "string"
+          },
+          "title": "Experimenter",
+          "type": "array"
+        },
+        "date": {
+          "description": "Date of the experiment",
+          "format": "date-time",
+          "title": "Date",
+          "type": "string"
+        },
+        "root_path": {
+          "description": "Root path where data will be logged",
+          "title": "Root Path",
+          "type": "string"
+        },
+        "session_name": {
+          "default": null,
+          "description": "Name of the session. This will be used to create a folder in the root path. If not provided, it will be generated using subject and date.",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Session Name"
+        },
+        "subject": {
+          "description": "Name of the subject",
+          "title": "Subject",
+          "type": "string"
+        },
+        "experiment_version": {
+          "default": "",
+          "deprecated": true,
+          "description": "Version of the experiment",
+          "title": "Experiment Version",
+          "type": "string"
+        },
+        "notes": {
+          "default": null,
+          "description": "Notes about the experiment",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Notes"
+        },
+        "commit_hash": {
+          "default": null,
+          "description": "Commit hash of the repository",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Commit Hash"
+        },
+        "allow_dirty_repo": {
+          "default": false,
+          "description": "Allow running from a dirty repository",
+          "title": "Allow Dirty Repo",
+          "type": "boolean"
+        },
+        "skip_hardware_validation": {
+          "default": false,
+          "description": "Skip hardware validation",
+          "title": "Skip Hardware Validation",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "root_path",
+        "subject"
+      ],
+      "title": "AindBehaviorSessionModel",
+      "type": "object"
+    },
+    "BaseModel": {
+      "properties": {},
+      "title": "BaseModel",
+      "type": "object"
+    },
+    "DisplayCalibration": {
+      "properties": {
+        "intrinsics": {
+          "$ref": "#/$defs/DisplayIntrinsics",
+          "default": {
+            "frame_width": 1920,
+            "frame_height": 1080,
+            "display_width": 20.0,
+            "display_height": 15.0
+          },
+          "description": "Intrinsics"
+        },
+        "extrinsics": {
+          "$ref": "#/$defs/DisplayExtrinsics",
+          "default": {
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "translation": {
+              "x": 0.0,
+              "y": 1.309016,
+              "z": -13.27
+            }
+          },
+          "description": "Extrinsics"
+        }
+      },
+      "title": "DisplayCalibration",
+      "type": "object"
+    },
+    "DisplayExtrinsics": {
+      "properties": {
+        "rotation": {
+          "$ref": "#/$defs/Vector3",
+          "default": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "description": "Rotation vector (radians)"
+        },
+        "translation": {
+          "$ref": "#/$defs/Vector3",
+          "default": {
+            "x": 0.0,
+            "y": 1.309016,
+            "z": -13.27
+          },
+          "description": "Translation (in cm)"
+        }
+      },
+      "title": "DisplayExtrinsics",
+      "type": "object"
+    },
+    "DisplayIntrinsics": {
+      "properties": {
+        "frame_width": {
+          "default": 1920,
+          "description": "Frame width (px)",
+          "minimum": 0,
+          "title": "Frame Width",
+          "type": "integer"
+        },
+        "frame_height": {
+          "default": 1080,
+          "description": "Frame height (px)",
+          "minimum": 0,
+          "title": "Frame Height",
+          "type": "integer"
+        },
+        "display_width": {
+          "default": 20,
+          "description": "Display width (cm)",
+          "minimum": 0,
+          "title": "Display Width",
+          "type": "number"
+        },
+        "display_height": {
+          "default": 15,
+          "description": "Display width (cm)",
+          "minimum": 0,
+          "title": "Display Height",
+          "type": "number"
+        }
+      },
+      "title": "DisplayIntrinsics",
+      "type": "object"
+    },
+    "DisplaysCalibration": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/DisplayCalibration",
+          "default": {
+            "intrinsics": {
+              "display_height": 15.0,
+              "display_width": 20.0,
+              "frame_height": 1080,
+              "frame_width": 1920
+            },
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": 1.0472,
+                "z": 0.0
+              },
+              "translation": {
+                "x": -16.6917756,
+                "y": 1.309016,
+                "z": -3.575264
+              }
+            }
+          },
+          "description": "Left display calibration"
+        },
+        "center": {
+          "$ref": "#/$defs/DisplayCalibration",
+          "default": {
+            "intrinsics": {
+              "display_height": 15.0,
+              "display_width": 20.0,
+              "frame_height": 1080,
+              "frame_width": 1920
+            },
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "translation": {
+                "x": 0.0,
+                "y": 1.309016,
+                "z": -13.27
+              }
+            }
+          },
+          "description": "Center display calibration"
+        },
+        "right": {
+          "$ref": "#/$defs/DisplayCalibration",
+          "default": {
+            "intrinsics": {
+              "display_height": 15.0,
+              "display_width": 20.0,
+              "frame_height": 1080,
+              "frame_width": 1920
+            },
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": -1.0472,
+                "z": 0.0
+              },
+              "translation": {
+                "x": 16.6917756,
+                "y": 1.309016,
+                "z": -3.575264
+              }
+            }
+          },
+          "description": "Right display calibration"
+        }
+      },
+      "title": "DisplaysCalibration",
+      "type": "object"
+    },
+    "HarpBehavior": {
+      "properties": {
+        "device_type": {
+          "const": "Behavior",
+          "default": "Behavior",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "device_name": {
+          "default": null,
+          "description": "Device name",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device Name"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "who_am_i": {
+          "const": 1216,
+          "default": 1216,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "HarpBehavior",
+      "type": "object"
+    },
+    "HarpSoundCard": {
+      "properties": {
+        "device_type": {
+          "const": "SoundCard",
+          "default": "SoundCard",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "device_name": {
+          "default": null,
+          "description": "Device name",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device Name"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "who_am_i": {
+          "const": 1280,
+          "default": 1280,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "HarpSoundCard",
+      "type": "object"
+    },
+    "Screen": {
+      "properties": {
+        "device_type": {
+          "const": "Screen",
+          "default": "Screen",
+          "description": "Device type",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "device_name": {
+          "default": null,
+          "description": "Device name",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device Name"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "$ref": "#/$defs/DisplaysCalibration",
+          "default": {
+            "left": {
+              "extrinsics": {
+                "rotation": {
+                  "x": 0.0,
+                  "y": 1.0472,
+                  "z": 0.0
+                },
+                "translation": {
+                  "x": -16.6917756,
+                  "y": 1.309016,
+                  "z": -3.575264
+                }
+              },
+              "intrinsics": {
+                "display_height": 15.0,
+                "display_width": 20.0,
+                "frame_height": 1080,
+                "frame_width": 1920
+              }
+            },
+            "center": {
+              "extrinsics": {
+                "rotation": {
+                  "x": 0.0,
+                  "y": 0.0,
+                  "z": 0.0
+                },
+                "translation": {
+                  "x": 0.0,
+                  "y": 1.309016,
+                  "z": -13.27
+                }
+              },
+              "intrinsics": {
+                "display_height": 15.0,
+                "display_width": 20.0,
+                "frame_height": 1080,
+                "frame_width": 1920
+              }
+            },
+            "right": {
+              "extrinsics": {
+                "rotation": {
+                  "x": 0.0,
+                  "y": -1.0472,
+                  "z": 0.0
+                },
+                "translation": {
+                  "x": 16.6917756,
+                  "y": 1.309016,
+                  "z": -3.575264
+                }
+              },
+              "intrinsics": {
+                "display_height": 15.0,
+                "display_width": 20.0,
+                "frame_height": 1080,
+                "frame_width": 1920
+              }
+            }
+          },
+          "description": "Screen calibration"
+        },
+        "display_index": {
+          "default": 1,
+          "description": "Display index",
+          "title": "Display Index",
+          "type": "integer"
+        },
+        "target_render_frequency": {
+          "default": 60,
+          "description": "Target render frequency",
+          "title": "Target Render Frequency",
+          "type": "number"
+        },
+        "target_update_frequency": {
+          "default": 120,
+          "description": "Target update frequency",
+          "title": "Target Update Frequency",
+          "type": "number"
+        },
+        "texture_assets_directory": {
+          "default": "Textures",
+          "description": "Calibration directory",
+          "title": "Texture Assets Directory",
+          "type": "string"
+        },
+        "brightness": {
+          "default": 0,
+          "description": "Brightness",
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Brightness",
+          "type": "number"
+        },
+        "contrast": {
+          "default": 1,
+          "description": "Contrast",
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Contrast",
+          "type": "number"
+        }
+      },
+      "title": "Screen",
+      "type": "object"
+    },
+    "Vector3": {
+      "properties": {
+        "x": {
+          "default": 0,
+          "description": "X coordinate of the point",
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "default": 0,
+          "description": "Y coordinate of the point",
+          "title": "Y",
+          "type": "number"
+        },
+        "z": {
+          "default": 0,
+          "description": "Z coordinate of the point",
+          "title": "Z",
+          "type": "number"
+        }
+      },
+      "title": "Vector3",
+      "type": "object"
+    }
+  }
+}

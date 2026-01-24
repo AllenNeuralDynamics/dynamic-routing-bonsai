@@ -31,7 +31,7 @@ Changelog = "https://github.com/AllenNeuralDynamics/Aind.Behavior.DynamicRouting
 data = ["contraqctor>=0.5.3, <0.6.0"]
 
 launcher = [
-    "aind-clabe[aind-services]>=0.9.1",
+    "aind-clabe[aind-services]>=0.9.0",
     "aind-data-schema>=2.2",
     "aind-behavior-dynamic-routing-bonsai[data]",
     ]
