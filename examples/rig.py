@@ -9,7 +9,15 @@ from aind_behavior_dynamic_routing_bonsai.rig import (
 rig = AindBehaviorDynamicRoutingBonsaiRig(
     rig_name="test_rig",
     harp_behavior=rig.harp.HarpBehavior(port_name="COM1"),
-    harp_sound_card=rig.harp.HarpSoundCard(port_name="COM2")
+    harp_sound_card=rig.harp.HarpSoundCard(port_name="COM2"),
+    screen=rig.visual_stimulation.Screen(
+        calibration=rig.visual_stimulation.DisplaysCalibration(
+            center=rig.visual_stimulation.DisplayCalibration(
+                intrinsics=rig.visual_stimulation.DisplayIntrinsics(),
+                extrinsics=rig.visual_stimulation.DisplayExtrinsics()
+            )
+        )
+    )
 )
 
 def main(path_seed: str = "./local/{schema}.json"):
