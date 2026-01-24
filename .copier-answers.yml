@@ -1,0 +1,6 @@
+_src_path: Aind.Behavior.CopierTemplate\aind-behavior-template
+author_email: a.erskine@neurogears.org
+author_name: RoboDoig
+prefix: aind-behavior
+project_description: A library that defines AIND data schema for a behavior experiment.
+project_name: dynamic-routing-bonsai
