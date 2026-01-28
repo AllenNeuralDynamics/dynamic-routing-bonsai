@@ -140,7 +140,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="num:CreateRandom">
-                <num:Seed>4</num:Seed>
+                <num:Seed>7</num:Seed>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -207,7 +207,7 @@
                       <gl:Title>DynamicRouting</gl:Title>
                       <gl:VSync>Off</gl:VSync>
                       <gl:SwapSync>false</gl:SwapSync>
-                      <gl:ClearColor>Black</gl:ClearColor>
+                      <gl:ClearColor>DarkGray</gl:ClearColor>
                       <gl:ClearMask>DepthBufferBit ColorBufferBit</gl:ClearMask>
                       <gl:CursorVisible>false</gl:CursorVisible>
                       <gl:Location xsi:nil="true" />
@@ -787,6 +787,25 @@ Item3 as Right)</scr:Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>Trial</Name>
                         </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>Trial</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>PresentationParameters.StimulusStartTime</Selector>
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="DueTime" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Delay">
+                            <rx:DueTime>PT1.5S</rx:DueTime>
+                          </Combinator>
+                        </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>Stimulus</Selector>
                         </Expression>
@@ -796,35 +815,123 @@ Item3 as Right)</scr:Expression>
                         <Expression xsi:type="MulticastSubject">
                           <Name>DrawGrating</Name>
                         </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="StringProperty">
-                            <Value>Grating</Value>
-                          </Combinator>
-                        </Expression>
+                        <Expression xsi:type="Unit" />
                         <Expression xsi:type="p1:MatchStimulus">
                           <p1:Type xsi:type="TypeMapping" TypeArguments="p1:AudioStimulus" />
                         </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="StringProperty">
-                            <Value>Audio</Value>
-                          </Combinator>
-                        </Expression>
+                        <Expression xsi:type="Unit" />
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Merge" />
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>Trial</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>PresentationParameters.StimulusDuration</Selector>
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="DueTime" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Delay">
+                            <rx:DueTime>PT0.5S</rx:DueTime>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="MulticastSubject">
+                          <Name>StopDrawing</Name>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>Trial</Name>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>Trial</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>PresentationParameters.ResponseWindowStartTime</Selector>
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="DueTime" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Delay">
+                            <rx:DueTime>PT1.6S</rx:DueTime>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="rx:SelectMany">
+                          <Name>ResponseWindow</Name>
+                          <Workflow>
+                            <Nodes>
+                              <Expression xsi:type="WorkflowInput">
+                                <Name>Source1</Name>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>Trial</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>PresentationParameters.ResponseWindowDuration</Selector>
+                              </Expression>
+                              <Expression xsi:type="scr:ExpressionTransform">
+                                <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
+                              </Expression>
+                              <Expression xsi:type="PropertyMapping">
+                                <PropertyMappings>
+                                  <Property Name="DueTime" />
+                                </PropertyMappings>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:Timer">
+                                  <rx:DueTime>PT0.9S</rx:DueTime>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:TakeUntil" />
+                              </Expression>
+                              <Expression xsi:type="WorkflowOutput" />
+                            </Nodes>
+                            <Edges>
+                              <Edge From="0" To="6" Label="Source1" />
+                              <Edge From="1" To="2" Label="Source1" />
+                              <Edge From="2" To="3" Label="Source1" />
+                              <Edge From="3" To="4" Label="Source1" />
+                              <Edge From="4" To="5" Label="Source1" />
+                              <Edge From="5" To="6" Label="Source2" />
+                              <Edge From="6" To="7" Label="Source1" />
+                            </Edges>
+                          </Workflow>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Take">
                             <rx:Count>1</rx:Count>
                           </Combinator>
                         </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>Trial</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>PresentationParameters.InterTrialInterval</Selector>
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="DueTime" />
+                          </PropertyMappings>
+                        </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Delay">
                             <rx:DueTime>PT3S</rx:DueTime>
                           </Combinator>
-                        </Expression>
-                        <Expression xsi:type="Unit" />
-                        <Expression xsi:type="MulticastSubject">
-                          <Name>StopDrawing</Name>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
@@ -837,19 +944,38 @@ Item3 as Right)</scr:Expression>
                         <Edge From="6" To="7" Label="Source1" />
                         <Edge From="7" To="8" Label="Source1" />
                         <Edge From="8" To="9" Label="Source1" />
-                        <Edge From="10" To="11" Label="Source1" />
+                        <Edge From="10" To="15" Label="Source1" />
                         <Edge From="11" To="12" Label="Source1" />
-                        <Edge From="11" To="15" Label="Source1" />
                         <Edge From="12" To="13" Label="Source1" />
                         <Edge From="13" To="14" Label="Source1" />
-                        <Edge From="14" To="17" Label="Source1" />
+                        <Edge From="14" To="15" Label="Source2" />
                         <Edge From="15" To="16" Label="Source1" />
-                        <Edge From="16" To="17" Label="Source2" />
+                        <Edge From="16" To="17" Label="Source1" />
+                        <Edge From="16" To="20" Label="Source1" />
                         <Edge From="17" To="18" Label="Source1" />
                         <Edge From="18" To="19" Label="Source1" />
-                        <Edge From="19" To="20" Label="Source1" />
+                        <Edge From="19" To="22" Label="Source1" />
                         <Edge From="20" To="21" Label="Source1" />
-                        <Edge From="21" To="22" Label="Source1" />
+                        <Edge From="21" To="22" Label="Source2" />
+                        <Edge From="22" To="27" Label="Source1" />
+                        <Edge From="23" To="24" Label="Source1" />
+                        <Edge From="24" To="25" Label="Source1" />
+                        <Edge From="25" To="26" Label="Source1" />
+                        <Edge From="26" To="27" Label="Source2" />
+                        <Edge From="27" To="28" Label="Source1" />
+                        <Edge From="29" To="34" Label="Source1" />
+                        <Edge From="30" To="31" Label="Source1" />
+                        <Edge From="31" To="32" Label="Source1" />
+                        <Edge From="32" To="33" Label="Source1" />
+                        <Edge From="33" To="34" Label="Source2" />
+                        <Edge From="34" To="35" Label="Source1" />
+                        <Edge From="35" To="36" Label="Source1" />
+                        <Edge From="36" To="41" Label="Source1" />
+                        <Edge From="37" To="38" Label="Source1" />
+                        <Edge From="38" To="39" Label="Source1" />
+                        <Edge From="39" To="40" Label="Source1" />
+                        <Edge From="40" To="41" Label="Source2" />
+                        <Edge From="41" To="42" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>

@@ -1912,11 +1912,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     
         private double _stimulusStartTime;
     
-        private double _stimulusEndTime;
+        private double _stimulusDuration;
     
         private double _responseWindowStartTime;
     
-        private double _responseWindowEndTime;
+        private double _responseWindowDuration;
     
         private double _interTrialInterval;
     
@@ -1933,9 +1933,9 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
         protected PresentationParameters(PresentationParameters other)
         {
             _stimulusStartTime = other._stimulusStartTime;
-            _stimulusEndTime = other._stimulusEndTime;
+            _stimulusDuration = other._stimulusDuration;
             _responseWindowStartTime = other._responseWindowStartTime;
-            _responseWindowEndTime = other._responseWindowEndTime;
+            _responseWindowDuration = other._responseWindowDuration;
             _interTrialInterval = other._interTrialInterval;
             _rewarded = other._rewarded;
             _nonContingentReward = other._nonContingentReward;
@@ -1955,16 +1955,16 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
-        [Newtonsoft.Json.JsonPropertyAttribute("stimulus_end_time", Required=Newtonsoft.Json.Required.Always)]
-        public double StimulusEndTime
+        [Newtonsoft.Json.JsonPropertyAttribute("stimulus_duration", Required=Newtonsoft.Json.Required.Always)]
+        public double StimulusDuration
         {
             get
             {
-                return _stimulusEndTime;
+                return _stimulusDuration;
             }
             set
             {
-                _stimulusEndTime = value;
+                _stimulusDuration = value;
             }
         }
     
@@ -1981,16 +1981,16 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
-        [Newtonsoft.Json.JsonPropertyAttribute("response_window_end_time", Required=Newtonsoft.Json.Required.Always)]
-        public double ResponseWindowEndTime
+        [Newtonsoft.Json.JsonPropertyAttribute("response_window_duration", Required=Newtonsoft.Json.Required.Always)]
+        public double ResponseWindowDuration
         {
             get
             {
-                return _responseWindowEndTime;
+                return _responseWindowDuration;
             }
             set
             {
-                _responseWindowEndTime = value;
+                _responseWindowDuration = value;
             }
         }
     
@@ -2059,9 +2059,9 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("StimulusStartTime = " + _stimulusStartTime + ", ");
-            stringBuilder.Append("StimulusEndTime = " + _stimulusEndTime + ", ");
+            stringBuilder.Append("StimulusDuration = " + _stimulusDuration + ", ");
             stringBuilder.Append("ResponseWindowStartTime = " + _responseWindowStartTime + ", ");
-            stringBuilder.Append("ResponseWindowEndTime = " + _responseWindowEndTime + ", ");
+            stringBuilder.Append("ResponseWindowDuration = " + _responseWindowDuration + ", ");
             stringBuilder.Append("InterTrialInterval = " + _interTrialInterval + ", ");
             stringBuilder.Append("Rewarded = " + _rewarded + ", ");
             stringBuilder.Append("NonContingentReward = " + _nonContingentReward + ", ");

@@ -33,9 +33,9 @@ class BlankStimulus(StimulusBase):
 
 class PresentationParameters(BaseModel):
     stimulus_start_time: float
-    stimulus_end_time: float
+    stimulus_duration: float
     response_window_start_time: float
-    response_window_end_time: float
+    response_window_duration: float
     inter_trial_interval: float
     rewarded: bool
     non_contingent_reward: bool
