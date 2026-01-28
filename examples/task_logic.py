@@ -17,6 +17,9 @@ non_contingent_presentation = PresentationParameters(stimulus_start_time=1.5, st
 rewarded_presentation = PresentationParameters(stimulus_start_time=1.5, stimulus_end_time=2, response_window_start_time=1.6, response_window_end_time=2.5, inter_trial_interval=3, rewarded=True, non_contingent_reward=False, timeout=0)
 unrewarded_presentation = PresentationParameters(stimulus_start_time=1.5, stimulus_end_time=2, response_window_start_time=1.6, response_window_end_time=2.5, inter_trial_interval=3, rewarded=False, non_contingent_reward=False, timeout=4.5)
 
+grating1 = GratingStimulus(stimulus_type="grating", angle=0, aperture=1, extent_x=2, extent_y=2, spatial_frequency=10, temporal_frequency=2)
+grating2 = GratingStimulus(stimulus_type="grating", angle=90, aperture=1, extent_x=2, extent_y=2, spatial_frequency=10, temporal_frequency=2)
+
 task_logic = AindBehaviorDynamicRoutingBonsaiTaskLogic(
     task_parameters=AindBehaviorDynamicRoutingBonsaiTaskParameters(
         task_blocks = [
@@ -25,14 +28,15 @@ task_logic = AindBehaviorDynamicRoutingBonsaiTaskLogic(
                       TrialSet(
                           repeats=5,
                           available_trials=[
-                              Trial(stimulus=GratingStimulus(stimulus_type="grating"), presentation_parameters=rewarded_presentation),
-                              Trial(stimulus=GratingStimulus(stimulus_type="grating"), presentation_parameters=unrewarded_presentation)
+                              Trial(stimulus=grating1, presentation_parameters=rewarded_presentation),
+                              Trial(stimulus=grating2, presentation_parameters=unrewarded_presentation)
                           ]
                       ),
                       TrialSet(
                           repeats=5,
                           available_trials=[
-                              Trial(stimulus=GratingStimulus(stimulus_type="grating"), presentation_parameters=non_contingent_presentation)
+                              Trial(stimulus=AudioStimulus(stimulus_type="audio"), presentation_parameters=rewarded_presentation),
+                              Trial(stimulus=AudioStimulus(stimulus_type="audio"), presentation_parameters=unrewarded_presentation)
                           ]
                       )
                   ]                

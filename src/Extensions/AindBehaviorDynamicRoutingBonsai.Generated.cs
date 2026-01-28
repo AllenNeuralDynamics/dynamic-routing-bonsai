@@ -1398,6 +1398,18 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     public partial class GratingStimulus : Stimulus
     {
     
+        private double _angle;
+    
+        private double _aperture;
+    
+        private double _extentX;
+    
+        private double _extentY;
+    
+        private double _spatialFrequency;
+    
+        private double _temporalFrequency;
+    
         public GratingStimulus()
         {
         }
@@ -1405,6 +1417,90 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
         protected GratingStimulus(GratingStimulus other) : 
                 base(other)
         {
+            _angle = other._angle;
+            _aperture = other._aperture;
+            _extentX = other._extentX;
+            _extentY = other._extentY;
+            _spatialFrequency = other._spatialFrequency;
+            _temporalFrequency = other._temporalFrequency;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("angle", Required=Newtonsoft.Json.Required.Always)]
+        public double Angle
+        {
+            get
+            {
+                return _angle;
+            }
+            set
+            {
+                _angle = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("aperture", Required=Newtonsoft.Json.Required.Always)]
+        public double Aperture
+        {
+            get
+            {
+                return _aperture;
+            }
+            set
+            {
+                _aperture = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("extent_x", Required=Newtonsoft.Json.Required.Always)]
+        public double ExtentX
+        {
+            get
+            {
+                return _extentX;
+            }
+            set
+            {
+                _extentX = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("extent_y", Required=Newtonsoft.Json.Required.Always)]
+        public double ExtentY
+        {
+            get
+            {
+                return _extentY;
+            }
+            set
+            {
+                _extentY = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("spatial_frequency", Required=Newtonsoft.Json.Required.Always)]
+        public double SpatialFrequency
+        {
+            get
+            {
+                return _spatialFrequency;
+            }
+            set
+            {
+                _spatialFrequency = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("temporal_frequency", Required=Newtonsoft.Json.Required.Always)]
+        public double TemporalFrequency
+        {
+            get
+            {
+                return _temporalFrequency;
+            }
+            set
+            {
+                _temporalFrequency = value;
+            }
         }
     
         public System.IObservable<GratingStimulus> Generate()
@@ -1419,7 +1515,17 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     
         protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            return base.PrintMembers(stringBuilder);
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("Angle = " + _angle + ", ");
+            stringBuilder.Append("Aperture = " + _aperture + ", ");
+            stringBuilder.Append("ExtentX = " + _extentX + ", ");
+            stringBuilder.Append("ExtentY = " + _extentY + ", ");
+            stringBuilder.Append("SpatialFrequency = " + _spatialFrequency + ", ");
+            stringBuilder.Append("TemporalFrequency = " + _temporalFrequency);
+            return true;
         }
     }
 

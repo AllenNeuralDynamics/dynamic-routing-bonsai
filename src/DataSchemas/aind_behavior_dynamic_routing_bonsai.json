@@ -548,10 +548,40 @@
           "const": "grating",
           "title": "Stimulus Type",
           "type": "string"
+        },
+        "angle": {
+          "title": "Angle",
+          "type": "number"
+        },
+        "aperture": {
+          "title": "Aperture",
+          "type": "number"
+        },
+        "extent_x": {
+          "title": "Extent X",
+          "type": "number"
+        },
+        "extent_y": {
+          "title": "Extent Y",
+          "type": "number"
+        },
+        "spatial_frequency": {
+          "title": "Spatial Frequency",
+          "type": "number"
+        },
+        "temporal_frequency": {
+          "title": "Temporal Frequency",
+          "type": "number"
         }
       },
       "required": [
-        "stimulus_type"
+        "stimulus_type",
+        "angle",
+        "aperture",
+        "extent_x",
+        "extent_y",
+        "spatial_frequency",
+        "temporal_frequency"
       ],
       "title": "GratingStimulus",
       "type": "object"

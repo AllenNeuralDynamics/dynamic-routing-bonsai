@@ -21,6 +21,12 @@ class AudioStimulus(StimulusBase):
     
 class GratingStimulus(StimulusBase):
     stimulus_type: Literal["grating"]
+    angle: float
+    aperture: float
+    extent_x: float
+    extent_y: float
+    spatial_frequency: float
+    temporal_frequency: float
     
 class BlankStimulus(StimulusBase):
     stimulus_type: Literal["blank"]
