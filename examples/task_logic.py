@@ -6,11 +6,39 @@ from aind_behavior_curriculum import Stage, TrainerState
 from aind_behavior_dynamic_routing_bonsai.task_logic import (
     AindBehaviorDynamicRoutingBonsaiTaskLogic,
     AindBehaviorDynamicRoutingBonsaiTaskParameters,
+    Block,
+    TrialSet,
+    Trial,
+    PresentationParameters,
+    BlankStimulus, AudioStimulus, GratingStimulus
 )
 
+non_contingent_presentation = PresentationParameters(stimulus_start_time=1.5, stimulus_end_time=2, response_window_start_time=1.6, response_window_end_time=2.5, inter_trial_interval=3, rewarded=True, non_contingent_reward=True, timeout=0)
+rewarded_presentation = PresentationParameters(stimulus_start_time=1.5, stimulus_end_time=2, response_window_start_time=1.6, response_window_end_time=2.5, inter_trial_interval=3, rewarded=True, non_contingent_reward=False, timeout=0)
+unrewarded_presentation = PresentationParameters(stimulus_start_time=1.5, stimulus_end_time=2, response_window_start_time=1.6, response_window_end_time=2.5, inter_trial_interval=3, rewarded=False, non_contingent_reward=False, timeout=4.5)
 
 task_logic = AindBehaviorDynamicRoutingBonsaiTaskLogic(
-    task_parameters=AindBehaviorDynamicRoutingBonsaiTaskParameters(),
+    task_parameters=AindBehaviorDynamicRoutingBonsaiTaskParameters(
+        task_blocks = [
+            Block(maxmimum_block_time=600,
+                  trial_sets=[
+                      TrialSet(
+                          repeats=5,
+                          available_trials=[
+                              Trial(stimulus=GratingStimulus(stimulus_type="grating"), presentation_parameters=rewarded_presentation),
+                              Trial(stimulus=GratingStimulus(stimulus_type="grating"), presentation_parameters=unrewarded_presentation)
+                          ]
+                      ),
+                      TrialSet(
+                          repeats=5,
+                          available_trials=[
+                              Trial(stimulus=GratingStimulus(stimulus_type="grating"), presentation_parameters=non_contingent_presentation)
+                          ]
+                      )
+                  ]                
+            )
+        ]
+    ),
 )
 
 

@@ -368,15 +368,19 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     
         private string _aindBehaviorServicesPkgVersion;
     
+        private System.Collections.Generic.List<Block> _taskBlocks;
+    
         public AindBehaviorDynamicRoutingBonsaiTaskParameters()
         {
             _aindBehaviorServicesPkgVersion = "0.12.5";
+            _taskBlocks = new System.Collections.Generic.List<Block>();
         }
     
         protected AindBehaviorDynamicRoutingBonsaiTaskParameters(AindBehaviorDynamicRoutingBonsaiTaskParameters other)
         {
             _rngSeed = other._rngSeed;
             _aindBehaviorServicesPkgVersion = other._aindBehaviorServicesPkgVersion;
+            _taskBlocks = other._taskBlocks;
         }
     
         /// <summary>
@@ -410,6 +414,20 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("task_blocks", Required=Newtonsoft.Json.Required.Always)]
+        public System.Collections.Generic.List<Block> TaskBlocks
+        {
+            get
+            {
+                return _taskBlocks;
+            }
+            set
+            {
+                _taskBlocks = value;
+            }
+        }
+    
         public System.IObservable<AindBehaviorDynamicRoutingBonsaiTaskParameters> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindBehaviorDynamicRoutingBonsaiTaskParameters(this)));
@@ -423,7 +441,8 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("RngSeed = " + _rngSeed + ", ");
-            stringBuilder.Append("AindBehaviorServicesPkgVersion = " + _aindBehaviorServicesPkgVersion);
+            stringBuilder.Append("AindBehaviorServicesPkgVersion = " + _aindBehaviorServicesPkgVersion + ", ");
+            stringBuilder.Append("TaskBlocks = " + _taskBlocks);
             return true;
         }
     
@@ -763,6 +782,38 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class AudioStimulus : Stimulus
+    {
+    
+        public AudioStimulus()
+        {
+        }
+    
+        protected AudioStimulus(AudioStimulus other) : 
+                base(other)
+        {
+        }
+    
+        public System.IObservable<AudioStimulus> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AudioStimulus(this)));
+        }
+    
+        public System.IObservable<AudioStimulus> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new AudioStimulus(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            return base.PrintMembers(stringBuilder);
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class BaseModel
     {
     
@@ -787,6 +838,118 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             return false;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class BlankStimulus : Stimulus
+    {
+    
+        public BlankStimulus()
+        {
+        }
+    
+        protected BlankStimulus(BlankStimulus other) : 
+                base(other)
+        {
+        }
+    
+        public System.IObservable<BlankStimulus> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BlankStimulus(this)));
+        }
+    
+        public System.IObservable<BlankStimulus> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new BlankStimulus(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            return base.PrintMembers(stringBuilder);
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class Block
+    {
+    
+        private System.Collections.Generic.List<TrialSet> _trialSets;
+    
+        private double _maxmimumBlockTime;
+    
+        public Block()
+        {
+            _trialSets = new System.Collections.Generic.List<TrialSet>();
+        }
+    
+        protected Block(Block other)
+        {
+            _trialSets = other._trialSets;
+            _maxmimumBlockTime = other._maxmimumBlockTime;
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("trial_sets", Required=Newtonsoft.Json.Required.Always)]
+        public System.Collections.Generic.List<TrialSet> TrialSets
+        {
+            get
+            {
+                return _trialSets;
+            }
+            set
+            {
+                _trialSets = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("maxmimum_block_time", Required=Newtonsoft.Json.Required.Always)]
+        public double MaxmimumBlockTime
+        {
+            get
+            {
+                return _maxmimumBlockTime;
+            }
+            set
+            {
+                _maxmimumBlockTime = value;
+            }
+        }
+    
+        public System.IObservable<Block> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Block(this)));
+        }
+    
+        public System.IObservable<Block> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Block(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("TrialSets = " + _trialSets + ", ");
+            stringBuilder.Append("MaxmimumBlockTime = " + _maxmimumBlockTime);
+            return true;
         }
     
         public override string ToString()
@@ -1232,6 +1395,38 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class GratingStimulus : Stimulus
+    {
+    
+        public GratingStimulus()
+        {
+        }
+    
+        protected GratingStimulus(GratingStimulus other) : 
+                base(other)
+        {
+        }
+    
+        public System.IObservable<GratingStimulus> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new GratingStimulus(this)));
+        }
+    
+        public System.IObservable<GratingStimulus> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new GratingStimulus(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            return base.PrintMembers(stringBuilder);
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class HarpBehavior
     {
     
@@ -1606,6 +1801,186 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class PresentationParameters
+    {
+    
+        private double _stimulusStartTime;
+    
+        private double _stimulusEndTime;
+    
+        private double _responseWindowStartTime;
+    
+        private double _responseWindowEndTime;
+    
+        private double _interTrialInterval;
+    
+        private bool _rewarded;
+    
+        private bool _nonContingentReward;
+    
+        private double _timeout;
+    
+        public PresentationParameters()
+        {
+        }
+    
+        protected PresentationParameters(PresentationParameters other)
+        {
+            _stimulusStartTime = other._stimulusStartTime;
+            _stimulusEndTime = other._stimulusEndTime;
+            _responseWindowStartTime = other._responseWindowStartTime;
+            _responseWindowEndTime = other._responseWindowEndTime;
+            _interTrialInterval = other._interTrialInterval;
+            _rewarded = other._rewarded;
+            _nonContingentReward = other._nonContingentReward;
+            _timeout = other._timeout;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("stimulus_start_time", Required=Newtonsoft.Json.Required.Always)]
+        public double StimulusStartTime
+        {
+            get
+            {
+                return _stimulusStartTime;
+            }
+            set
+            {
+                _stimulusStartTime = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("stimulus_end_time", Required=Newtonsoft.Json.Required.Always)]
+        public double StimulusEndTime
+        {
+            get
+            {
+                return _stimulusEndTime;
+            }
+            set
+            {
+                _stimulusEndTime = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("response_window_start_time", Required=Newtonsoft.Json.Required.Always)]
+        public double ResponseWindowStartTime
+        {
+            get
+            {
+                return _responseWindowStartTime;
+            }
+            set
+            {
+                _responseWindowStartTime = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("response_window_end_time", Required=Newtonsoft.Json.Required.Always)]
+        public double ResponseWindowEndTime
+        {
+            get
+            {
+                return _responseWindowEndTime;
+            }
+            set
+            {
+                _responseWindowEndTime = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("inter_trial_interval", Required=Newtonsoft.Json.Required.Always)]
+        public double InterTrialInterval
+        {
+            get
+            {
+                return _interTrialInterval;
+            }
+            set
+            {
+                _interTrialInterval = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("rewarded", Required=Newtonsoft.Json.Required.Always)]
+        public bool Rewarded
+        {
+            get
+            {
+                return _rewarded;
+            }
+            set
+            {
+                _rewarded = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("non_contingent_reward", Required=Newtonsoft.Json.Required.Always)]
+        public bool NonContingentReward
+        {
+            get
+            {
+                return _nonContingentReward;
+            }
+            set
+            {
+                _nonContingentReward = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("timeout", Required=Newtonsoft.Json.Required.Always)]
+        public double Timeout
+        {
+            get
+            {
+                return _timeout;
+            }
+            set
+            {
+                _timeout = value;
+            }
+        }
+    
+        public System.IObservable<PresentationParameters> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PresentationParameters(this)));
+        }
+    
+        public System.IObservable<PresentationParameters> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new PresentationParameters(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("StimulusStartTime = " + _stimulusStartTime + ", ");
+            stringBuilder.Append("StimulusEndTime = " + _stimulusEndTime + ", ");
+            stringBuilder.Append("ResponseWindowStartTime = " + _responseWindowStartTime + ", ");
+            stringBuilder.Append("ResponseWindowEndTime = " + _responseWindowEndTime + ", ");
+            stringBuilder.Append("InterTrialInterval = " + _interTrialInterval + ", ");
+            stringBuilder.Append("Rewarded = " + _rewarded + ", ");
+            stringBuilder.Append("NonContingentReward = " + _nonContingentReward + ", ");
+            stringBuilder.Append("Timeout = " + _timeout);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Screen
     {
     
@@ -1870,6 +2245,167 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class Trial
+    {
+    
+        private Stimulus _stimulus;
+    
+        private PresentationParameters _presentationParameters;
+    
+        public Trial()
+        {
+            _presentationParameters = new PresentationParameters();
+        }
+    
+        protected Trial(Trial other)
+        {
+            _stimulus = other._stimulus;
+            _presentationParameters = other._presentationParameters;
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("stimulus", Required=Newtonsoft.Json.Required.Always)]
+        public Stimulus Stimulus
+        {
+            get
+            {
+                return _stimulus;
+            }
+            set
+            {
+                _stimulus = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("presentation_parameters", Required=Newtonsoft.Json.Required.Always)]
+        public PresentationParameters PresentationParameters
+        {
+            get
+            {
+                return _presentationParameters;
+            }
+            set
+            {
+                _presentationParameters = value;
+            }
+        }
+    
+        public System.IObservable<Trial> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Trial(this)));
+        }
+    
+        public System.IObservable<Trial> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Trial(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("Stimulus = " + _stimulus + ", ");
+            stringBuilder.Append("PresentationParameters = " + _presentationParameters);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class TrialSet
+    {
+    
+        private System.Collections.Generic.List<Trial> _availableTrials;
+    
+        private int _repeats;
+    
+        public TrialSet()
+        {
+            _availableTrials = new System.Collections.Generic.List<Trial>();
+        }
+    
+        protected TrialSet(TrialSet other)
+        {
+            _availableTrials = other._availableTrials;
+            _repeats = other._repeats;
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("available_trials", Required=Newtonsoft.Json.Required.Always)]
+        public System.Collections.Generic.List<Trial> AvailableTrials
+        {
+            get
+            {
+                return _availableTrials;
+            }
+            set
+            {
+                _availableTrials = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("repeats", Required=Newtonsoft.Json.Required.Always)]
+        public int Repeats
+        {
+            get
+            {
+                return _repeats;
+            }
+            set
+            {
+                _repeats = value;
+            }
+        }
+    
+        public System.IObservable<TrialSet> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new TrialSet(this)));
+        }
+    
+        public System.IObservable<TrialSet> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new TrialSet(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("AvailableTrials = " + _availableTrials + ", ");
+            stringBuilder.Append("Repeats = " + _repeats);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Vector3
     {
     
@@ -1977,6 +2513,233 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     }
 
 
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "stimulus_type")]
+    [JsonInheritanceAttribute("audio", typeof(AudioStimulus))]
+    [JsonInheritanceAttribute("blank", typeof(BlankStimulus))]
+    [JsonInheritanceAttribute("grating", typeof(GratingStimulus))]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class Stimulus
+    {
+    
+        public Stimulus()
+        {
+        }
+    
+        protected Stimulus(Stimulus other)
+        {
+        }
+    
+        public System.IObservable<Stimulus> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Stimulus(this)));
+        }
+    
+        public System.IObservable<Stimulus> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Stimulus(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            return false;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.Interface, AllowMultiple = true)]
+    internal class JsonInheritanceAttribute : System.Attribute
+    {
+        public JsonInheritanceAttribute(string key, System.Type type)
+        {
+            Key = key;
+            Type = type;
+        }
+
+        public string Key { get; private set; }
+
+        public System.Type Type { get; private set; }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    public class JsonInheritanceConverter : Newtonsoft.Json.JsonConverter
+    {
+        internal static readonly string DefaultDiscriminatorName = "discriminator";
+
+        private readonly string _discriminatorName;
+
+        [System.ThreadStatic]
+        private static bool _isReading;
+
+        [System.ThreadStatic]
+        private static bool _isWriting;
+
+        public JsonInheritanceConverter()
+        {
+            _discriminatorName = DefaultDiscriminatorName;
+        }
+
+        public JsonInheritanceConverter(string discriminatorName)
+        {
+            _discriminatorName = discriminatorName;
+        }
+
+        public string DiscriminatorName { get { return _discriminatorName; } }
+
+        public override void WriteJson(Newtonsoft.Json.JsonWriter writer, object value, Newtonsoft.Json.JsonSerializer serializer)
+        {
+            try
+            {
+                _isWriting = true;
+
+                var jObject = Newtonsoft.Json.Linq.JObject.FromObject(value, serializer);
+                jObject.AddFirst(new Newtonsoft.Json.Linq.JProperty(_discriminatorName, GetSubtypeDiscriminator(value.GetType())));
+                writer.WriteToken(jObject.CreateReader());
+            }
+            finally
+            {
+                _isWriting = false;
+            }
+        }
+
+        public override bool CanWrite
+        {
+            get
+            {
+                if (_isWriting)
+                {
+                    _isWriting = false;
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        public override bool CanRead
+        {
+            get
+            {
+                if (_isReading)
+                {
+                    _isReading = false;
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        public override bool CanConvert(System.Type objectType)
+        {
+            return true;
+        }
+
+        public override object ReadJson(Newtonsoft.Json.JsonReader reader, System.Type objectType, object existingValue, Newtonsoft.Json.JsonSerializer serializer)
+        {
+            var jObject = serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(reader);
+            if (jObject == null)
+                return null;
+
+            var discriminatorValue = jObject.GetValue(_discriminatorName);
+            var discriminator = discriminatorValue != null ? Newtonsoft.Json.Linq.Extensions.Value<string>(discriminatorValue) : null;
+            var subtype = GetObjectSubtype(objectType, discriminator);
+
+            var objectContract = serializer.ContractResolver.ResolveContract(subtype) as Newtonsoft.Json.Serialization.JsonObjectContract;
+            if (objectContract == null || System.Linq.Enumerable.All(objectContract.Properties, p => p.PropertyName != _discriminatorName))
+            {
+                jObject.Remove(_discriminatorName);
+            }
+
+            try
+            {
+                _isReading = true;
+                return serializer.Deserialize(jObject.CreateReader(), subtype);
+            }
+            finally
+            {
+                _isReading = false;
+            }
+        }
+
+        private System.Type GetObjectSubtype(System.Type objectType, string discriminator)
+        {
+            foreach (var attribute in System.Reflection.CustomAttributeExtensions.GetCustomAttributes<JsonInheritanceAttribute>(System.Reflection.IntrospectionExtensions.GetTypeInfo(objectType), true))
+            {
+                if (attribute.Key == discriminator)
+                    return attribute.Type;
+            }
+
+            return objectType;
+        }
+
+        private string GetSubtypeDiscriminator(System.Type objectType)
+        {
+            foreach (var attribute in System.Reflection.CustomAttributeExtensions.GetCustomAttributes<JsonInheritanceAttribute>(System.Reflection.IntrospectionExtensions.GetTypeInfo(objectType), true))
+            {
+                if (attribute.Type == objectType)
+                    return attribute.Key;
+            }
+
+            return objectType.Name;
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DefaultPropertyAttribute("Type")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AudioStimulus>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlankStimulus>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GratingStimulus>))]
+    public partial class MatchStimulus : Bonsai.Expressions.SingleArgumentExpressionBuilder
+    {
+    
+        public Bonsai.Expressions.TypeMapping Type { get; set; }
+
+        public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
+        {
+            var typeMapping = Type;
+            var returnType = typeMapping != null ? typeMapping.GetType().GetGenericArguments()[0] : typeof(Stimulus);
+            return System.Linq.Expressions.Expression.Call(
+                typeof(MatchStimulus),
+                "Process",
+                new System.Type[] { returnType },
+                System.Linq.Enumerable.Single(arguments));
+        }
+
+    
+        private static System.IObservable<TResult> Process<TResult>(System.IObservable<Stimulus> source)
+            where TResult : Stimulus
+        {
+            return System.Reactive.Linq.Observable.Create<TResult>(observer =>
+            {
+                var sourceObserver = System.Reactive.Observer.Create<Stimulus>(
+                    value =>
+                    {
+                        var match = value as TResult;
+                        if (match != null) observer.OnNext(match);
+                    },
+                    observer.OnError,
+                    observer.OnCompleted);
+                return System.ObservableExtensions.SubscribeSafe(source, sourceObserver);
+            });
+        }
+    }
+
+
     /// <summary>
     /// Serializes a sequence of data model objects into JSON strings.
     /// </summary>
@@ -2015,9 +2778,24 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             return Process<AindBehaviorSessionModel>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<AudioStimulus> source)
+        {
+            return Process<AudioStimulus>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<BaseModel> source)
         {
             return Process<BaseModel>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<BlankStimulus> source)
+        {
+            return Process<BlankStimulus>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Block> source)
+        {
+            return Process<Block>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<DisplayCalibration> source)
@@ -2040,6 +2818,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             return Process<DisplaysCalibration>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<GratingStimulus> source)
+        {
+            return Process<GratingStimulus>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<HarpBehavior> source)
         {
             return Process<HarpBehavior>(source);
@@ -2050,14 +2833,34 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             return Process<HarpSoundCard>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<PresentationParameters> source)
+        {
+            return Process<PresentationParameters>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Screen> source)
         {
             return Process<Screen>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Trial> source)
+        {
+            return Process<Trial>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<TrialSet> source)
+        {
+            return Process<TrialSet>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Vector3> source)
         {
             return Process<Vector3>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Stimulus> source)
+        {
+            return Process<Stimulus>(source);
         }
     }
 
@@ -2073,15 +2876,23 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindBehaviorDynamicRoutingBonsaiTaskLogic>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindBehaviorDynamicRoutingBonsaiTaskParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindBehaviorSessionModel>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AudioStimulus>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BaseModel>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlankStimulus>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Block>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplayCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplayExtrinsics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplayIntrinsics>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DisplaysCalibration>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GratingStimulus>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBehavior>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpSoundCard>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PresentationParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Screen>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Trial>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TrialSet>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Vector3>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Stimulus>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     

@@ -187,8 +187,18 @@
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
+        },
+        "task_blocks": {
+          "items": {
+            "$ref": "#/$defs/Block"
+          },
+          "title": "Task Blocks",
+          "type": "array"
         }
       },
+      "required": [
+        "task_blocks"
+      ],
       "title": "AindBehaviorDynamicRoutingBonsaiTaskParameters",
       "type": "object"
     },
@@ -310,9 +320,58 @@
       "title": "AindBehaviorSessionModel",
       "type": "object"
     },
+    "AudioStimulus": {
+      "properties": {
+        "stimulus_type": {
+          "const": "audio",
+          "title": "Stimulus Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "stimulus_type"
+      ],
+      "title": "AudioStimulus",
+      "type": "object"
+    },
     "BaseModel": {
       "properties": {},
       "title": "BaseModel",
+      "type": "object"
+    },
+    "BlankStimulus": {
+      "properties": {
+        "stimulus_type": {
+          "const": "blank",
+          "title": "Stimulus Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "stimulus_type"
+      ],
+      "title": "BlankStimulus",
+      "type": "object"
+    },
+    "Block": {
+      "properties": {
+        "trial_sets": {
+          "items": {
+            "$ref": "#/$defs/TrialSet"
+          },
+          "title": "Trial Sets",
+          "type": "array"
+        },
+        "maxmimum_block_time": {
+          "title": "Maxmimum Block Time",
+          "type": "number"
+        }
+      },
+      "required": [
+        "trial_sets",
+        "maxmimum_block_time"
+      ],
+      "title": "Block",
       "type": "object"
     },
     "DisplayCalibration": {
@@ -483,6 +542,20 @@
       "title": "DisplaysCalibration",
       "type": "object"
     },
+    "GratingStimulus": {
+      "properties": {
+        "stimulus_type": {
+          "const": "grating",
+          "title": "Stimulus Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "stimulus_type"
+      ],
+      "title": "GratingStimulus",
+      "type": "object"
+    },
     "HarpBehavior": {
       "properties": {
         "device_type": {
@@ -635,6 +708,54 @@
       "title": "HarpSoundCard",
       "type": "object"
     },
+    "PresentationParameters": {
+      "properties": {
+        "stimulus_start_time": {
+          "title": "Stimulus Start Time",
+          "type": "number"
+        },
+        "stimulus_end_time": {
+          "title": "Stimulus End Time",
+          "type": "number"
+        },
+        "response_window_start_time": {
+          "title": "Response Window Start Time",
+          "type": "number"
+        },
+        "response_window_end_time": {
+          "title": "Response Window End Time",
+          "type": "number"
+        },
+        "inter_trial_interval": {
+          "title": "Inter Trial Interval",
+          "type": "number"
+        },
+        "rewarded": {
+          "title": "Rewarded",
+          "type": "boolean"
+        },
+        "non_contingent_reward": {
+          "title": "Non Contingent Reward",
+          "type": "boolean"
+        },
+        "timeout": {
+          "title": "Timeout",
+          "type": "number"
+        }
+      },
+      "required": [
+        "stimulus_start_time",
+        "stimulus_end_time",
+        "response_window_start_time",
+        "response_window_end_time",
+        "inter_trial_interval",
+        "rewarded",
+        "non_contingent_reward",
+        "timeout"
+      ],
+      "title": "PresentationParameters",
+      "type": "object"
+    },
     "Screen": {
       "properties": {
         "device_type": {
@@ -777,6 +898,62 @@
         }
       },
       "title": "Screen",
+      "type": "object"
+    },
+    "Trial": {
+      "properties": {
+        "stimulus": {
+          "discriminator": {
+            "mapping": {
+              "audio": "#/$defs/AudioStimulus",
+              "blank": "#/$defs/BlankStimulus",
+              "grating": "#/$defs/GratingStimulus"
+            },
+            "propertyName": "stimulus_type"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/AudioStimulus"
+            },
+            {
+              "$ref": "#/$defs/GratingStimulus"
+            },
+            {
+              "$ref": "#/$defs/BlankStimulus"
+            }
+          ],
+          "title": "Stimulus"
+        },
+        "presentation_parameters": {
+          "$ref": "#/$defs/PresentationParameters"
+        }
+      },
+      "required": [
+        "stimulus",
+        "presentation_parameters"
+      ],
+      "title": "Trial",
+      "type": "object"
+    },
+    "TrialSet": {
+      "properties": {
+        "available_trials": {
+          "items": {
+            "$ref": "#/$defs/Trial"
+          },
+          "title": "Available Trials",
+          "type": "array"
+        },
+        "repeats": {
+          "title": "Repeats",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "available_trials",
+        "repeats"
+      ],
+      "title": "TrialSet",
       "type": "object"
     },
     "Vector3": {
