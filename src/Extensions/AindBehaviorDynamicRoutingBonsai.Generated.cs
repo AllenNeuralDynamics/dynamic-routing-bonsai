@@ -785,6 +785,8 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     public partial class AudioStimulus : Stimulus
     {
     
+        private double _frequency;
+    
         public AudioStimulus()
         {
         }
@@ -792,6 +794,20 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
         protected AudioStimulus(AudioStimulus other) : 
                 base(other)
         {
+            _frequency = other._frequency;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("frequency", Required=Newtonsoft.Json.Required.Always)]
+        public double Frequency
+        {
+            get
+            {
+                return _frequency;
+            }
+            set
+            {
+                _frequency = value;
+            }
         }
     
         public System.IObservable<AudioStimulus> Generate()
@@ -806,7 +822,12 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     
         protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            return base.PrintMembers(stringBuilder);
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("Frequency = " + _frequency);
+            return true;
         }
     }
 

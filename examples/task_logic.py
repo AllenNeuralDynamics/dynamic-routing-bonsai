@@ -31,12 +31,16 @@ task_logic = AindBehaviorDynamicRoutingBonsaiTaskLogic(
                               Trial(stimulus=grating1, presentation_parameters=rewarded_presentation),
                               Trial(stimulus=grating2, presentation_parameters=unrewarded_presentation)
                           ]
-                      ),
+                      )
+                  ]                
+            ),
+            Block(maxmimum_block_time=600,
+                  trial_sets=[
                       TrialSet(
                           repeats=5,
                           available_trials=[
-                              Trial(stimulus=AudioStimulus(stimulus_type="audio"), presentation_parameters=rewarded_presentation),
-                              Trial(stimulus=AudioStimulus(stimulus_type="audio"), presentation_parameters=unrewarded_presentation)
+                              Trial(stimulus=AudioStimulus(stimulus_type="audio", frequency=120), presentation_parameters=rewarded_presentation),
+                              Trial(stimulus=AudioStimulus(stimulus_type="audio", frequency=700), presentation_parameters=unrewarded_presentation)
                           ]
                       )
                   ]                

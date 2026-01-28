@@ -18,6 +18,7 @@ class StimulusBase(BaseModel):
     
 class AudioStimulus(StimulusBase):
     stimulus_type: Literal["audio"]
+    frequency: float
     
 class GratingStimulus(StimulusBase):
     stimulus_type: Literal["grating"]

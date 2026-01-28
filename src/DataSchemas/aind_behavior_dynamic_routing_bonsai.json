@@ -326,10 +326,15 @@
           "const": "audio",
           "title": "Stimulus Type",
           "type": "string"
+        },
+        "frequency": {
+          "title": "Frequency",
+          "type": "number"
         }
       },
       "required": [
-        "stimulus_type"
+        "stimulus_type",
+        "frequency"
       ],
       "title": "AudioStimulus",
       "type": "object"
