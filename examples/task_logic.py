@@ -26,7 +26,7 @@ task_logic = AindBehaviorDynamicRoutingBonsaiTaskLogic(
             Block(maxmimum_block_time=600,
                   trial_sets=[
                       TrialSet(
-                          repeats=5,
+                          repeats=50,
                           available_trials=[
                               Trial(stimulus=grating1, presentation_parameters=rewarded_presentation),
                               Trial(stimulus=grating2, presentation_parameters=unrewarded_presentation)

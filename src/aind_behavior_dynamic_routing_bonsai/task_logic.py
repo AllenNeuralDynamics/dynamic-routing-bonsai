@@ -1,5 +1,6 @@
 import logging
 from typing import Literal, List, Annotated, Union
+from enum import Enum
 
 import aind_behavior_services.task_logic.distributions as distributions
 from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel, TaskParameters
@@ -45,6 +46,15 @@ class PresentationParameters(BaseModel):
 class Trial(BaseModel):
     stimulus: Annotated[Union[AudioStimulus, GratingStimulus, BlankStimulus], Field(discriminator="stimulus_type")]
     presentation_parameters: PresentationParameters
+
+class TrialResultEnum(str, Enum):
+    HIT = "Hit"
+    FA = "FalseAlarm"
+    CR = "CorrectRejection"
+    MISS = "Miss"
+
+class TrialResult(BaseModel):
+    result: TrialResultEnum
 
 class TrialSet(BaseModel):
     available_trials: List[Trial]

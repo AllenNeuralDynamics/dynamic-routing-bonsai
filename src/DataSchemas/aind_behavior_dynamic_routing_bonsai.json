@@ -970,6 +970,28 @@
       "title": "Trial",
       "type": "object"
     },
+    "TrialResult": {
+      "properties": {
+        "result": {
+          "$ref": "#/$defs/TrialResultEnum"
+        }
+      },
+      "required": [
+        "result"
+      ],
+      "title": "TrialResult",
+      "type": "object"
+    },
+    "TrialResultEnum": {
+      "enum": [
+        "Hit",
+        "FalseAlarm",
+        "CorrectRejection",
+        "Miss"
+      ],
+      "title": "TrialResultEnum",
+      "type": "string"
+    },
     "TrialSet": {
       "properties": {
         "available_trials": {

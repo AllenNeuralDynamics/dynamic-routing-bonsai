@@ -2453,6 +2453,87 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class TrialResult
+    {
+    
+        private TrialResultEnum _result;
+    
+        public TrialResult()
+        {
+        }
+    
+        protected TrialResult(TrialResult other)
+        {
+            _result = other._result;
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("result", Required=Newtonsoft.Json.Required.Always)]
+        public TrialResultEnum Result
+        {
+            get
+            {
+                return _result;
+            }
+            set
+            {
+                _result = value;
+            }
+        }
+    
+        public System.IObservable<TrialResult> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new TrialResult(this)));
+        }
+    
+        public System.IObservable<TrialResult> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new TrialResult(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("Result = " + _result);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum TrialResultEnum
+    {
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Hit")]
+        Hit = 0,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="FalseAlarm")]
+        FalseAlarm = 1,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="CorrectRejection")]
+        CorrectRejection = 2,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Miss")]
+        Miss = 3,
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class TrialSet
     {
     
@@ -2975,6 +3056,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             return Process<Trial>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<TrialResult> source)
+        {
+            return Process<TrialResult>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<TrialSet> source)
         {
             return Process<TrialSet>(source);
@@ -3017,6 +3103,7 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PresentationParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Screen>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Trial>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TrialResult>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TrialSet>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Vector3>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Stimulus>))]
