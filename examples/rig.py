@@ -14,11 +14,12 @@ rig = AindBehaviorDynamicRoutingBonsaiRig(
         calibration=rig.visual_stimulation.DisplaysCalibration(
             center=rig.visual_stimulation.DisplayCalibration(
                 intrinsics=rig.visual_stimulation.DisplayIntrinsics(),
-                extrinsics=rig.visual_stimulation.DisplayExtrinsics()
+                extrinsics=rig.visual_stimulation.DisplayExtrinsics(),
             )
         )
-    )
+    ),
 )
+
 
 def main(path_seed: str = "./local/{schema}.json"):
     os.makedirs(os.path.dirname(path_seed), exist_ok=True)

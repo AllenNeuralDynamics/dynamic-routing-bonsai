@@ -60,10 +60,17 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
         cls,
         curriculum_suggestion: Optional[Promise[Any, CurriculumSuggestion]] = None,
     ) -> Callable[
-        [Launcher[AindBehaviorDynamicRoutingBonsaiRig, AindBehaviorSessionModel, AindBehaviorDynamicRoutingBonsaiTaskLogic]], "AindSessionDataMapper"
+        [
+            Launcher[
+                AindBehaviorDynamicRoutingBonsaiRig, AindBehaviorSessionModel, AindBehaviorDynamicRoutingBonsaiTaskLogic
+            ]
+        ],
+        "AindSessionDataMapper",
     ]:
         def _new(
-            launcher: Launcher[AindBehaviorDynamicRoutingBonsaiRig, AindBehaviorSessionModel, AindBehaviorDynamicRoutingBonsaiTaskLogic],
+            launcher: Launcher[
+                AindBehaviorDynamicRoutingBonsaiRig, AindBehaviorSessionModel, AindBehaviorDynamicRoutingBonsaiTaskLogic
+            ],
         ) -> "AindSessionDataMapper":
             new = cls(
                 session_model=launcher.get_session(strict=True),

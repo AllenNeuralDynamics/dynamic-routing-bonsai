@@ -7,8 +7,10 @@ import aind_behavior_services.calibration.water_valve as wvc
 
 from aind_behavior_dynamic_routing_bonsai import __semver__
 
+
 class RigCalibration(BaseModel):
     water_valve: wvc.WaterValveCalibration = Field(..., description="Water valve calibration")
+
 
 class AindBehaviorDynamicRoutingBonsaiRig(rig.AindBehaviorRigModel):
     version: Literal[__semver__] = __semver__

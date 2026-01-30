@@ -16,7 +16,12 @@ sys.path.append(".")
 from examples import rig, session, task_logic  # isort:skip # pylint: disable=wrong-import-position
 from tests import JSON_ROOT  # isort:skip # pylint: disable=wrong-import-position
 
-TModel = TypeVar("TModel", bound=Union[AindBehaviorDynamicRoutingBonsaiRig, AindBehaviorDynamicRoutingBonsaiTaskLogic, AindBehaviorSessionModel])
+TModel = TypeVar(
+    "TModel",
+    bound=Union[
+        AindBehaviorDynamicRoutingBonsaiRig, AindBehaviorDynamicRoutingBonsaiTaskLogic, AindBehaviorSessionModel
+    ],
+)
 
 
 class BonsaiTests(unittest.TestCase):
@@ -28,7 +33,9 @@ class BonsaiTests(unittest.TestCase):
         models_to_test = [
             TestModel(bonsai_property="SessionPath", json_root=JSON_ROOT, model=AindBehaviorSessionModel),
             TestModel(bonsai_property="RigPath", json_root=JSON_ROOT, model=AindBehaviorDynamicRoutingBonsaiRig),
-            TestModel(bonsai_property="TaskLogicPath", json_root=JSON_ROOT, model=AindBehaviorDynamicRoutingBonsaiTaskLogic),
+            TestModel(
+                bonsai_property="TaskLogicPath", json_root=JSON_ROOT, model=AindBehaviorDynamicRoutingBonsaiTaskLogic
+            ),
         ]
 
         workflow_props = {
