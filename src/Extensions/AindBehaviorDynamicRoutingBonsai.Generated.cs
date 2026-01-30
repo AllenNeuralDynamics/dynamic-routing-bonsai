@@ -1962,7 +1962,9 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     
         private bool _nonContingentReward;
     
-        private double _timeout;
+        private double _timeoutDuration;
+    
+        private Stimulus _timeoutStimulus;
     
         public PresentationParameters()
         {
@@ -1976,7 +1978,8 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             _responseWindowDuration = other._responseWindowDuration;
             _rewarded = other._rewarded;
             _nonContingentReward = other._nonContingentReward;
-            _timeout = other._timeout;
+            _timeoutDuration = other._timeoutDuration;
+            _timeoutStimulus = other._timeoutStimulus;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("stimulus_start_time", Required=Newtonsoft.Json.Required.Always)]
@@ -2057,16 +2060,30 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
-        [Newtonsoft.Json.JsonPropertyAttribute("timeout", Required=Newtonsoft.Json.Required.Always)]
-        public double Timeout
+        [Newtonsoft.Json.JsonPropertyAttribute("timeout_duration", Required=Newtonsoft.Json.Required.Always)]
+        public double TimeoutDuration
         {
             get
             {
-                return _timeout;
+                return _timeoutDuration;
             }
             set
             {
-                _timeout = value;
+                _timeoutDuration = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("timeout_stimulus", Required=Newtonsoft.Json.Required.Always)]
+        public Stimulus TimeoutStimulus
+        {
+            get
+            {
+                return _timeoutStimulus;
+            }
+            set
+            {
+                _timeoutStimulus = value;
             }
         }
     
@@ -2088,7 +2105,8 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             stringBuilder.Append("ResponseWindowDuration = " + _responseWindowDuration + ", ");
             stringBuilder.Append("Rewarded = " + _rewarded + ", ");
             stringBuilder.Append("NonContingentReward = " + _nonContingentReward + ", ");
-            stringBuilder.Append("Timeout = " + _timeout);
+            stringBuilder.Append("TimeoutDuration = " + _timeoutDuration + ", ");
+            stringBuilder.Append("TimeoutStimulus = " + _timeoutStimulus);
             return true;
         }
     
@@ -2103,6 +2121,178 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
             stringBuilder.Append("}");
             return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class QuadStimulus : Stimulus
+    {
+    
+        private double _extentX;
+    
+        private double _extentY;
+    
+        private double _positionX;
+    
+        private double _positionY;
+    
+        private double _colorR;
+    
+        private double _colorG;
+    
+        private double _colorB;
+    
+        private double _colorA;
+    
+        public QuadStimulus()
+        {
+        }
+    
+        protected QuadStimulus(QuadStimulus other) : 
+                base(other)
+        {
+            _extentX = other._extentX;
+            _extentY = other._extentY;
+            _positionX = other._positionX;
+            _positionY = other._positionY;
+            _colorR = other._colorR;
+            _colorG = other._colorG;
+            _colorB = other._colorB;
+            _colorA = other._colorA;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("extent_x", Required=Newtonsoft.Json.Required.Always)]
+        public double ExtentX
+        {
+            get
+            {
+                return _extentX;
+            }
+            set
+            {
+                _extentX = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("extent_y", Required=Newtonsoft.Json.Required.Always)]
+        public double ExtentY
+        {
+            get
+            {
+                return _extentY;
+            }
+            set
+            {
+                _extentY = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("position_x", Required=Newtonsoft.Json.Required.Always)]
+        public double PositionX
+        {
+            get
+            {
+                return _positionX;
+            }
+            set
+            {
+                _positionX = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("position_y", Required=Newtonsoft.Json.Required.Always)]
+        public double PositionY
+        {
+            get
+            {
+                return _positionY;
+            }
+            set
+            {
+                _positionY = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("color_r", Required=Newtonsoft.Json.Required.Always)]
+        public double ColorR
+        {
+            get
+            {
+                return _colorR;
+            }
+            set
+            {
+                _colorR = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("color_g", Required=Newtonsoft.Json.Required.Always)]
+        public double ColorG
+        {
+            get
+            {
+                return _colorG;
+            }
+            set
+            {
+                _colorG = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("color_b", Required=Newtonsoft.Json.Required.Always)]
+        public double ColorB
+        {
+            get
+            {
+                return _colorB;
+            }
+            set
+            {
+                _colorB = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("color_a", Required=Newtonsoft.Json.Required.Always)]
+        public double ColorA
+        {
+            get
+            {
+                return _colorA;
+            }
+            set
+            {
+                _colorA = value;
+            }
+        }
+    
+        public System.IObservable<QuadStimulus> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new QuadStimulus(this)));
+        }
+    
+        public System.IObservable<QuadStimulus> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new QuadStimulus(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("ExtentX = " + _extentX + ", ");
+            stringBuilder.Append("ExtentY = " + _extentY + ", ");
+            stringBuilder.Append("PositionX = " + _positionX + ", ");
+            stringBuilder.Append("PositionY = " + _positionY + ", ");
+            stringBuilder.Append("ColorR = " + _colorR + ", ");
+            stringBuilder.Append("ColorG = " + _colorG + ", ");
+            stringBuilder.Append("ColorB = " + _colorB + ", ");
+            stringBuilder.Append("ColorA = " + _colorA);
+            return true;
         }
     }
 
@@ -3124,6 +3314,7 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     [JsonInheritanceAttribute("audio", typeof(AudioStimulus))]
     [JsonInheritanceAttribute("blank", typeof(BlankStimulus))]
     [JsonInheritanceAttribute("grating", typeof(GratingStimulus))]
+    [JsonInheritanceAttribute("quad", typeof(QuadStimulus))]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Stimulus
@@ -3145,6 +3336,51 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
         public System.IObservable<Stimulus> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new Stimulus(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            return false;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "stimulus_type")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class TimeoutStimulus
+    {
+    
+        public TimeoutStimulus()
+        {
+        }
+    
+        protected TimeoutStimulus(TimeoutStimulus other)
+        {
+        }
+    
+        public System.IObservable<TimeoutStimulus> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new TimeoutStimulus(this)));
+        }
+    
+        public System.IObservable<TimeoutStimulus> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new TimeoutStimulus(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
@@ -3323,6 +3559,7 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AudioStimulus>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlankStimulus>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GratingStimulus>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<QuadStimulus>))]
     public partial class MatchStimulus : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     
@@ -3346,6 +3583,45 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             return System.Reactive.Linq.Observable.Create<TResult>(observer =>
             {
                 var sourceObserver = System.Reactive.Observer.Create<Stimulus>(
+                    value =>
+                    {
+                        var match = value as TResult;
+                        if (match != null) observer.OnNext(match);
+                    },
+                    observer.OnError,
+                    observer.OnCompleted);
+                return System.ObservableExtensions.SubscribeSafe(source, sourceObserver);
+            });
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DefaultPropertyAttribute("Type")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
+    public partial class MatchTimeoutStimulus : Bonsai.Expressions.SingleArgumentExpressionBuilder
+    {
+    
+        public Bonsai.Expressions.TypeMapping Type { get; set; }
+
+        public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
+        {
+            var typeMapping = Type;
+            var returnType = typeMapping != null ? typeMapping.GetType().GetGenericArguments()[0] : typeof(TimeoutStimulus);
+            return System.Linq.Expressions.Expression.Call(
+                typeof(MatchTimeoutStimulus),
+                "Process",
+                new System.Type[] { returnType },
+                System.Linq.Enumerable.Single(arguments));
+        }
+
+    
+        private static System.IObservable<TResult> Process<TResult>(System.IObservable<TimeoutStimulus> source)
+            where TResult : TimeoutStimulus
+        {
+            return System.Reactive.Linq.Observable.Create<TResult>(observer =>
+            {
+                var sourceObserver = System.Reactive.Observer.Create<TimeoutStimulus>(
                     value =>
                     {
                         var match = value as TResult;
@@ -3457,6 +3733,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             return Process<PresentationParameters>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<QuadStimulus> source)
+        {
+            return Process<QuadStimulus>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<ScalingParameters> source)
         {
             return Process<ScalingParameters>(source);
@@ -3501,6 +3782,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
         {
             return Process<Stimulus>(source);
         }
+
+        public System.IObservable<string> Process(System.IObservable<TimeoutStimulus> source)
+        {
+            return Process<TimeoutStimulus>(source);
+        }
     }
 
 
@@ -3527,6 +3813,7 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBehavior>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpSoundCard>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PresentationParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<QuadStimulus>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScalingParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Screen>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Trial>))]
@@ -3536,6 +3823,7 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UniformDistributionParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Vector3>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Stimulus>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TimeoutStimulus>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     

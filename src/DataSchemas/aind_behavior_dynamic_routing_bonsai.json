@@ -782,9 +782,35 @@
           "title": "Non Contingent Reward",
           "type": "boolean"
         },
-        "timeout": {
-          "title": "Timeout",
+        "timeout_duration": {
+          "title": "Timeout Duration",
           "type": "number"
+        },
+        "timeout_stimulus": {
+          "discriminator": {
+            "mapping": {
+              "audio": "#/$defs/AudioStimulus",
+              "blank": "#/$defs/BlankStimulus",
+              "grating": "#/$defs/GratingStimulus",
+              "quad": "#/$defs/QuadStimulus"
+            },
+            "propertyName": "stimulus_type"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/AudioStimulus"
+            },
+            {
+              "$ref": "#/$defs/GratingStimulus"
+            },
+            {
+              "$ref": "#/$defs/QuadStimulus"
+            },
+            {
+              "$ref": "#/$defs/BlankStimulus"
+            }
+          ],
+          "title": "Timeout Stimulus"
         }
       },
       "required": [
@@ -794,9 +820,64 @@
         "response_window_duration",
         "rewarded",
         "non_contingent_reward",
-        "timeout"
+        "timeout_duration",
+        "timeout_stimulus"
       ],
       "title": "PresentationParameters",
+      "type": "object"
+    },
+    "QuadStimulus": {
+      "properties": {
+        "stimulus_type": {
+          "const": "quad",
+          "title": "Stimulus Type",
+          "type": "string"
+        },
+        "extent_x": {
+          "title": "Extent X",
+          "type": "number"
+        },
+        "extent_y": {
+          "title": "Extent Y",
+          "type": "number"
+        },
+        "position_x": {
+          "title": "Position X",
+          "type": "number"
+        },
+        "position_y": {
+          "title": "Position Y",
+          "type": "number"
+        },
+        "color_r": {
+          "title": "Color R",
+          "type": "number"
+        },
+        "color_g": {
+          "title": "Color G",
+          "type": "number"
+        },
+        "color_b": {
+          "title": "Color B",
+          "type": "number"
+        },
+        "color_a": {
+          "title": "Color A",
+          "type": "number"
+        }
+      },
+      "required": [
+        "stimulus_type",
+        "extent_x",
+        "extent_y",
+        "position_x",
+        "position_y",
+        "color_r",
+        "color_g",
+        "color_b",
+        "color_a"
+      ],
+      "title": "QuadStimulus",
       "type": "object"
     },
     "ScalingParameters": {
@@ -969,7 +1050,8 @@
             "mapping": {
               "audio": "#/$defs/AudioStimulus",
               "blank": "#/$defs/BlankStimulus",
-              "grating": "#/$defs/GratingStimulus"
+              "grating": "#/$defs/GratingStimulus",
+              "quad": "#/$defs/QuadStimulus"
             },
             "propertyName": "stimulus_type"
           },
@@ -979,6 +1061,9 @@
             },
             {
               "$ref": "#/$defs/GratingStimulus"
+            },
+            {
+              "$ref": "#/$defs/QuadStimulus"
             },
             {
               "$ref": "#/$defs/BlankStimulus"
