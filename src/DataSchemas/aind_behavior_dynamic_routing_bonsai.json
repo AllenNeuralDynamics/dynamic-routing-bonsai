@@ -1,0 +1,1231 @@
+{
+  "$defs": {
+    "AindBehaviorDynamicRoutingBonsaiRig": {
+      "properties": {
+        "aind_behavior_services_pkg_version": {
+          "default": "0.12.5",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
+          "title": "aind_behavior_services package version",
+          "type": "string"
+        },
+        "version": {
+          "const": "0.0.0-rc0",
+          "default": "0.0.0-rc0",
+          "title": "Version",
+          "type": "string"
+        },
+        "computer_name": {
+          "description": "Computer name",
+          "title": "Computer Name",
+          "type": "string"
+        },
+        "rig_name": {
+          "description": "Rig name",
+          "title": "Rig Name",
+          "type": "string"
+        },
+        "harp_behavior": {
+          "$ref": "#/$defs/HarpBehavior",
+          "description": "Harp behavior"
+        },
+        "harp_sound_card": {
+          "$ref": "#/$defs/HarpSoundCard",
+          "description": "Harp sound card"
+        },
+        "screen": {
+          "$ref": "#/$defs/Screen",
+          "default": {
+            "device_type": "Screen",
+            "device_name": "Screen",
+            "additional_settings": null,
+            "calibration": {
+              "center": {
+                "extrinsics": {
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "translation": {
+                    "x": 0.0,
+                    "y": 1.309016,
+                    "z": -13.27
+                  }
+                },
+                "intrinsics": {
+                  "display_height": 15.0,
+                  "display_width": 20.0,
+                  "frame_height": 1080,
+                  "frame_width": 1920
+                }
+              },
+              "left": {
+                "extrinsics": {
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 1.0472,
+                    "z": 0.0
+                  },
+                  "translation": {
+                    "x": -16.6917756,
+                    "y": 1.309016,
+                    "z": -3.575264
+                  }
+                },
+                "intrinsics": {
+                  "display_height": 15.0,
+                  "display_width": 20.0,
+                  "frame_height": 1080,
+                  "frame_width": 1920
+                }
+              },
+              "right": {
+                "extrinsics": {
+                  "rotation": {
+                    "x": 0.0,
+                    "y": -1.0472,
+                    "z": 0.0
+                  },
+                  "translation": {
+                    "x": 16.6917756,
+                    "y": 1.309016,
+                    "z": -3.575264
+                  }
+                },
+                "intrinsics": {
+                  "display_height": 15.0,
+                  "display_width": 20.0,
+                  "frame_height": 1080,
+                  "frame_width": 1920
+                }
+              }
+            },
+            "display_index": 1,
+            "target_render_frequency": 60.0,
+            "target_update_frequency": 120.0,
+            "texture_assets_directory": "Textures",
+            "brightness": 0.0,
+            "contrast": 1.0
+          },
+          "description": "Screen settings"
+        }
+      },
+      "required": [
+        "rig_name",
+        "harp_behavior",
+        "harp_sound_card"
+      ],
+      "title": "AindBehaviorDynamicRoutingBonsaiRig",
+      "type": "object"
+    },
+    "AindBehaviorDynamicRoutingBonsaiTaskLogic": {
+      "additionalProperties": false,
+      "description": "Main task logic model for the dynamic-routing-bonsai task.",
+      "properties": {
+        "name": {
+          "const": "AindBehaviorDynamicRoutingBonsai",
+          "default": "AindBehaviorDynamicRoutingBonsai",
+          "description": "Name of the task logic",
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "default": "",
+          "description": "Description of the task.",
+          "title": "Description",
+          "type": "string"
+        },
+        "task_parameters": {
+          "$ref": "#/$defs/AindBehaviorDynamicRoutingBonsaiTaskParameters",
+          "description": "Parameters of the task logic"
+        },
+        "version": {
+          "const": "0.0.0-rc0",
+          "default": "0.0.0-rc0",
+          "title": "Version",
+          "type": "string"
+        },
+        "stage_name": {
+          "default": null,
+          "description": "Optional stage name the `Task` object instance represents.",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Stage Name"
+        }
+      },
+      "required": [
+        "task_parameters"
+      ],
+      "title": "AindBehaviorDynamicRoutingBonsaiTaskLogic",
+      "type": "object"
+    },
+    "AindBehaviorDynamicRoutingBonsaiTaskParameters": {
+      "additionalProperties": true,
+      "description": "Complete parameter specification for the dynamic-routing-bonsai task.",
+      "properties": {
+        "rng_seed": {
+          "default": null,
+          "description": "Seed of the random number generator",
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Rng Seed"
+        },
+        "aind_behavior_services_pkg_version": {
+          "default": "0.12.5",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
+          "title": "aind_behavior_services package version",
+          "type": "string"
+        },
+        "task_blocks": {
+          "items": {
+            "$ref": "#/$defs/Block"
+          },
+          "title": "Task Blocks",
+          "type": "array"
+        },
+        "inter_trial_interval": {
+          "$ref": "#/$defs/UniformDistribution",
+          "default": {
+            "family": "Uniform",
+            "distribution_parameters": {
+              "family": "Uniform",
+              "max": 3.0,
+              "min": 1.0
+            },
+            "truncation_parameters": null,
+            "scaling_parameters": null
+          }
+        }
+      },
+      "required": [
+        "task_blocks"
+      ],
+      "title": "AindBehaviorDynamicRoutingBonsaiTaskParameters",
+      "type": "object"
+    },
+    "AindBehaviorSessionModel": {
+      "properties": {
+        "aind_behavior_services_pkg_version": {
+          "default": "0.12.5",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
+          "title": "aind_behavior_services package version",
+          "type": "string"
+        },
+        "version": {
+          "const": "0.12.5",
+          "default": "0.12.5",
+          "title": "Version",
+          "type": "string"
+        },
+        "experiment": {
+          "default": null,
+          "description": "Name of the experiment",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Experiment"
+        },
+        "experimenter": {
+          "default": [],
+          "description": "Name of the experimenter",
+          "items": {
+            "type": "string"
+          },
+          "title": "Experimenter",
+          "type": "array"
+        },
+        "date": {
+          "description": "Date of the experiment",
+          "format": "date-time",
+          "title": "Date",
+          "type": "string"
+        },
+        "root_path": {
+          "description": "Root path where data will be logged",
+          "title": "Root Path",
+          "type": "string"
+        },
+        "session_name": {
+          "default": null,
+          "description": "Name of the session. This will be used to create a folder in the root path. If not provided, it will be generated using subject and date.",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Session Name"
+        },
+        "subject": {
+          "description": "Name of the subject",
+          "title": "Subject",
+          "type": "string"
+        },
+        "experiment_version": {
+          "default": "",
+          "deprecated": true,
+          "description": "Version of the experiment",
+          "title": "Experiment Version",
+          "type": "string"
+        },
+        "notes": {
+          "default": null,
+          "description": "Notes about the experiment",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Notes"
+        },
+        "commit_hash": {
+          "default": null,
+          "description": "Commit hash of the repository",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Commit Hash"
+        },
+        "allow_dirty_repo": {
+          "default": false,
+          "description": "Allow running from a dirty repository",
+          "title": "Allow Dirty Repo",
+          "type": "boolean"
+        },
+        "skip_hardware_validation": {
+          "default": false,
+          "description": "Skip hardware validation",
+          "title": "Skip Hardware Validation",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "root_path",
+        "subject"
+      ],
+      "title": "AindBehaviorSessionModel",
+      "type": "object"
+    },
+    "AudioStimulus": {
+      "properties": {
+        "stimulus_type": {
+          "const": "audio",
+          "title": "Stimulus Type",
+          "type": "string"
+        },
+        "frequency": {
+          "title": "Frequency",
+          "type": "number"
+        }
+      },
+      "required": [
+        "stimulus_type",
+        "frequency"
+      ],
+      "title": "AudioStimulus",
+      "type": "object"
+    },
+    "BaseModel": {
+      "properties": {},
+      "title": "BaseModel",
+      "type": "object"
+    },
+    "BlankStimulus": {
+      "properties": {
+        "stimulus_type": {
+          "const": "blank",
+          "title": "Stimulus Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "stimulus_type"
+      ],
+      "title": "BlankStimulus",
+      "type": "object"
+    },
+    "Block": {
+      "properties": {
+        "trial_sets": {
+          "items": {
+            "$ref": "#/$defs/TrialSet"
+          },
+          "title": "Trial Sets",
+          "type": "array"
+        },
+        "maxmimum_block_time": {
+          "title": "Maxmimum Block Time",
+          "type": "number"
+        }
+      },
+      "required": [
+        "trial_sets",
+        "maxmimum_block_time"
+      ],
+      "title": "Block",
+      "type": "object"
+    },
+    "DisplayCalibration": {
+      "properties": {
+        "intrinsics": {
+          "$ref": "#/$defs/DisplayIntrinsics",
+          "default": {
+            "frame_width": 1920,
+            "frame_height": 1080,
+            "display_width": 20.0,
+            "display_height": 15.0
+          },
+          "description": "Intrinsics"
+        },
+        "extrinsics": {
+          "$ref": "#/$defs/DisplayExtrinsics",
+          "default": {
+            "rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "translation": {
+              "x": 0.0,
+              "y": 1.309016,
+              "z": -13.27
+            }
+          },
+          "description": "Extrinsics"
+        }
+      },
+      "title": "DisplayCalibration",
+      "type": "object"
+    },
+    "DisplayExtrinsics": {
+      "properties": {
+        "rotation": {
+          "$ref": "#/$defs/Vector3",
+          "default": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "description": "Rotation vector (radians)"
+        },
+        "translation": {
+          "$ref": "#/$defs/Vector3",
+          "default": {
+            "x": 0.0,
+            "y": 1.309016,
+            "z": -13.27
+          },
+          "description": "Translation (in cm)"
+        }
+      },
+      "title": "DisplayExtrinsics",
+      "type": "object"
+    },
+    "DisplayIntrinsics": {
+      "properties": {
+        "frame_width": {
+          "default": 1920,
+          "description": "Frame width (px)",
+          "minimum": 0,
+          "title": "Frame Width",
+          "type": "integer"
+        },
+        "frame_height": {
+          "default": 1080,
+          "description": "Frame height (px)",
+          "minimum": 0,
+          "title": "Frame Height",
+          "type": "integer"
+        },
+        "display_width": {
+          "default": 20,
+          "description": "Display width (cm)",
+          "minimum": 0,
+          "title": "Display Width",
+          "type": "number"
+        },
+        "display_height": {
+          "default": 15,
+          "description": "Display width (cm)",
+          "minimum": 0,
+          "title": "Display Height",
+          "type": "number"
+        }
+      },
+      "title": "DisplayIntrinsics",
+      "type": "object"
+    },
+    "DisplaysCalibration": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/DisplayCalibration",
+          "default": {
+            "intrinsics": {
+              "display_height": 15.0,
+              "display_width": 20.0,
+              "frame_height": 1080,
+              "frame_width": 1920
+            },
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": 1.0472,
+                "z": 0.0
+              },
+              "translation": {
+                "x": -16.6917756,
+                "y": 1.309016,
+                "z": -3.575264
+              }
+            }
+          },
+          "description": "Left display calibration"
+        },
+        "center": {
+          "$ref": "#/$defs/DisplayCalibration",
+          "default": {
+            "intrinsics": {
+              "display_height": 15.0,
+              "display_width": 20.0,
+              "frame_height": 1080,
+              "frame_width": 1920
+            },
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "translation": {
+                "x": 0.0,
+                "y": 1.309016,
+                "z": -13.27
+              }
+            }
+          },
+          "description": "Center display calibration"
+        },
+        "right": {
+          "$ref": "#/$defs/DisplayCalibration",
+          "default": {
+            "intrinsics": {
+              "display_height": 15.0,
+              "display_width": 20.0,
+              "frame_height": 1080,
+              "frame_width": 1920
+            },
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": -1.0472,
+                "z": 0.0
+              },
+              "translation": {
+                "x": 16.6917756,
+                "y": 1.309016,
+                "z": -3.575264
+              }
+            }
+          },
+          "description": "Right display calibration"
+        }
+      },
+      "title": "DisplaysCalibration",
+      "type": "object"
+    },
+    "GratingStimulus": {
+      "properties": {
+        "stimulus_type": {
+          "const": "grating",
+          "title": "Stimulus Type",
+          "type": "string"
+        },
+        "angle": {
+          "title": "Angle",
+          "type": "number"
+        },
+        "aperture": {
+          "title": "Aperture",
+          "type": "number"
+        },
+        "extent_x": {
+          "title": "Extent X",
+          "type": "number"
+        },
+        "extent_y": {
+          "title": "Extent Y",
+          "type": "number"
+        },
+        "spatial_frequency": {
+          "title": "Spatial Frequency",
+          "type": "number"
+        },
+        "temporal_frequency": {
+          "title": "Temporal Frequency",
+          "type": "number"
+        }
+      },
+      "required": [
+        "stimulus_type",
+        "angle",
+        "aperture",
+        "extent_x",
+        "extent_y",
+        "spatial_frequency",
+        "temporal_frequency"
+      ],
+      "title": "GratingStimulus",
+      "type": "object"
+    },
+    "HarpBehavior": {
+      "properties": {
+        "device_type": {
+          "const": "Behavior",
+          "default": "Behavior",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "device_name": {
+          "default": null,
+          "description": "Device name",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device Name"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "who_am_i": {
+          "const": 1216,
+          "default": 1216,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "HarpBehavior",
+      "type": "object"
+    },
+    "HarpSoundCard": {
+      "properties": {
+        "device_type": {
+          "const": "SoundCard",
+          "default": "SoundCard",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "device_name": {
+          "default": null,
+          "description": "Device name",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device Name"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "who_am_i": {
+          "const": 1280,
+          "default": 1280,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "HarpSoundCard",
+      "type": "object"
+    },
+    "PresentationParameters": {
+      "properties": {
+        "stimulus_start_time": {
+          "title": "Stimulus Start Time",
+          "type": "number"
+        },
+        "stimulus_duration": {
+          "title": "Stimulus Duration",
+          "type": "number"
+        },
+        "response_window_start_time": {
+          "title": "Response Window Start Time",
+          "type": "number"
+        },
+        "response_window_duration": {
+          "title": "Response Window Duration",
+          "type": "number"
+        },
+        "rewarded": {
+          "title": "Rewarded",
+          "type": "boolean"
+        },
+        "non_contingent_reward": {
+          "title": "Non Contingent Reward",
+          "type": "boolean"
+        },
+        "timeout_duration": {
+          "title": "Timeout Duration",
+          "type": "number"
+        },
+        "timeout_stimulus": {
+          "discriminator": {
+            "mapping": {
+              "audio": "#/$defs/AudioStimulus",
+              "blank": "#/$defs/BlankStimulus",
+              "grating": "#/$defs/GratingStimulus",
+              "quad": "#/$defs/QuadStimulus"
+            },
+            "propertyName": "stimulus_type"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/AudioStimulus"
+            },
+            {
+              "$ref": "#/$defs/GratingStimulus"
+            },
+            {
+              "$ref": "#/$defs/QuadStimulus"
+            },
+            {
+              "$ref": "#/$defs/BlankStimulus"
+            }
+          ],
+          "title": "Timeout Stimulus"
+        }
+      },
+      "required": [
+        "stimulus_start_time",
+        "stimulus_duration",
+        "response_window_start_time",
+        "response_window_duration",
+        "rewarded",
+        "non_contingent_reward",
+        "timeout_duration",
+        "timeout_stimulus"
+      ],
+      "title": "PresentationParameters",
+      "type": "object"
+    },
+    "QuadStimulus": {
+      "properties": {
+        "stimulus_type": {
+          "const": "quad",
+          "title": "Stimulus Type",
+          "type": "string"
+        },
+        "extent_x": {
+          "title": "Extent X",
+          "type": "number"
+        },
+        "extent_y": {
+          "title": "Extent Y",
+          "type": "number"
+        },
+        "position_x": {
+          "title": "Position X",
+          "type": "number"
+        },
+        "position_y": {
+          "title": "Position Y",
+          "type": "number"
+        },
+        "color_r": {
+          "title": "Color R",
+          "type": "number"
+        },
+        "color_g": {
+          "title": "Color G",
+          "type": "number"
+        },
+        "color_b": {
+          "title": "Color B",
+          "type": "number"
+        },
+        "color_a": {
+          "title": "Color A",
+          "type": "number"
+        }
+      },
+      "required": [
+        "stimulus_type",
+        "extent_x",
+        "extent_y",
+        "position_x",
+        "position_y",
+        "color_r",
+        "color_g",
+        "color_b",
+        "color_a"
+      ],
+      "title": "QuadStimulus",
+      "type": "object"
+    },
+    "ScalingParameters": {
+      "description": "Parameters for scaling and offsetting sampled distribution values.\nScaling is applied as (value * scale + offset).\n\nApplies linear transformation: result = (value * scale) + offset.",
+      "properties": {
+        "scale": {
+          "default": 1,
+          "description": "Scaling factor to apply on the sampled distribution",
+          "title": "Scale",
+          "type": "number"
+        },
+        "offset": {
+          "default": 0,
+          "description": "Offset factor to apply on the sampled distribution",
+          "title": "Offset",
+          "type": "number"
+        }
+      },
+      "title": "ScalingParameters",
+      "type": "object"
+    },
+    "Screen": {
+      "properties": {
+        "device_type": {
+          "const": "Screen",
+          "default": "Screen",
+          "description": "Device type",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "device_name": {
+          "default": null,
+          "description": "Device name",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device Name"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "$ref": "#/$defs/DisplaysCalibration",
+          "default": {
+            "left": {
+              "extrinsics": {
+                "rotation": {
+                  "x": 0.0,
+                  "y": 1.0472,
+                  "z": 0.0
+                },
+                "translation": {
+                  "x": -16.6917756,
+                  "y": 1.309016,
+                  "z": -3.575264
+                }
+              },
+              "intrinsics": {
+                "display_height": 15.0,
+                "display_width": 20.0,
+                "frame_height": 1080,
+                "frame_width": 1920
+              }
+            },
+            "center": {
+              "extrinsics": {
+                "rotation": {
+                  "x": 0.0,
+                  "y": 0.0,
+                  "z": 0.0
+                },
+                "translation": {
+                  "x": 0.0,
+                  "y": 1.309016,
+                  "z": -13.27
+                }
+              },
+              "intrinsics": {
+                "display_height": 15.0,
+                "display_width": 20.0,
+                "frame_height": 1080,
+                "frame_width": 1920
+              }
+            },
+            "right": {
+              "extrinsics": {
+                "rotation": {
+                  "x": 0.0,
+                  "y": -1.0472,
+                  "z": 0.0
+                },
+                "translation": {
+                  "x": 16.6917756,
+                  "y": 1.309016,
+                  "z": -3.575264
+                }
+              },
+              "intrinsics": {
+                "display_height": 15.0,
+                "display_width": 20.0,
+                "frame_height": 1080,
+                "frame_width": 1920
+              }
+            }
+          },
+          "description": "Screen calibration"
+        },
+        "display_index": {
+          "default": 1,
+          "description": "Display index",
+          "title": "Display Index",
+          "type": "integer"
+        },
+        "target_render_frequency": {
+          "default": 60,
+          "description": "Target render frequency",
+          "title": "Target Render Frequency",
+          "type": "number"
+        },
+        "target_update_frequency": {
+          "default": 120,
+          "description": "Target update frequency",
+          "title": "Target Update Frequency",
+          "type": "number"
+        },
+        "texture_assets_directory": {
+          "default": "Textures",
+          "description": "Calibration directory",
+          "title": "Texture Assets Directory",
+          "type": "string"
+        },
+        "brightness": {
+          "default": 0,
+          "description": "Brightness",
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Brightness",
+          "type": "number"
+        },
+        "contrast": {
+          "default": 1,
+          "description": "Contrast",
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Contrast",
+          "type": "number"
+        }
+      },
+      "title": "Screen",
+      "type": "object"
+    },
+    "Trial": {
+      "properties": {
+        "stimulus": {
+          "discriminator": {
+            "mapping": {
+              "audio": "#/$defs/AudioStimulus",
+              "blank": "#/$defs/BlankStimulus",
+              "grating": "#/$defs/GratingStimulus",
+              "quad": "#/$defs/QuadStimulus"
+            },
+            "propertyName": "stimulus_type"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/AudioStimulus"
+            },
+            {
+              "$ref": "#/$defs/GratingStimulus"
+            },
+            {
+              "$ref": "#/$defs/QuadStimulus"
+            },
+            {
+              "$ref": "#/$defs/BlankStimulus"
+            }
+          ],
+          "title": "Stimulus"
+        },
+        "presentation_parameters": {
+          "$ref": "#/$defs/PresentationParameters"
+        }
+      },
+      "required": [
+        "stimulus",
+        "presentation_parameters"
+      ],
+      "title": "Trial",
+      "type": "object"
+    },
+    "TrialSet": {
+      "properties": {
+        "available_trials": {
+          "items": {
+            "$ref": "#/$defs/Trial"
+          },
+          "title": "Available Trials",
+          "type": "array"
+        },
+        "repeats": {
+          "title": "Repeats",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "available_trials",
+        "repeats"
+      ],
+      "title": "TrialSet",
+      "type": "object"
+    },
+    "TruncationParameters": {
+      "description": "Parameters for truncating a distribution to a specified range. Truncation should\nbe applied after sampling and scaling.\n\nThe truncation_mode determines how out-of-bounds values are handled:\n- \"exclude\": Resample until a value within [min, max] is obtained.\nIf after a certain number of attempts no valid value is found, it\nwill use the average of sampled values and pick the closest bound.\n- \"clamp\": Clamp values to the nearest bound within [min, max].\nUsed to constrain sampled values within minimum and maximum bounds.",
+      "properties": {
+        "truncation_mode": {
+          "default": "exclude",
+          "description": "Mode of truncation to apply",
+          "enum": [
+            "exclude",
+            "clamp"
+          ],
+          "title": "Truncation Mode",
+          "type": "string"
+        },
+        "min": {
+          "default": 0,
+          "description": "Minimum value of the sampled distribution",
+          "title": "Min",
+          "type": "number"
+        },
+        "max": {
+          "default": 0,
+          "description": "Maximum value of the sampled distribution",
+          "title": "Max",
+          "type": "number"
+        }
+      },
+      "title": "TruncationParameters",
+      "type": "object"
+    },
+    "UniformDistribution": {
+      "description": "A uniform probability distribution.\n\nAll values between min and max have equal probability of being sampled.",
+      "properties": {
+        "family": {
+          "const": "Uniform",
+          "default": "Uniform",
+          "title": "Family",
+          "type": "string"
+        },
+        "distribution_parameters": {
+          "$ref": "#/$defs/UniformDistributionParameters",
+          "default": {
+            "family": "Uniform",
+            "min": 0.0,
+            "max": 0.0
+          },
+          "description": "Parameters of the distribution"
+        },
+        "truncation_parameters": {
+          "default": null,
+          "description": "Truncation parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/TruncationParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scaling_parameters": {
+          "default": null,
+          "description": "Scaling parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ScalingParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "UniformDistribution",
+      "type": "object"
+    },
+    "UniformDistributionParameters": {
+      "description": "Parameters for a uniform distribution.\n\nDefined by minimum and maximum bounds of the distribution.",
+      "properties": {
+        "family": {
+          "const": "Uniform",
+          "default": "Uniform",
+          "title": "Family",
+          "type": "string"
+        },
+        "min": {
+          "default": 0,
+          "description": "Minimum value of the distribution",
+          "title": "Min",
+          "type": "number"
+        },
+        "max": {
+          "default": 0,
+          "description": "Maximum value of the distribution",
+          "title": "Max",
+          "type": "number"
+        }
+      },
+      "title": "UniformDistributionParameters",
+      "type": "object"
+    },
+    "Vector3": {
+      "properties": {
+        "x": {
+          "default": 0,
+          "description": "X coordinate of the point",
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "default": 0,
+          "description": "Y coordinate of the point",
+          "title": "Y",
+          "type": "number"
+        },
+        "z": {
+          "default": 0,
+          "description": "Z coordinate of the point",
+          "title": "Z",
+          "type": "number"
+        }
+      },
+      "title": "Vector3",
+      "type": "object"
+    }
+  }
+}

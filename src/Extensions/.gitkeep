@@ -1,0 +1,3 @@
+# This directory contains Bonsai extension files (.bonsai workflows and .cs source files)
+# Add your custom Bonsai workflows and C# extensions here.
+# These files are used by the Bonsai visual programming environment.

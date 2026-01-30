@@ -1,0 +1,3 @@
+# This directory contains JSON schema files generated from Python models
+# Run the regenerate command to generate these files:
+#   dynamic-routing-bonsai regenerate
