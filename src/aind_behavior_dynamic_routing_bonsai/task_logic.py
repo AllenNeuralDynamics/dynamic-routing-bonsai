@@ -1,9 +1,9 @@
 import logging
-from typing import Literal, List, Annotated, Union
+from typing import Annotated, List, Literal, Union
 
 import aind_behavior_services.task_logic.distributions as distributions
 from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel, TaskParameters
-from pydantic import Field, BaseModel
+from pydantic import BaseModel, Field
 
 from aind_behavior_dynamic_routing_bonsai import (
     __semver__,

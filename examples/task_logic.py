@@ -1,19 +1,17 @@
 import os
 
-import aind_behavior_services.task_logic.distributions as distributions
 from aind_behavior_curriculum import Stage, TrainerState
 
 from aind_behavior_dynamic_routing_bonsai.task_logic import (
     AindBehaviorDynamicRoutingBonsaiTaskLogic,
     AindBehaviorDynamicRoutingBonsaiTaskParameters,
-    Block,
-    TrialSet,
-    Trial,
-    PresentationParameters,
-    BlankStimulus,
     AudioStimulus,
+    Block,
     GratingStimulus,
+    PresentationParameters,
     QuadStimulus,
+    Trial,
+    TrialSet,
 )
 
 grating1 = GratingStimulus(

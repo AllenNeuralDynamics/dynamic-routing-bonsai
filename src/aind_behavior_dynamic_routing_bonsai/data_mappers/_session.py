@@ -8,14 +8,12 @@ import git
 import pydantic
 from aind_behavior_services.session import AindBehaviorSessionModel
 from aind_data_schema.core import acquisition
-
 from clabe.apps import CurriculumSuggestion
 from clabe.data_mapper import aind_data_schema as ads
 from clabe.launcher import Launcher, Promise
 
 from aind_behavior_dynamic_routing_bonsai.rig import AindBehaviorDynamicRoutingBonsaiRig
 from aind_behavior_dynamic_routing_bonsai.task_logic import AindBehaviorDynamicRoutingBonsaiTaskLogic
-
 
 logger = logging.getLogger(__name__)
 
