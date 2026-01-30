@@ -143,7 +143,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="num:CreateRandom">
-                <num:Seed>3</num:Seed>
+                <num:Seed>4</num:Seed>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -165,7 +165,7 @@
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateRootLoggingPath.bonsai">
               <RootFolder>C:/Users/erski/source/repos/AllenNeuralDynamics/dynamic-routing-bonsai/temp_data</RootFolder>
-              <Subject />
+              <Subject>Plimbo</Subject>
               <DateTimeOffset>0001-01-01T00:00:00.0000000+00:00</DateTimeOffset>
               <SubjectName>LoggingRootPath</SubjectName>
             </Expression>
@@ -666,7 +666,7 @@ Item3 as Right)</scr:Expression>
                           <SpatialFrequency>10</SpatialFrequency>
                           <TemporalFrequency>2</TemporalFrequency>
                           <Phase>0</Phase>
-                          <Angle>90</Angle>
+                          <Angle>0</Angle>
                           <SquareWave>false</SquareWave>
                           <Contrast>1</Contrast>
                           <DutyCycle xsi:nil="true" />
@@ -1201,6 +1201,96 @@ Item3 as Right)</scr:Expression>
               <LoggerName>SoftwareEvents</LoggerName>
               <SubjectName>LoggingRootPath</SubjectName>
               <Modality>Behavior</Modality>
+            </Expression>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>ConfigSchemaLogging</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>SubjectSchema</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p1:SerializeToJson">
+                      <p1:Formatting>None</p1:Formatting>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogDataSchema.bonsai">
+                    <SubjectName>LoggingRootPath</SubjectName>
+                    <Modality>Behavior</Modality>
+                    <DeviceName>Config</DeviceName>
+                    <LogName>session_output</LogName>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>TaskLogicSchema</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p1:SerializeToJson">
+                      <p1:Formatting>None</p1:Formatting>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogDataSchema.bonsai">
+                    <SubjectName>LoggingRootPath</SubjectName>
+                    <Modality>Behavior</Modality>
+                    <DeviceName>Config</DeviceName>
+                    <LogName>tasklogic_output</LogName>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>RigSchema</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p1:SerializeToJson">
+                      <p1:Formatting>None</p1:Formatting>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogDataSchema.bonsai">
+                    <SubjectName>LoggingRootPath</SubjectName>
+                    <Modality>Behavior</Modality>
+                    <DeviceName>Config</DeviceName>
+                    <LogName>rig_output</LogName>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>RawRigSchema</Name>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogAllText.bonsai">
+                    <SubjectName>LoggingRootPath</SubjectName>
+                    <Modality>Behavior</Modality>
+                    <DeviceName>Config</DeviceName>
+                    <LogName>rig_input</LogName>
+                    <Extension>json</Extension>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>RawSessionSchema</Name>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogAllText.bonsai">
+                    <SubjectName>LoggingRootPath</SubjectName>
+                    <Modality>Behavior</Modality>
+                    <DeviceName>Config</DeviceName>
+                    <LogName>session_input</LogName>
+                    <Extension>json</Extension>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>RawTaskLogicSchema</Name>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogAllText.bonsai">
+                    <SubjectName>LoggingRootPath</SubjectName>
+                    <Modality>Behavior</Modality>
+                    <DeviceName>Config</DeviceName>
+                    <LogName>tasklogic_input</LogName>
+                    <Extension>json</Extension>
+                  </Expression>
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source1" />
+                </Edges>
+              </Workflow>
             </Expression>
           </Nodes>
           <Edges>
@@ -1841,7 +1931,7 @@ Item3 as Right)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Delay">
-                            <rx:DueTime>PT4.5S</rx:DueTime>
+                            <rx:DueTime>PT0S</rx:DueTime>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="rx:Condition">
@@ -1924,7 +2014,7 @@ Item3 as Right)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Delay">
-                            <rx:DueTime>PT2.862S</rx:DueTime>
+                            <rx:DueTime>PT1.777S</rx:DueTime>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
