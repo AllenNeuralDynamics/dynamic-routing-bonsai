@@ -143,7 +143,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="num:CreateRandom">
-                <num:Seed>6</num:Seed>
+                <num:Seed>7</num:Seed>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -841,7 +841,7 @@ Item3 as Right)</scr:Expression>
                           <SpatialFrequency>10</SpatialFrequency>
                           <TemporalFrequency>2</TemporalFrequency>
                           <Phase>0</Phase>
-                          <Angle>90</Angle>
+                          <Angle>0</Angle>
                           <SquareWave>false</SquareWave>
                           <Contrast>1</Contrast>
                           <DutyCycle xsi:nil="true" />
@@ -1670,6 +1670,33 @@ Item3 as Right)</scr:Expression>
                                         </Edges>
                                       </Workflow>
                                     </Expression>
+                                    <Expression xsi:type="rx:Condition">
+                                      <Name>Hit</Name>
+                                      <Workflow>
+                                        <Nodes>
+                                          <Expression xsi:type="WorkflowInput">
+                                            <Name>Source1</Name>
+                                          </Expression>
+                                          <Expression xsi:type="MemberSelector">
+                                            <Selector>Item1</Selector>
+                                          </Expression>
+                                          <Expression xsi:type="Equal">
+                                            <Operand xsi:type="StringProperty">
+                                              <Value>Hit</Value>
+                                            </Operand>
+                                          </Expression>
+                                          <Expression xsi:type="WorkflowOutput" />
+                                        </Nodes>
+                                        <Edges>
+                                          <Edge From="0" To="1" Label="Source1" />
+                                          <Edge From="1" To="2" Label="Source1" />
+                                          <Edge From="2" To="3" Label="Source1" />
+                                        </Edges>
+                                      </Workflow>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="rx:Merge" />
+                                    </Expression>
                                     <Expression xsi:type="MemberSelector">
                                       <Selector>Item1</Selector>
                                     </Expression>
@@ -1736,15 +1763,18 @@ Item3 as Right)</scr:Expression>
                                     <Edge From="25" To="27" Label="Source1" />
                                     <Edge From="26" To="27" Label="Source2" />
                                     <Edge From="27" To="28" Label="Source1" />
-                                    <Edge From="27" To="32" Label="Source1" />
+                                    <Edge From="27" To="34" Label="Source1" />
                                     <Edge From="28" To="29" Label="Source1" />
+                                    <Edge From="28" To="31" Label="Source1" />
                                     <Edge From="29" To="30" Label="Source1" />
-                                    <Edge From="30" To="31" Label="Source1" />
-                                    <Edge From="31" To="34" Label="Source1" />
+                                    <Edge From="30" To="32" Label="Source1" />
+                                    <Edge From="31" To="32" Label="Source2" />
                                     <Edge From="32" To="33" Label="Source1" />
-                                    <Edge From="33" To="34" Label="Source2" />
+                                    <Edge From="33" To="36" Label="Source1" />
                                     <Edge From="34" To="35" Label="Source1" />
-                                    <Edge From="35" To="36" Label="Source1" />
+                                    <Edge From="35" To="36" Label="Source2" />
+                                    <Edge From="36" To="37" Label="Source1" />
+                                    <Edge From="37" To="38" Label="Source1" />
                                   </Edges>
                                 </Workflow>
                               </Expression>
@@ -1812,7 +1842,7 @@ Item3 as Right)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Delay">
-                            <rx:DueTime>PT4.5S</rx:DueTime>
+                            <rx:DueTime>PT0S</rx:DueTime>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="rx:Condition">
@@ -1895,7 +1925,7 @@ Item3 as Right)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Delay">
-                            <rx:DueTime>PT1.398S</rx:DueTime>
+                            <rx:DueTime>PT1.024S</rx:DueTime>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
