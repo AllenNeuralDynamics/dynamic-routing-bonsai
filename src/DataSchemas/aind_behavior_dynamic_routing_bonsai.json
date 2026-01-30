@@ -380,14 +380,14 @@
           "title": "Trial Sets",
           "type": "array"
         },
-        "maxmimum_block_time": {
-          "title": "Maxmimum Block Time",
+        "maximum_block_time": {
+          "title": "Maximum Block Time",
           "type": "number"
         }
       },
       "required": [
         "trial_sets",
-        "maxmimum_block_time"
+        "maximum_block_time"
       ],
       "title": "Block",
       "type": "object"

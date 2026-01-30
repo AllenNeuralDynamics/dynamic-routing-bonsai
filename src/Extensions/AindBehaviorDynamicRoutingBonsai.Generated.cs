@@ -935,7 +935,7 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     
         private System.Collections.Generic.List<TrialSet> _trialSets;
     
-        private double _maxmimumBlockTime;
+        private double _maximumBlockTime;
     
         public Block()
         {
@@ -945,7 +945,7 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
         protected Block(Block other)
         {
             _trialSets = other._trialSets;
-            _maxmimumBlockTime = other._maxmimumBlockTime;
+            _maximumBlockTime = other._maximumBlockTime;
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -962,16 +962,16 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
-        [Newtonsoft.Json.JsonPropertyAttribute("maxmimum_block_time", Required=Newtonsoft.Json.Required.Always)]
-        public double MaxmimumBlockTime
+        [Newtonsoft.Json.JsonPropertyAttribute("maximum_block_time", Required=Newtonsoft.Json.Required.Always)]
+        public double MaximumBlockTime
         {
             get
             {
-                return _maxmimumBlockTime;
+                return _maximumBlockTime;
             }
             set
             {
-                _maxmimumBlockTime = value;
+                _maximumBlockTime = value;
             }
         }
     
@@ -988,7 +988,7 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("TrialSets = " + _trialSets + ", ");
-            stringBuilder.Append("MaxmimumBlockTime = " + _maxmimumBlockTime);
+            stringBuilder.Append("MaximumBlockTime = " + _maximumBlockTime);
             return true;
         }
     

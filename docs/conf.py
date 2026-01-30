@@ -86,7 +86,9 @@ def export_model_diagram(model: BaseModel, root: str = _static_path) -> None:
     diagram.draw(f"{root}/{model.__name__}.svg")
 
 
-export_model_diagram(aind_behavior_dynamic_routing_bonsai.task_logic.AindBehaviorDynamicRoutingBonsaiTaskLogic, _static_path)
+export_model_diagram(
+    aind_behavior_dynamic_routing_bonsai.task_logic.AindBehaviorDynamicRoutingBonsaiTaskLogic, _static_path
+)
 
 # -- Dataset rendering
 

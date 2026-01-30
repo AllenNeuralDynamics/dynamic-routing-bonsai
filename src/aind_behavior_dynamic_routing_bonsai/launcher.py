@@ -37,7 +37,9 @@ def make_launcher(settings: LauncherCliArgs) -> Launcher:
     bonsai_app = AindBehaviorServicesBonsaiApp(BonsaiAppSettings(workflow=Path(r"./src/main.bonsai")))
     trainer = CurriculumApp(settings=CurriculumSettings())
     watchdog_settings = WatchdogSettings()  # type: ignore[call-arg]
-    picker = DefaultBehaviorPicker[AindBehaviorDynamicRoutingBonsaiRig, AindBehaviorSessionModel, AindBehaviorDynamicRoutingBonsaiTaskLogic](
+    picker = DefaultBehaviorPicker[
+        AindBehaviorDynamicRoutingBonsaiRig, AindBehaviorSessionModel, AindBehaviorDynamicRoutingBonsaiTaskLogic
+    ](
         settings=DefaultBehaviorPickerSettings()  # type: ignore[call-arg]
     )
     launcher = Launcher(

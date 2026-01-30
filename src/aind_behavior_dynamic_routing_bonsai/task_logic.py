@@ -1,9 +1,9 @@
 import logging
-from typing import Literal, List, Annotated, Union
+from typing import Annotated, List, Literal, Union
 
 import aind_behavior_services.task_logic.distributions as distributions
 from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel, TaskParameters
-from pydantic import Field, BaseModel
+from pydantic import BaseModel, Field
 
 from aind_behavior_dynamic_routing_bonsai import (
     __semver__,
@@ -13,13 +13,16 @@ logger = logging.getLogger(__name__)
 
 # ==================== MAIN TASK LOGIC CLASSES ====================
 
+
 class StimulusBase(BaseModel):
     stimulus_type: str
-    
+
+
 class AudioStimulus(StimulusBase):
     stimulus_type: Literal["audio"]
     frequency: float
-    
+
+
 class GratingStimulus(StimulusBase):
     stimulus_type: Literal["grating"]
     angle: float
@@ -28,6 +31,7 @@ class GratingStimulus(StimulusBase):
     extent_y: float
     spatial_frequency: float
     temporal_frequency: float
+
 
 class QuadStimulus(StimulusBase):
     stimulus_type: Literal["quad"]
@@ -39,9 +43,11 @@ class QuadStimulus(StimulusBase):
     color_g: float
     color_b: float
     color_a: float
-    
+
+
 class BlankStimulus(StimulusBase):
     stimulus_type: Literal["blank"]
+
 
 class PresentationParameters(BaseModel):
     stimulus_start_time: float
@@ -51,28 +57,40 @@ class PresentationParameters(BaseModel):
     rewarded: bool
     non_contingent_reward: bool
     timeout_duration: float
-    timeout_stimulus: Annotated[Union[AudioStimulus, GratingStimulus, QuadStimulus, BlankStimulus], Field(discriminator="stimulus_type")]
-    
+    timeout_stimulus: Annotated[
+        Union[AudioStimulus, GratingStimulus, QuadStimulus, BlankStimulus], Field(discriminator="stimulus_type")
+    ]
+
+
 class Trial(BaseModel):
-    stimulus: Annotated[Union[AudioStimulus, GratingStimulus, QuadStimulus, BlankStimulus], Field(discriminator="stimulus_type")]
+    stimulus: Annotated[
+        Union[AudioStimulus, GratingStimulus, QuadStimulus, BlankStimulus], Field(discriminator="stimulus_type")
+    ]
     presentation_parameters: PresentationParameters
+
 
 class TrialSet(BaseModel):
     available_trials: List[Trial]
     repeats: int
- 
+
+
 class Block(BaseModel):
     trial_sets: List[TrialSet]
-    maxmimum_block_time: float
+    maximum_block_time: float
+
 
 class AindBehaviorDynamicRoutingBonsaiTaskParameters(TaskParameters):
     """
     Complete parameter specification for the dynamic-routing-bonsai task.
     """
+
     task_blocks: List[Block]
     inter_trial_interval: distributions.UniformDistribution = Field(
-        default=distributions.UniformDistribution(distribution_parameters=distributions.UniformDistributionParameters(min=1, max=3))
+        default=distributions.UniformDistribution(
+            distribution_parameters=distributions.UniformDistributionParameters(min=1, max=3)
+        )
     )
+
 
 class AindBehaviorDynamicRoutingBonsaiTaskLogic(AindBehaviorTaskLogicModel):
     """
@@ -80,5 +98,7 @@ class AindBehaviorDynamicRoutingBonsaiTaskLogic(AindBehaviorTaskLogicModel):
     """
 
     version: Literal[__semver__] = __semver__
-    name: Literal["AindBehaviorDynamicRoutingBonsai"] = Field(default="AindBehaviorDynamicRoutingBonsai", description="Name of the task logic", frozen=True)
+    name: Literal["AindBehaviorDynamicRoutingBonsai"] = Field(
+        default="AindBehaviorDynamicRoutingBonsai", description="Name of the task logic", frozen=True
+    )
     task_parameters: AindBehaviorDynamicRoutingBonsaiTaskParameters = Field(description="Parameters of the task logic")
