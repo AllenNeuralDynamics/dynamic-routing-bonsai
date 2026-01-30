@@ -76,7 +76,7 @@ class TrialSet(BaseModel):
 
 class Block(BaseModel):
     trial_sets: List[TrialSet]
-    maxmimum_block_time: float
+    maximum_block_time: float
 
 
 class AindBehaviorDynamicRoutingBonsaiTaskParameters(TaskParameters):
