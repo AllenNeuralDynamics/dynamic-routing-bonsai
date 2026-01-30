@@ -143,7 +143,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="num:CreateRandom">
-                <num:Seed>9</num:Seed>
+                <num:Seed>1</num:Seed>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -587,7 +587,7 @@ Item3 as Right)</scr:Expression>
                           <SpatialFrequency>10</SpatialFrequency>
                           <TemporalFrequency>2</TemporalFrequency>
                           <Phase>0</Phase>
-                          <Angle>90</Angle>
+                          <Angle>0</Angle>
                           <SquareWave>false</SquareWave>
                           <Contrast>1</Contrast>
                           <DutyCycle xsi:nil="true" />
