@@ -30,6 +30,17 @@ class GratingStimulus(StimulusBase):
     extent_y: float
     spatial_frequency: float
     temporal_frequency: float
+
+class QuadStimulus(StimulusBase):
+    stimulus_type: Literal["quad"]
+    extent_x: float
+    extent_y: float
+    position_x: float
+    position_y: float
+    color_r: float
+    color_g: float
+    color_b: float
+    color_a: float
     
 class BlankStimulus(StimulusBase):
     stimulus_type: Literal["blank"]
@@ -41,10 +52,11 @@ class PresentationParameters(BaseModel):
     response_window_duration: float
     rewarded: bool
     non_contingent_reward: bool
-    timeout: float
+    timeout_duration: float
+    timeout_stimulus: Annotated[Union[AudioStimulus, GratingStimulus, QuadStimulus, BlankStimulus], Field(discriminator="stimulus_type")]
     
 class Trial(BaseModel):
-    stimulus: Annotated[Union[AudioStimulus, GratingStimulus, BlankStimulus], Field(discriminator="stimulus_type")]
+    stimulus: Annotated[Union[AudioStimulus, GratingStimulus, QuadStimulus, BlankStimulus], Field(discriminator="stimulus_type")]
     presentation_parameters: PresentationParameters
 
 class TrialSet(BaseModel):
