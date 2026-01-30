@@ -16,7 +16,6 @@ NAMESPACE_PREFIX = "AindBehaviorDynamicRoutingBonsaiDataSchema"
 def main():
     models = [
         aind_behavior_dynamic_routing_bonsai.task_logic.AindBehaviorDynamicRoutingBonsaiTaskLogic,
-        aind_behavior_dynamic_routing_bonsai.task_logic.TrialResult,
         aind_behavior_dynamic_routing_bonsai.rig.AindBehaviorDynamicRoutingBonsaiRig,
         AindBehaviorSessionModel,
     ]

@@ -143,7 +143,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="num:CreateRandom">
-                <num:Seed>1</num:Seed>
+                <num:Seed>0</num:Seed>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -178,8 +178,67 @@
             <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p3:SoftwareEvent">
               <rx:Name>SoftwareEvent</rx:Name>
             </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>TaskLogicParameters</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>RngSeed</Selector>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Seed" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="num:CreateRandom">
+                <num:Seed xsi:nil="true" />
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>TaskLogicParameters</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>InterTrialInterval.DistributionParameters.Min</Selector>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Lower" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>TaskLogicParameters</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>InterTrialInterval.DistributionParameters.Max</Selector>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Upper" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p2:CreateContinuousUniform">
+                <p2:Lower>1</p2:Lower>
+                <p2:Upper>3</p2:Upper>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>InterTrialIntervalDistribution</Name>
+            </Expression>
           </Nodes>
-          <Edges />
+          <Edges>
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="4" To="11" Label="Source1" />
+            <Edge From="5" To="6" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="11" Label="Source2" />
+            <Edge From="8" To="9" Label="Source1" />
+            <Edge From="9" To="10" Label="Source1" />
+            <Edge From="10" To="11" Label="Source3" />
+            <Edge From="11" To="12" Label="Source1" />
+          </Edges>
         </Workflow>
       </Expression>
       <Expression xsi:type="GroupWorkflow">
@@ -587,7 +646,7 @@ Item3 as Right)</scr:Expression>
                           <SpatialFrequency>10</SpatialFrequency>
                           <TemporalFrequency>2</TemporalFrequency>
                           <Phase>0</Phase>
-                          <Angle>0</Angle>
+                          <Angle>90</Angle>
                           <SquareWave>false</SquareWave>
                           <Contrast>1</Contrast>
                           <DutyCycle xsi:nil="true" />
@@ -829,283 +888,6 @@ Item3 as Right)</scr:Expression>
                   <Expression xsi:type="MulticastSubject">
                     <Name>InitiateTrial</Name>
                   </Expression>
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="rx:CreateObservable">
-                      <Name>DoTrial</Name>
-                      <Workflow>
-                        <Nodes>
-                          <Expression xsi:type="WorkflowInput">
-                            <Name>Source1</Name>
-                          </Expression>
-                          <Expression xsi:type="Combinator">
-                            <Combinator xsi:type="rx:Take">
-                              <rx:Count>1</rx:Count>
-                            </Combinator>
-                          </Expression>
-                          <Expression xsi:type="rx:AsyncSubject">
-                            <Name>Trial</Name>
-                          </Expression>
-                          <Expression xsi:type="SubscribeSubject">
-                            <Name>Trial</Name>
-                          </Expression>
-                          <Expression xsi:type="Combinator">
-                            <Combinator xsi:type="p6:CreateSoftwareEvent">
-                              <p6:EventName>SoftwareEvent</p6:EventName>
-                            </Combinator>
-                          </Expression>
-                          <Expression xsi:type="SubscribeSubject">
-                            <Name>TimeBase</Name>
-                          </Expression>
-                          <Expression xsi:type="Combinator">
-                            <Combinator xsi:type="rx:WithLatestFrom" />
-                          </Expression>
-                          <Expression xsi:type="Combinator">
-                            <Combinator xsi:type="harp:CreateTimestamped" />
-                          </Expression>
-                          <Expression xsi:type="Combinator">
-                            <Combinator xsi:type="p6:TimestampSoftwareEvent" />
-                          </Expression>
-                          <Expression xsi:type="MulticastSubject">
-                            <Name>SoftwareEvent</Name>
-                          </Expression>
-                          <Expression xsi:type="SubscribeSubject">
-                            <Name>Trial</Name>
-                          </Expression>
-                          <Expression xsi:type="SubscribeSubject">
-                            <Name>Trial</Name>
-                          </Expression>
-                          <Expression xsi:type="MemberSelector">
-                            <Selector>PresentationParameters.StimulusStartTime</Selector>
-                          </Expression>
-                          <Expression xsi:type="scr:ExpressionTransform">
-                            <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
-                          </Expression>
-                          <Expression xsi:type="PropertyMapping">
-                            <PropertyMappings>
-                              <Property Name="DueTime" />
-                            </PropertyMappings>
-                          </Expression>
-                          <Expression xsi:type="Combinator">
-                            <Combinator xsi:type="rx:Delay">
-                              <rx:DueTime>PT1.5S</rx:DueTime>
-                            </Combinator>
-                          </Expression>
-                          <Expression xsi:type="MemberSelector">
-                            <Selector>Stimulus</Selector>
-                          </Expression>
-                          <Expression xsi:type="p1:MatchStimulus">
-                            <p1:Type xsi:type="TypeMapping" TypeArguments="p1:GratingStimulus" />
-                          </Expression>
-                          <Expression xsi:type="MulticastSubject">
-                            <Name>DrawGrating</Name>
-                          </Expression>
-                          <Expression xsi:type="Unit" />
-                          <Expression xsi:type="p1:MatchStimulus">
-                            <p1:Type xsi:type="TypeMapping" TypeArguments="p1:AudioStimulus" />
-                          </Expression>
-                          <Expression xsi:type="MulticastSubject">
-                            <Name>AudioStimulus</Name>
-                          </Expression>
-                          <Expression xsi:type="Unit" />
-                          <Expression xsi:type="Combinator">
-                            <Combinator xsi:type="rx:Merge" />
-                          </Expression>
-                          <Expression xsi:type="SubscribeSubject">
-                            <Name>Trial</Name>
-                          </Expression>
-                          <Expression xsi:type="MemberSelector">
-                            <Selector>PresentationParameters.StimulusDuration</Selector>
-                          </Expression>
-                          <Expression xsi:type="scr:ExpressionTransform">
-                            <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
-                          </Expression>
-                          <Expression xsi:type="PropertyMapping">
-                            <PropertyMappings>
-                              <Property Name="DueTime" />
-                            </PropertyMappings>
-                          </Expression>
-                          <Expression xsi:type="Combinator">
-                            <Combinator xsi:type="rx:Delay">
-                              <rx:DueTime>PT0.5S</rx:DueTime>
-                            </Combinator>
-                          </Expression>
-                          <Expression xsi:type="MulticastSubject">
-                            <Name>StopDrawing</Name>
-                          </Expression>
-                          <Expression xsi:type="MulticastSubject">
-                            <Name>StopAudio</Name>
-                          </Expression>
-                          <Expression xsi:type="SubscribeSubject">
-                            <Name>Trial</Name>
-                          </Expression>
-                          <Expression xsi:type="SubscribeSubject">
-                            <Name>Trial</Name>
-                          </Expression>
-                          <Expression xsi:type="MemberSelector">
-                            <Selector>PresentationParameters.ResponseWindowStartTime</Selector>
-                          </Expression>
-                          <Expression xsi:type="scr:ExpressionTransform">
-                            <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
-                          </Expression>
-                          <Expression xsi:type="PropertyMapping">
-                            <PropertyMappings>
-                              <Property Name="DueTime" />
-                            </PropertyMappings>
-                          </Expression>
-                          <Expression xsi:type="Combinator">
-                            <Combinator xsi:type="rx:Delay">
-                              <rx:DueTime>PT1.6S</rx:DueTime>
-                            </Combinator>
-                          </Expression>
-                          <Expression xsi:type="rx:SelectMany">
-                            <Name>ResponseWindow</Name>
-                            <Workflow>
-                              <Nodes>
-                                <Expression xsi:type="WorkflowInput">
-                                  <Name>Source1</Name>
-                                </Expression>
-                                <Expression xsi:type="SubscribeSubject">
-                                  <Name>Trial</Name>
-                                </Expression>
-                                <Expression xsi:type="MemberSelector">
-                                  <Selector>PresentationParameters.ResponseWindowDuration</Selector>
-                                </Expression>
-                                <Expression xsi:type="scr:ExpressionTransform">
-                                  <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
-                                </Expression>
-                                <Expression xsi:type="PropertyMapping">
-                                  <PropertyMappings>
-                                    <Property Name="DueTime" />
-                                  </PropertyMappings>
-                                </Expression>
-                                <Expression xsi:type="Combinator">
-                                  <Combinator xsi:type="rx:Timer">
-                                    <rx:DueTime>PT0.9S</rx:DueTime>
-                                  </Combinator>
-                                </Expression>
-                                <Expression xsi:type="Combinator">
-                                  <Combinator xsi:type="rx:TakeUntil" />
-                                </Expression>
-                                <Expression xsi:type="WorkflowOutput" />
-                              </Nodes>
-                              <Edges>
-                                <Edge From="0" To="6" Label="Source1" />
-                                <Edge From="1" To="2" Label="Source1" />
-                                <Edge From="2" To="3" Label="Source1" />
-                                <Edge From="3" To="4" Label="Source1" />
-                                <Edge From="4" To="5" Label="Source1" />
-                                <Edge From="5" To="6" Label="Source2" />
-                                <Edge From="6" To="7" Label="Source1" />
-                              </Edges>
-                            </Workflow>
-                          </Expression>
-                          <Expression xsi:type="Combinator">
-                            <Combinator xsi:type="rx:Take">
-                              <rx:Count>1</rx:Count>
-                            </Combinator>
-                          </Expression>
-                          <Expression xsi:type="SubscribeSubject">
-                            <Name>Trial</Name>
-                          </Expression>
-                          <Expression xsi:type="MemberSelector">
-                            <Selector>PresentationParameters.InterTrialInterval</Selector>
-                          </Expression>
-                          <Expression xsi:type="scr:ExpressionTransform">
-                            <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
-                          </Expression>
-                          <Expression xsi:type="PropertyMapping">
-                            <PropertyMappings>
-                              <Property Name="DueTime" />
-                            </PropertyMappings>
-                          </Expression>
-                          <Expression xsi:type="Combinator">
-                            <Combinator xsi:type="rx:Delay">
-                              <rx:DueTime>PT3S</rx:DueTime>
-                            </Combinator>
-                          </Expression>
-                          <Expression xsi:type="WorkflowOutput" />
-                        </Nodes>
-                        <Edges>
-                          <Edge From="0" To="1" Label="Source1" />
-                          <Edge From="1" To="2" Label="Source1" />
-                          <Edge From="3" To="4" Label="Source1" />
-                          <Edge From="4" To="6" Label="Source1" />
-                          <Edge From="5" To="6" Label="Source2" />
-                          <Edge From="6" To="7" Label="Source1" />
-                          <Edge From="7" To="8" Label="Source1" />
-                          <Edge From="8" To="9" Label="Source1" />
-                          <Edge From="10" To="15" Label="Source1" />
-                          <Edge From="11" To="12" Label="Source1" />
-                          <Edge From="12" To="13" Label="Source1" />
-                          <Edge From="13" To="14" Label="Source1" />
-                          <Edge From="14" To="15" Label="Source2" />
-                          <Edge From="15" To="16" Label="Source1" />
-                          <Edge From="16" To="17" Label="Source1" />
-                          <Edge From="16" To="20" Label="Source1" />
-                          <Edge From="17" To="18" Label="Source1" />
-                          <Edge From="18" To="19" Label="Source1" />
-                          <Edge From="19" To="23" Label="Source1" />
-                          <Edge From="20" To="21" Label="Source1" />
-                          <Edge From="21" To="22" Label="Source1" />
-                          <Edge From="22" To="23" Label="Source2" />
-                          <Edge From="23" To="28" Label="Source1" />
-                          <Edge From="24" To="25" Label="Source1" />
-                          <Edge From="25" To="26" Label="Source1" />
-                          <Edge From="26" To="27" Label="Source1" />
-                          <Edge From="27" To="28" Label="Source2" />
-                          <Edge From="28" To="29" Label="Source1" />
-                          <Edge From="29" To="30" Label="Source1" />
-                          <Edge From="31" To="36" Label="Source1" />
-                          <Edge From="32" To="33" Label="Source1" />
-                          <Edge From="33" To="34" Label="Source1" />
-                          <Edge From="34" To="35" Label="Source1" />
-                          <Edge From="35" To="36" Label="Source2" />
-                          <Edge From="36" To="37" Label="Source1" />
-                          <Edge From="37" To="38" Label="Source1" />
-                          <Edge From="38" To="43" Label="Source1" />
-                          <Edge From="39" To="40" Label="Source1" />
-                          <Edge From="40" To="41" Label="Source1" />
-                          <Edge From="41" To="42" Label="Source1" />
-                          <Edge From="42" To="43" Label="Source2" />
-                          <Edge From="43" To="44" Label="Source1" />
-                        </Edges>
-                      </Workflow>
-                    </Builder>
-                  </Expression>
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="Combinator">
-                      <Combinator xsi:type="rx:Concat" />
-                    </Builder>
-                  </Expression>
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="SubscribeSubject">
-                      <Name>TrialSet</Name>
-                    </Builder>
-                  </Expression>
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="MemberSelector">
-                      <Selector>Repeats</Selector>
-                    </Builder>
-                  </Expression>
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="PropertyMapping">
-                      <PropertyMappings>
-                        <Property Name="Count" />
-                      </PropertyMappings>
-                    </Builder>
-                  </Expression>
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="Combinator">
-                      <Combinator xsi:type="rx:RepeatCount">
-                        <rx:Count>5</rx:Count>
-                      </Combinator>
-                    </Builder>
-                  </Expression>
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="Combinator">
-                      <Combinator xsi:type="rx:Last" />
-                    </Builder>
-                  </Expression>
                   <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p1:Trial">
                     <rx:Name>InitiateTrial</rx:Name>
                   </Expression>
@@ -1146,6 +928,20 @@ Item3 as Right)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
                           <Name>SoftwareEvent</Name>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>InterTrialIntervalDistribution</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="p2:Sample" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Take">
+                            <rx:Count>1</rx:Count>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="rx:AsyncSubject">
+                          <Name>InterTrialInterval</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>Trial</Name>
@@ -1299,7 +1095,9 @@ Item3 as Right)</scr:Expression>
                                       </Workflow>
                                     </Expression>
                                     <Expression xsi:type="Combinator">
-                                      <Combinator xsi:type="p1:TrialResult" />
+                                      <Combinator xsi:type="StringProperty">
+                                        <Value>Hit</Value>
+                                      </Combinator>
                                     </Expression>
                                     <Expression xsi:type="rx:Condition">
                                       <Name>FalseAlarm</Name>
@@ -1322,7 +1120,9 @@ Item3 as Right)</scr:Expression>
                                       </Workflow>
                                     </Expression>
                                     <Expression xsi:type="Combinator">
-                                      <Combinator xsi:type="p1:TrialResult" />
+                                      <Combinator xsi:type="StringProperty">
+                                        <Value>FalseAlarm</Value>
+                                      </Combinator>
                                     </Expression>
                                     <Expression xsi:type="SubscribeSubject">
                                       <Name>Trial</Name>
@@ -1373,7 +1173,9 @@ Item3 as Right)</scr:Expression>
                                       </Workflow>
                                     </Expression>
                                     <Expression xsi:type="Combinator">
-                                      <Combinator xsi:type="p1:TrialResult" />
+                                      <Combinator xsi:type="StringProperty">
+                                        <Value>CorrectRejection</Value>
+                                      </Combinator>
                                     </Expression>
                                     <Expression xsi:type="rx:Condition">
                                       <Name>Miss</Name>
@@ -1394,7 +1196,9 @@ Item3 as Right)</scr:Expression>
                                       </Workflow>
                                     </Expression>
                                     <Expression xsi:type="Combinator">
-                                      <Combinator xsi:type="p1:TrialResult" />
+                                      <Combinator xsi:type="StringProperty">
+                                        <Value>Miss</Value>
+                                      </Combinator>
                                     </Expression>
                                     <Expression xsi:type="Combinator">
                                       <Combinator xsi:type="rx:Merge" />
@@ -1460,11 +1264,8 @@ Item3 as Right)</scr:Expression>
                               <Expression xsi:type="WorkflowInput">
                                 <Name>Source1</Name>
                               </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Result</Selector>
-                              </Expression>
                               <Expression xsi:type="Equal">
-                                <Operand xsi:type="WorkflowProperty" TypeArguments="p1:TrialResultEnum">
+                                <Operand xsi:type="StringProperty">
                                   <Value>FalseAlarm</Value>
                                 </Operand>
                               </Expression>
@@ -1473,7 +1274,6 @@ Item3 as Right)</scr:Expression>
                             <Edges>
                               <Edge From="0" To="1" Label="Source1" />
                               <Edge From="1" To="2" Label="Source1" />
-                              <Edge From="2" To="3" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>
@@ -1493,11 +1293,8 @@ Item3 as Right)</scr:Expression>
                               <Expression xsi:type="WorkflowInput">
                                 <Name>Source1</Name>
                               </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Result</Selector>
-                              </Expression>
                               <Expression xsi:type="NotEqual">
-                                <Operand xsi:type="WorkflowProperty" TypeArguments="p1:TrialResultEnum">
+                                <Operand xsi:type="StringProperty">
                                   <Value>FalseAlarm</Value>
                                 </Operand>
                               </Expression>
@@ -1506,7 +1303,6 @@ Item3 as Right)</scr:Expression>
                             <Edges>
                               <Edge From="0" To="1" Label="Source1" />
                               <Edge From="1" To="2" Label="Source1" />
-                              <Edge From="2" To="3" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>
@@ -1555,6 +1351,22 @@ Item3 as Right)</scr:Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Take">
                             <rx:Count>1</rx:Count>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>InterTrialInterval</Name>
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="DueTime" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Delay">
+                            <rx:DueTime>PT1.693S</rx:DueTime>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
@@ -1668,28 +1480,35 @@ Item3 as Right)</scr:Expression>
                         <Edge From="7" To="8" Label="Source1" />
                         <Edge From="8" To="9" Label="Source1" />
                         <Edge From="10" To="11" Label="Source1" />
-                        <Edge From="10" To="16" Label="Source1" />
-                        <Edge From="10" To="31" Label="Source1" />
                         <Edge From="11" To="12" Label="Source1" />
-                        <Edge From="12" To="14" Label="Source1" />
-                        <Edge From="13" To="14" Label="Source2" />
+                        <Edge From="12" To="13" Label="Source1" />
                         <Edge From="14" To="15" Label="Source1" />
-                        <Edge From="15" To="27" Label="Source1" />
-                        <Edge From="16" To="17" Label="Source1" />
-                        <Edge From="16" To="21" Label="Source1" />
-                        <Edge From="17" To="19" Label="Source1" />
-                        <Edge From="18" To="19" Label="Source2" />
-                        <Edge From="19" To="20" Label="Source1" />
-                        <Edge From="20" To="27" Label="Source2" />
-                        <Edge From="21" To="25" Label="Source1" />
-                        <Edge From="22" To="23" Label="Source1" />
+                        <Edge From="14" To="20" Label="Source1" />
+                        <Edge From="14" To="39" Label="Source1" />
+                        <Edge From="15" To="16" Label="Source1" />
+                        <Edge From="16" To="18" Label="Source1" />
+                        <Edge From="17" To="18" Label="Source2" />
+                        <Edge From="18" To="19" Label="Source1" />
+                        <Edge From="19" To="31" Label="Source1" />
+                        <Edge From="20" To="21" Label="Source1" />
+                        <Edge From="20" To="25" Label="Source1" />
+                        <Edge From="21" To="23" Label="Source1" />
+                        <Edge From="22" To="23" Label="Source2" />
                         <Edge From="23" To="24" Label="Source1" />
-                        <Edge From="24" To="25" Label="Source2" />
-                        <Edge From="25" To="26" Label="Source1" />
-                        <Edge From="26" To="27" Label="Source3" />
+                        <Edge From="24" To="31" Label="Source2" />
+                        <Edge From="25" To="29" Label="Source1" />
+                        <Edge From="26" To="27" Label="Source1" />
                         <Edge From="27" To="28" Label="Source1" />
-                        <Edge From="28" To="29" Label="Source1" />
+                        <Edge From="28" To="29" Label="Source2" />
                         <Edge From="29" To="30" Label="Source1" />
+                        <Edge From="30" To="31" Label="Source3" />
+                        <Edge From="31" To="32" Label="Source1" />
+                        <Edge From="32" To="33" Label="Source1" />
+                        <Edge From="33" To="37" Label="Source1" />
+                        <Edge From="34" To="35" Label="Source1" />
+                        <Edge From="35" To="36" Label="Source1" />
+                        <Edge From="36" To="37" Label="Source2" />
+                        <Edge From="37" To="38" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -1708,15 +1527,9 @@ Item3 as Right)</scr:Expression>
                   <Edge From="4" To="5" Label="Source1" />
                   <Edge From="5" To="6" Label="Source1" />
                   <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="8" To="12" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
                   <Edge From="9" To="10" Label="Source1" />
                   <Edge From="10" To="11" Label="Source1" />
-                  <Edge From="11" To="12" Label="Source2" />
-                  <Edge From="12" To="13" Label="Source1" />
-                  <Edge From="14" To="15" Label="Source1" />
-                  <Edge From="15" To="16" Label="Source1" />
-                  <Edge From="16" To="17" Label="Source1" />
-                  <Edge From="17" To="18" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>

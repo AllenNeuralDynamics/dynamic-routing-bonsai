@@ -370,10 +370,13 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     
         private System.Collections.Generic.List<Block> _taskBlocks;
     
+        private UniformDistribution _interTrialInterval;
+    
         public AindBehaviorDynamicRoutingBonsaiTaskParameters()
         {
             _aindBehaviorServicesPkgVersion = "0.12.5";
             _taskBlocks = new System.Collections.Generic.List<Block>();
+            _interTrialInterval = new UniformDistribution();
         }
     
         protected AindBehaviorDynamicRoutingBonsaiTaskParameters(AindBehaviorDynamicRoutingBonsaiTaskParameters other)
@@ -381,6 +384,7 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             _rngSeed = other._rngSeed;
             _aindBehaviorServicesPkgVersion = other._aindBehaviorServicesPkgVersion;
             _taskBlocks = other._taskBlocks;
+            _interTrialInterval = other._interTrialInterval;
         }
     
         /// <summary>
@@ -428,6 +432,20 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("inter_trial_interval")]
+        public UniformDistribution InterTrialInterval
+        {
+            get
+            {
+                return _interTrialInterval;
+            }
+            set
+            {
+                _interTrialInterval = value;
+            }
+        }
+    
         public System.IObservable<AindBehaviorDynamicRoutingBonsaiTaskParameters> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindBehaviorDynamicRoutingBonsaiTaskParameters(this)));
@@ -442,7 +460,8 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
         {
             stringBuilder.Append("RngSeed = " + _rngSeed + ", ");
             stringBuilder.Append("AindBehaviorServicesPkgVersion = " + _aindBehaviorServicesPkgVersion + ", ");
-            stringBuilder.Append("TaskBlocks = " + _taskBlocks);
+            stringBuilder.Append("TaskBlocks = " + _taskBlocks + ", ");
+            stringBuilder.Append("InterTrialInterval = " + _interTrialInterval);
             return true;
         }
     
@@ -1939,8 +1958,6 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     
         private double _responseWindowDuration;
     
-        private double _interTrialInterval;
-    
         private bool _rewarded;
     
         private bool _nonContingentReward;
@@ -1957,7 +1974,6 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             _stimulusDuration = other._stimulusDuration;
             _responseWindowStartTime = other._responseWindowStartTime;
             _responseWindowDuration = other._responseWindowDuration;
-            _interTrialInterval = other._interTrialInterval;
             _rewarded = other._rewarded;
             _nonContingentReward = other._nonContingentReward;
             _timeout = other._timeout;
@@ -2012,19 +2028,6 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             set
             {
                 _responseWindowDuration = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("inter_trial_interval", Required=Newtonsoft.Json.Required.Always)]
-        public double InterTrialInterval
-        {
-            get
-            {
-                return _interTrialInterval;
-            }
-            set
-            {
-                _interTrialInterval = value;
             }
         }
     
@@ -2083,10 +2086,106 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             stringBuilder.Append("StimulusDuration = " + _stimulusDuration + ", ");
             stringBuilder.Append("ResponseWindowStartTime = " + _responseWindowStartTime + ", ");
             stringBuilder.Append("ResponseWindowDuration = " + _responseWindowDuration + ", ");
-            stringBuilder.Append("InterTrialInterval = " + _interTrialInterval + ", ");
             stringBuilder.Append("Rewarded = " + _rewarded + ", ");
             stringBuilder.Append("NonContingentReward = " + _nonContingentReward + ", ");
             stringBuilder.Append("Timeout = " + _timeout);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    /// <summary>
+    /// Parameters for scaling and offsetting sampled distribution values.
+    ///Scaling is applied as (value * scale + offset).
+    ///
+    ///Applies linear transformation: result = (value * scale) + offset.
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Parameters for scaling and offsetting sampled distribution values.\nScaling is app" +
+        "lied as (value * scale + offset).\n\nApplies linear transformation: result = (valu" +
+        "e * scale) + offset.")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class ScalingParameters
+    {
+    
+        private double _scale;
+    
+        private double _offset;
+    
+        public ScalingParameters()
+        {
+            _scale = 1D;
+            _offset = 0D;
+        }
+    
+        protected ScalingParameters(ScalingParameters other)
+        {
+            _scale = other._scale;
+            _offset = other._offset;
+        }
+    
+        /// <summary>
+        /// Scaling factor to apply on the sampled distribution
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("scale")]
+        [System.ComponentModel.DescriptionAttribute("Scaling factor to apply on the sampled distribution")]
+        public double Scale
+        {
+            get
+            {
+                return _scale;
+            }
+            set
+            {
+                _scale = value;
+            }
+        }
+    
+        /// <summary>
+        /// Offset factor to apply on the sampled distribution
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("offset")]
+        [System.ComponentModel.DescriptionAttribute("Offset factor to apply on the sampled distribution")]
+        public double Offset
+        {
+            get
+            {
+                return _offset;
+            }
+            set
+            {
+                _offset = value;
+            }
+        }
+    
+        public System.IObservable<ScalingParameters> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ScalingParameters(this)));
+        }
+    
+        public System.IObservable<ScalingParameters> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new ScalingParameters(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("Scale = " + _scale + ", ");
+            stringBuilder.Append("Offset = " + _offset);
             return true;
         }
     
@@ -2453,87 +2552,6 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class TrialResult
-    {
-    
-        private TrialResultEnum _result;
-    
-        public TrialResult()
-        {
-        }
-    
-        protected TrialResult(TrialResult other)
-        {
-            _result = other._result;
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("result", Required=Newtonsoft.Json.Required.Always)]
-        public TrialResultEnum Result
-        {
-            get
-            {
-                return _result;
-            }
-            set
-            {
-                _result = value;
-            }
-        }
-    
-        public System.IObservable<TrialResult> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new TrialResult(this)));
-        }
-    
-        public System.IObservable<TrialResult> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new TrialResult(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("Result = " + _result);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum TrialResultEnum
-    {
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="Hit")]
-        Hit = 0,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="FalseAlarm")]
-        FalseAlarm = 1,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="CorrectRejection")]
-        CorrectRejection = 2,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="Miss")]
-        Miss = 3,
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class TrialSet
     {
     
@@ -2593,6 +2611,386 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
         {
             stringBuilder.Append("AvailableTrials = " + _availableTrials + ", ");
             stringBuilder.Append("Repeats = " + _repeats);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    /// <summary>
+    /// Parameters for truncating a distribution to a specified range. Truncation should
+    ///be applied after sampling and scaling.
+    ///
+    ///The truncation_mode determines how out-of-bounds values are handled:
+    ///- "exclude": Resample until a value within [min, max] is obtained.
+    ///If after a certain number of attempts no valid value is found, it
+    ///will use the average of sampled values and pick the closest bound.
+    ///- "clamp": Clamp values to the nearest bound within [min, max].
+    ///Used to constrain sampled values within minimum and maximum bounds.
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute(@"Parameters for truncating a distribution to a specified range. Truncation should
+    be applied after sampling and scaling.
+
+    The truncation_mode determines how out-of-bounds values are handled:
+    - ""exclude"": Resample until a value within [min, max] is obtained.
+    If after a certain number of attempts no valid value is found, it
+    will use the average of sampled values and pick the closest bound.
+    - ""clamp"": Clamp values to the nearest bound within [min, max].
+    Used to constrain sampled values within minimum and maximum bounds.")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class TruncationParameters
+    {
+    
+        private TruncationParametersTruncationMode _truncationMode;
+    
+        private double _min;
+    
+        private double _max;
+    
+        public TruncationParameters()
+        {
+            _truncationMode = AindBehaviorDynamicRoutingBonsaiDataSchema.TruncationParametersTruncationMode.Exclude;
+            _min = 0D;
+            _max = 0D;
+        }
+    
+        protected TruncationParameters(TruncationParameters other)
+        {
+            _truncationMode = other._truncationMode;
+            _min = other._min;
+            _max = other._max;
+        }
+    
+        /// <summary>
+        /// Mode of truncation to apply
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("truncation_mode")]
+        [System.ComponentModel.DescriptionAttribute("Mode of truncation to apply")]
+        public TruncationParametersTruncationMode TruncationMode
+        {
+            get
+            {
+                return _truncationMode;
+            }
+            set
+            {
+                _truncationMode = value;
+            }
+        }
+    
+        /// <summary>
+        /// Minimum value of the sampled distribution
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("min")]
+        [System.ComponentModel.DescriptionAttribute("Minimum value of the sampled distribution")]
+        public double Min
+        {
+            get
+            {
+                return _min;
+            }
+            set
+            {
+                _min = value;
+            }
+        }
+    
+        /// <summary>
+        /// Maximum value of the sampled distribution
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("max")]
+        [System.ComponentModel.DescriptionAttribute("Maximum value of the sampled distribution")]
+        public double Max
+        {
+            get
+            {
+                return _max;
+            }
+            set
+            {
+                _max = value;
+            }
+        }
+    
+        public System.IObservable<TruncationParameters> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new TruncationParameters(this)));
+        }
+    
+        public System.IObservable<TruncationParameters> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new TruncationParameters(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("TruncationMode = " + _truncationMode + ", ");
+            stringBuilder.Append("Min = " + _min + ", ");
+            stringBuilder.Append("Max = " + _max);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    /// <summary>
+    /// A uniform probability distribution.
+    ///
+    ///All values between min and max have equal probability of being sampled.
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("A uniform probability distribution.\n\nAll values between min and max have equal pr" +
+        "obability of being sampled.")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class UniformDistribution
+    {
+    
+        private string _family;
+    
+        private UniformDistributionParameters _distributionParameters;
+    
+        private TruncationParameters _truncationParameters;
+    
+        private ScalingParameters _scalingParameters;
+    
+        public UniformDistribution()
+        {
+            _family = "Uniform";
+            _distributionParameters = new UniformDistributionParameters();
+        }
+    
+        protected UniformDistribution(UniformDistribution other)
+        {
+            _family = other._family;
+            _distributionParameters = other._distributionParameters;
+            _truncationParameters = other._truncationParameters;
+            _scalingParameters = other._scalingParameters;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("family")]
+        public string Family
+        {
+            get
+            {
+                return _family;
+            }
+            set
+            {
+                _family = value;
+            }
+        }
+    
+        /// <summary>
+        /// Parameters of the distribution
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("distribution_parameters")]
+        [System.ComponentModel.DescriptionAttribute("Parameters of the distribution")]
+        public UniformDistributionParameters DistributionParameters
+        {
+            get
+            {
+                return _distributionParameters;
+            }
+            set
+            {
+                _distributionParameters = value;
+            }
+        }
+    
+        /// <summary>
+        /// Truncation parameters of the distribution
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("truncation_parameters")]
+        [System.ComponentModel.DescriptionAttribute("Truncation parameters of the distribution")]
+        public TruncationParameters TruncationParameters
+        {
+            get
+            {
+                return _truncationParameters;
+            }
+            set
+            {
+                _truncationParameters = value;
+            }
+        }
+    
+        /// <summary>
+        /// Scaling parameters of the distribution
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("scaling_parameters")]
+        [System.ComponentModel.DescriptionAttribute("Scaling parameters of the distribution")]
+        public ScalingParameters ScalingParameters
+        {
+            get
+            {
+                return _scalingParameters;
+            }
+            set
+            {
+                _scalingParameters = value;
+            }
+        }
+    
+        public System.IObservable<UniformDistribution> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new UniformDistribution(this)));
+        }
+    
+        public System.IObservable<UniformDistribution> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new UniformDistribution(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("Family = " + _family + ", ");
+            stringBuilder.Append("DistributionParameters = " + _distributionParameters + ", ");
+            stringBuilder.Append("TruncationParameters = " + _truncationParameters + ", ");
+            stringBuilder.Append("ScalingParameters = " + _scalingParameters);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    /// <summary>
+    /// Parameters for a uniform distribution.
+    ///
+    ///Defined by minimum and maximum bounds of the distribution.
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Parameters for a uniform distribution.\n\nDefined by minimum and maximum bounds of " +
+        "the distribution.")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class UniformDistributionParameters
+    {
+    
+        private string _family;
+    
+        private double _min;
+    
+        private double _max;
+    
+        public UniformDistributionParameters()
+        {
+            _family = "Uniform";
+            _min = 0D;
+            _max = 0D;
+        }
+    
+        protected UniformDistributionParameters(UniformDistributionParameters other)
+        {
+            _family = other._family;
+            _min = other._min;
+            _max = other._max;
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("family")]
+        public string Family
+        {
+            get
+            {
+                return _family;
+            }
+            set
+            {
+                _family = value;
+            }
+        }
+    
+        /// <summary>
+        /// Minimum value of the distribution
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("min")]
+        [System.ComponentModel.DescriptionAttribute("Minimum value of the distribution")]
+        public double Min
+        {
+            get
+            {
+                return _min;
+            }
+            set
+            {
+                _min = value;
+            }
+        }
+    
+        /// <summary>
+        /// Maximum value of the distribution
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("max")]
+        [System.ComponentModel.DescriptionAttribute("Maximum value of the distribution")]
+        public double Max
+        {
+            get
+            {
+                return _max;
+            }
+            set
+            {
+                _max = value;
+            }
+        }
+    
+        public System.IObservable<UniformDistributionParameters> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new UniformDistributionParameters(this)));
+        }
+    
+        public System.IObservable<UniformDistributionParameters> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new UniformDistributionParameters(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("Family = " + _family + ", ");
+            stringBuilder.Append("Min = " + _min + ", ");
+            stringBuilder.Append("Max = " + _max);
             return true;
         }
     
@@ -2766,6 +3164,19 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             stringBuilder.Append("}");
             return stringBuilder.ToString();
         }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum TruncationParametersTruncationMode
+    {
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="exclude")]
+        Exclude = 0,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="clamp")]
+        Clamp = 1,
     }
 
 
@@ -3046,6 +3457,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             return Process<PresentationParameters>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<ScalingParameters> source)
+        {
+            return Process<ScalingParameters>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Screen> source)
         {
             return Process<Screen>(source);
@@ -3056,14 +3472,24 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             return Process<Trial>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<TrialResult> source)
-        {
-            return Process<TrialResult>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<TrialSet> source)
         {
             return Process<TrialSet>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<TruncationParameters> source)
+        {
+            return Process<TruncationParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<UniformDistribution> source)
+        {
+            return Process<UniformDistribution>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<UniformDistributionParameters> source)
+        {
+            return Process<UniformDistributionParameters>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Vector3> source)
@@ -3101,10 +3527,13 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBehavior>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpSoundCard>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PresentationParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScalingParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Screen>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Trial>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TrialResult>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TrialSet>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TruncationParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UniformDistribution>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UniformDistributionParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Vector3>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Stimulus>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder

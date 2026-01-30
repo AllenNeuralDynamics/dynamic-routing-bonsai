@@ -13,9 +13,9 @@ from aind_behavior_dynamic_routing_bonsai.task_logic import (
     BlankStimulus, AudioStimulus, GratingStimulus
 )
 
-non_contingent_presentation = PresentationParameters(stimulus_start_time=1.5, stimulus_duration=0.5, response_window_start_time=1.6, response_window_duration=0.9, inter_trial_interval=3, rewarded=True, non_contingent_reward=True, timeout=0)
-rewarded_presentation = PresentationParameters(stimulus_start_time=1.5, stimulus_duration=0.5, response_window_start_time=1.6, response_window_duration=0.9, inter_trial_interval=3, rewarded=True, non_contingent_reward=False, timeout=0)
-unrewarded_presentation = PresentationParameters(stimulus_start_time=1.5, stimulus_duration=0.5, response_window_start_time=1.6, response_window_duration=0.9, inter_trial_interval=3, rewarded=False, non_contingent_reward=False, timeout=4.5)
+non_contingent_presentation = PresentationParameters(stimulus_start_time=1.5, stimulus_duration=0.5, response_window_start_time=1.6, response_window_duration=0.9, rewarded=True, non_contingent_reward=True, timeout=0)
+rewarded_presentation = PresentationParameters(stimulus_start_time=1.5, stimulus_duration=0.5, response_window_start_time=1.6, response_window_duration=0.9, rewarded=True, non_contingent_reward=False, timeout=0)
+unrewarded_presentation = PresentationParameters(stimulus_start_time=1.5, stimulus_duration=0.5, response_window_start_time=1.6, response_window_duration=0.9, rewarded=False, non_contingent_reward=False, timeout=4.5)
 
 grating1 = GratingStimulus(stimulus_type="grating", angle=0, aperture=1, extent_x=2, extent_y=2, spatial_frequency=10, temporal_frequency=2)
 grating2 = GratingStimulus(stimulus_type="grating", angle=90, aperture=1, extent_x=2, extent_y=2, spatial_frequency=10, temporal_frequency=2)

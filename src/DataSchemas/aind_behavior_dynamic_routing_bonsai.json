@@ -194,6 +194,19 @@
           },
           "title": "Task Blocks",
           "type": "array"
+        },
+        "inter_trial_interval": {
+          "$ref": "#/$defs/UniformDistribution",
+          "default": {
+            "family": "Uniform",
+            "distribution_parameters": {
+              "family": "Uniform",
+              "max": 3.0,
+              "min": 1.0
+            },
+            "truncation_parameters": null,
+            "scaling_parameters": null
+          }
         }
       },
       "required": [
@@ -761,10 +774,6 @@
           "title": "Response Window Duration",
           "type": "number"
         },
-        "inter_trial_interval": {
-          "title": "Inter Trial Interval",
-          "type": "number"
-        },
         "rewarded": {
           "title": "Rewarded",
           "type": "boolean"
@@ -783,12 +792,30 @@
         "stimulus_duration",
         "response_window_start_time",
         "response_window_duration",
-        "inter_trial_interval",
         "rewarded",
         "non_contingent_reward",
         "timeout"
       ],
       "title": "PresentationParameters",
+      "type": "object"
+    },
+    "ScalingParameters": {
+      "description": "Parameters for scaling and offsetting sampled distribution values.\nScaling is applied as (value * scale + offset).\n\nApplies linear transformation: result = (value * scale) + offset.",
+      "properties": {
+        "scale": {
+          "default": 1,
+          "description": "Scaling factor to apply on the sampled distribution",
+          "title": "Scale",
+          "type": "number"
+        },
+        "offset": {
+          "default": 0,
+          "description": "Offset factor to apply on the sampled distribution",
+          "title": "Offset",
+          "type": "number"
+        }
+      },
+      "title": "ScalingParameters",
       "type": "object"
     },
     "Screen": {
@@ -970,28 +997,6 @@
       "title": "Trial",
       "type": "object"
     },
-    "TrialResult": {
-      "properties": {
-        "result": {
-          "$ref": "#/$defs/TrialResultEnum"
-        }
-      },
-      "required": [
-        "result"
-      ],
-      "title": "TrialResult",
-      "type": "object"
-    },
-    "TrialResultEnum": {
-      "enum": [
-        "Hit",
-        "FalseAlarm",
-        "CorrectRejection",
-        "Miss"
-      ],
-      "title": "TrialResultEnum",
-      "type": "string"
-    },
     "TrialSet": {
       "properties": {
         "available_trials": {
@@ -1011,6 +1016,106 @@
         "repeats"
       ],
       "title": "TrialSet",
+      "type": "object"
+    },
+    "TruncationParameters": {
+      "description": "Parameters for truncating a distribution to a specified range. Truncation should\nbe applied after sampling and scaling.\n\nThe truncation_mode determines how out-of-bounds values are handled:\n- \"exclude\": Resample until a value within [min, max] is obtained.\nIf after a certain number of attempts no valid value is found, it\nwill use the average of sampled values and pick the closest bound.\n- \"clamp\": Clamp values to the nearest bound within [min, max].\nUsed to constrain sampled values within minimum and maximum bounds.",
+      "properties": {
+        "truncation_mode": {
+          "default": "exclude",
+          "description": "Mode of truncation to apply",
+          "enum": [
+            "exclude",
+            "clamp"
+          ],
+          "title": "Truncation Mode",
+          "type": "string"
+        },
+        "min": {
+          "default": 0,
+          "description": "Minimum value of the sampled distribution",
+          "title": "Min",
+          "type": "number"
+        },
+        "max": {
+          "default": 0,
+          "description": "Maximum value of the sampled distribution",
+          "title": "Max",
+          "type": "number"
+        }
+      },
+      "title": "TruncationParameters",
+      "type": "object"
+    },
+    "UniformDistribution": {
+      "description": "A uniform probability distribution.\n\nAll values between min and max have equal probability of being sampled.",
+      "properties": {
+        "family": {
+          "const": "Uniform",
+          "default": "Uniform",
+          "title": "Family",
+          "type": "string"
+        },
+        "distribution_parameters": {
+          "$ref": "#/$defs/UniformDistributionParameters",
+          "default": {
+            "family": "Uniform",
+            "min": 0.0,
+            "max": 0.0
+          },
+          "description": "Parameters of the distribution"
+        },
+        "truncation_parameters": {
+          "default": null,
+          "description": "Truncation parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/TruncationParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scaling_parameters": {
+          "default": null,
+          "description": "Scaling parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ScalingParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "UniformDistribution",
+      "type": "object"
+    },
+    "UniformDistributionParameters": {
+      "description": "Parameters for a uniform distribution.\n\nDefined by minimum and maximum bounds of the distribution.",
+      "properties": {
+        "family": {
+          "const": "Uniform",
+          "default": "Uniform",
+          "title": "Family",
+          "type": "string"
+        },
+        "min": {
+          "default": 0,
+          "description": "Minimum value of the distribution",
+          "title": "Min",
+          "type": "number"
+        },
+        "max": {
+          "default": 0,
+          "description": "Maximum value of the distribution",
+          "title": "Max",
+          "type": "number"
+        }
+      },
+      "title": "UniformDistributionParameters",
       "type": "object"
     },
     "Vector3": {
