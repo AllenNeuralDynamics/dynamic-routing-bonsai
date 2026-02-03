@@ -59,25 +59,25 @@ task_logic = AindBehaviorDynamicRoutingBonsaiTaskLogic(
     task_parameters=AindBehaviorDynamicRoutingBonsaiTaskParameters(
         task_blocks=[
             Block(
-                maxmimum_block_time=600,
+                maximum_block_time=600,
                 trial_sets=[
                     TrialSet(
-                        repeats=5,
+                        repeats=2,
                         available_trials=[
                             Trial(stimulus=grating1, presentation_parameters=non_contingent_presentation)
-                        ],
+                        ] * 5,
                     ),
-                    TrialSet(
-                        repeats=10,
-                        available_trials=[
-                            Trial(stimulus=grating1, presentation_parameters=rewarded_presentation),
-                            Trial(stimulus=grating2, presentation_parameters=unrewarded_presentation),
-                        ],
-                    ),
+                    # TrialSet(
+                    #     repeats=1,
+                    #     available_trials=[
+                    #         Trial(stimulus=grating1, presentation_parameters=rewarded_presentation),
+                    #         Trial(stimulus=grating2, presentation_parameters=unrewarded_presentation),
+                    #     ] * 5,
+                    # ),
                 ],
             ),
             Block(
-                maxmimum_block_time=600,
+                maximum_block_time=600,
                 trial_sets=[
                     TrialSet(
                         repeats=10,
