@@ -144,7 +144,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="num:CreateRandom">
-                <num:Seed>3</num:Seed>
+                <num:Seed>6</num:Seed>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -1444,7 +1444,7 @@ Item3 as Right)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Take">
-                      <rx:Count>1</rx:Count>
+                      <rx:Count>10</rx:Count>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -1493,7 +1493,7 @@ Item3 as Right)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Index">
                           <Operand xsi:type="IntProperty">
-                            <Value>0</Value>
+                            <Value>1</Value>
                           </Operand>
                         </Expression>
                         <Expression xsi:type="Combinator">
@@ -2135,7 +2135,7 @@ Item3 as Right)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Delay">
-                            <rx:DueTime>PT2.341S</rx:DueTime>
+                            <rx:DueTime>PT2.609S</rx:DueTime>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
