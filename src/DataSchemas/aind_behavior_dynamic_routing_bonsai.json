@@ -32,6 +32,10 @@
           "$ref": "#/$defs/HarpSoundCard",
           "description": "Harp sound card"
         },
+        "harp_lickety_split": {
+          "$ref": "#/$defs/HarpLicketySplit",
+          "description": "Harp lickometer"
+        },
         "screen": {
           "$ref": "#/$defs/Screen",
           "default": {
@@ -113,7 +117,8 @@
       "required": [
         "rig_name",
         "harp_behavior",
-        "harp_sound_card"
+        "harp_sound_card",
+        "harp_lickety_split"
       ],
       "title": "AindBehaviorDynamicRoutingBonsaiRig",
       "type": "object"
@@ -678,6 +683,82 @@
         "port_name"
       ],
       "title": "HarpBehavior",
+      "type": "object"
+    },
+    "HarpLicketySplit": {
+      "properties": {
+        "device_type": {
+          "const": "LicketySplit",
+          "default": "LicketySplit",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "device_name": {
+          "default": null,
+          "description": "Device name",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device Name"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "who_am_i": {
+          "const": 1400,
+          "default": 1400,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "HarpLicketySplit",
       "type": "object"
     },
     "HarpSoundCard": {

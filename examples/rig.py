@@ -10,6 +10,7 @@ rig = AindBehaviorDynamicRoutingBonsaiRig(
     rig_name="test_rig",
     harp_behavior=rig.harp.HarpBehavior(port_name="COM1"),
     harp_sound_card=rig.harp.HarpSoundCard(port_name="COM2"),
+    harp_lickety_split=rig.harp.HarpLicketySplit(port_name="COM3"),
     screen=rig.visual_stimulation.Screen(
         calibration=rig.visual_stimulation.DisplaysCalibration(
             center=rig.visual_stimulation.DisplayCalibration(
