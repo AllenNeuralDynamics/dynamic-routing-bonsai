@@ -15,10 +15,10 @@
                  xmlns:al="clr-namespace:Bonsai.Audio;assembly=Bonsai.Audio"
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
                  xmlns:p6="clr-namespace:Harp.SoundCard;assembly=Harp.SoundCard"
-                 xmlns:wie="clr-namespace:Bonsai.Windows.Input;assembly=Bonsai.Windows.Input"
                  xmlns:p7="clr-namespace:AllenNeuralDynamics.LicketySplit;assembly=AllenNeuralDynamics.LicketySplit"
-                 xmlns:p8="clr-namespace:;assembly=Extensions"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                 xmlns:p8="clr-namespace:;assembly=Extensions"
+                 xmlns:wie="clr-namespace:Bonsai.Windows.Input;assembly=Bonsai.Windows.Input"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -1202,16 +1202,6 @@ Item3 as Right)</scr:Expression>
               <Name>LickDetection</Name>
               <Workflow>
                 <Nodes>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="wie:KeyDown">
-                      <wie:Filter>L</wie:Filter>
-                      <wie:SuppressRepetitions>false</wie:SuppressRepetitions>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Unit" />
-                  <Expression xsi:type="rx:PublishSubject">
-                    <Name>LickDetection</Name>
-                  </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>RigSchema</Name>
                   </Expression>
@@ -1238,13 +1228,23 @@ Item3 as Right)</scr:Expression>
                       <Value>Channel0</Value>
                     </Operand>
                   </Expression>
+                  <Expression xsi:type="Equal">
+                    <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Byte">
+                      <Value>1</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="Unit" />
+                  <Expression xsi:type="rx:PublishSubject">
+                    <Name>LickDetection</Name>
+                  </Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
                   <Edge From="4" To="5" Label="Source1" />
                   <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
                   <Edge From="7" To="8" Label="Source1" />
                   <Edge From="8" To="9" Label="Source1" />
                 </Edges>
