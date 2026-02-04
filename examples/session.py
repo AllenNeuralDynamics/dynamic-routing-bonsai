@@ -6,7 +6,7 @@ from aind_behavior_services.session import AindBehaviorSessionModel
 session = AindBehaviorSessionModel(
     date=datetime.datetime.now(tz=datetime.timezone.utc),
     experiment="AindBehaviorDynamicRoutingBonsai",
-    root_path="C:/Users/erski/source/repos/AllenNeuralDynamics/dynamic-routing-bonsai/temp_data",
+    root_path="C:/Users/neurogears/source/repos/AllenNeuralDynamics/dynamic-routing-bonsai/temp_data",
     subject="Plimbo",
     notes="test session",
     experiment_version="0.1.0",
