@@ -144,7 +144,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="num:CreateRandom">
-                <num:Seed>6</num:Seed>
+                <num:Seed>0</num:Seed>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -1387,17 +1387,23 @@ Item3 as Right)</scr:Expression>
                     <Name>TotalTrials</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
+                    <Name>TotalTrials</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
                     <Name>TrialSet</Name>
                   </Expression>
-                  <Expression xsi:type="InputMapping">
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Repeats</Selector>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
                     <PropertyMappings>
-                      <Property Name="Count" Selector="Repeats" />
+                      <Property Name="Count" />
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Range">
                       <rx:Start>0</rx:Start>
-                      <rx:Count>2</rx:Count>
+                      <rx:Count>10</rx:Count>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:SelectMany">
@@ -1444,7 +1450,7 @@ Item3 as Right)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Take">
-                      <rx:Count>10</rx:Count>
+                      <rx:Count>20</rx:Count>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -2050,7 +2056,7 @@ Item3 as Right)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Delay">
-                            <rx:DueTime>PT0S</rx:DueTime>
+                            <rx:DueTime>PT4.5S</rx:DueTime>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="rx:Condition">
@@ -2135,7 +2141,7 @@ Item3 as Right)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Delay">
-                            <rx:DueTime>PT2.609S</rx:DueTime>
+                            <rx:DueTime>PT1.077S</rx:DueTime>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
@@ -2353,23 +2359,12 @@ Item3 as Right)</scr:Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>TrialComplete</Name>
                   </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:ElementIndex" />
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Index</Selector>
-                  </Expression>
                   <Expression xsi:type="rx:Condition">
                     <Name>ContinueTrials</Name>
                     <Workflow>
                       <Nodes>
                         <Expression xsi:type="WorkflowInput">
                           <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="Add">
-                          <Operand xsi:type="IntProperty">
-                            <Value>1</Value>
-                          </Operand>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>TotalTrials</Name>
@@ -2381,11 +2376,10 @@ Item3 as Right)</scr:Expression>
                         <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="3" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="0" To="2" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source2" />
+                        <Edge From="2" To="3" Label="Source1" />
                         <Edge From="3" To="4" Label="Source1" />
-                        <Edge From="4" To="5" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -2399,11 +2393,6 @@ Item3 as Right)</scr:Expression>
                         <Expression xsi:type="WorkflowInput">
                           <Name>Source1</Name>
                         </Expression>
-                        <Expression xsi:type="Add">
-                          <Operand xsi:type="IntProperty">
-                            <Value>1</Value>
-                          </Operand>
-                        </Expression>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>TotalTrials</Name>
                         </Expression>
@@ -2415,12 +2404,11 @@ Item3 as Right)</scr:Expression>
                         <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="3" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="0" To="2" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source2" />
+                        <Edge From="2" To="3" Label="Source1" />
                         <Edge From="3" To="4" Label="Source1" />
                         <Edge From="4" To="5" Label="Source1" />
-                        <Edge From="5" To="6" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -2439,23 +2427,23 @@ Item3 as Right)</scr:Expression>
                   <Edge From="7" To="8" Label="Source1" />
                   <Edge From="8" To="9" Label="Source1" />
                   <Edge From="9" To="10" Label="Source1" />
-                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="11" To="15" Label="Source1" />
                   <Edge From="12" To="13" Label="Source1" />
                   <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="14" To="15" Label="Source1" />
-                  <Edge From="15" To="18" Label="Source1" />
+                  <Edge From="14" To="15" Label="Source2" />
+                  <Edge From="15" To="16" Label="Source1" />
                   <Edge From="16" To="17" Label="Source1" />
-                  <Edge From="17" To="18" Label="Source2" />
+                  <Edge From="17" To="20" Label="Source1" />
                   <Edge From="18" To="19" Label="Source1" />
-                  <Edge From="19" To="20" Label="Source1" />
+                  <Edge From="19" To="20" Label="Source2" />
                   <Edge From="20" To="21" Label="Source1" />
+                  <Edge From="21" To="22" Label="Source1" />
                   <Edge From="22" To="23" Label="Source1" />
-                  <Edge From="23" To="24" Label="Source1" />
+                  <Edge From="24" To="25" Label="Source1" />
                   <Edge From="25" To="26" Label="Source1" />
-                  <Edge From="26" To="27" Label="Source1" />
                   <Edge From="27" To="28" Label="Source1" />
+                  <Edge From="28" To="29" Label="Source1" />
                   <Edge From="29" To="30" Label="Source1" />
-                  <Edge From="30" To="31" Label="Source1" />
                   <Edge From="31" To="32" Label="Source1" />
                   <Edge From="31" To="34" Label="Source1" />
                   <Edge From="31" To="35" Label="Source1" />
