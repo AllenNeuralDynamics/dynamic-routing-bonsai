@@ -7,12 +7,12 @@
                  xmlns:p2="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:p3="clr-namespace:AllenNeuralDynamics.AindBehaviorServices.DataTypes;assembly=AllenNeuralDynamics.AindBehaviorServices"
+                 xmlns:p4="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
                  xmlns:beh="clr-namespace:Harp.Behavior;assembly=Harp.Behavior"
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
-                 xmlns:p4="clr-namespace:AllenNeuralDynamics.Core;assembly=AllenNeuralDynamics.Core"
-                 xmlns:p5="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
+                 xmlns:p5="clr-namespace:AllenNeuralDynamics.Core;assembly=AllenNeuralDynamics.Core"
                  xmlns:p6="clr-namespace:Harp.SoundCard;assembly=Harp.SoundCard"
                  xmlns:p7="clr-namespace:AllenNeuralDynamics.LicketySplit;assembly=AllenNeuralDynamics.LicketySplit"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -148,7 +148,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="num:CreateRandom">
-                <num:Seed>6</num:Seed>
+                <num:Seed>8</num:Seed>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -246,6 +246,9 @@
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>InterTrialIntervalDistribution</Name>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p4:Unit">
+              <rx:Name>StartExperiment</rx:Name>
             </Expression>
           </Nodes>
           <Edges>
@@ -697,8 +700,8 @@ Item3 as Right)</scr:Expression>
                           <Selector>Item2</Selector>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p4:CreateSoftwareEvent">
-                            <p4:EventName>SoftwareEvent</p4:EventName>
+                          <Combinator xsi:type="p5:CreateSoftwareEvent">
+                            <p5:EventName>SoftwareEvent</p5:EventName>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
@@ -880,8 +883,8 @@ Item3 as Right)</scr:Expression>
                           <Selector>Item2</Selector>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p4:CreateSoftwareEvent">
-                            <p4:EventName>SoftwareEvent</p4:EventName>
+                          <Combinator xsi:type="p5:CreateSoftwareEvent">
+                            <p5:EventName>SoftwareEvent</p5:EventName>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
@@ -927,7 +930,7 @@ Item3 as Right)</scr:Expression>
                       </Edges>
                     </Workflow>
                   </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p5:Unit">
+                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p4:Unit">
                     <rx:Name>StopDrawing</rx:Name>
                   </Expression>
                   <Expression xsi:type="rx:CreateObservable">
@@ -975,8 +978,8 @@ Item3 as Right)</scr:Expression>
                           <Selector>Item2</Selector>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p4:CreateSoftwareEvent">
-                            <p4:EventName>SoftwareEvent</p4:EventName>
+                          <Combinator xsi:type="p5:CreateSoftwareEvent">
+                            <p5:EventName>SoftwareEvent</p5:EventName>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
@@ -1052,7 +1055,7 @@ Item3 as Right)</scr:Expression>
                             <harp:VisualIndicators>On</harp:VisualIndicators>
                             <harp:Heartbeat>Disabled</harp:Heartbeat>
                             <harp:IgnoreErrors>false</harp:IgnoreErrors>
-                            <harp:PortName>COM8</harp:PortName>
+                            <harp:PortName>COM4</harp:PortName>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="rx:PublishSubject">
@@ -1116,8 +1119,8 @@ Item3 as Right)</scr:Expression>
                           <Name>Source1</Name>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p4:CreateSoftwareEvent">
-                            <p4:EventName>SoftwareEvent</p4:EventName>
+                          <Combinator xsi:type="p5:CreateSoftwareEvent">
+                            <p5:EventName>SoftwareEvent</p5:EventName>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
@@ -1171,7 +1174,7 @@ Item3 as Right)</scr:Expression>
                   <Expression xsi:type="MulticastSubject">
                     <Name>HarpSoundCardCommands</Name>
                   </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p5:Unit">
+                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p4:Unit">
                     <rx:Name>StopAudio</rx:Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -1187,8 +1190,8 @@ Item3 as Right)</scr:Expression>
                           <Name>Source1</Name>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p4:CreateSoftwareEvent">
-                            <p4:EventName>SoftwareEvent</p4:EventName>
+                          <Combinator xsi:type="p5:CreateSoftwareEvent">
+                            <p5:EventName>SoftwareEvent</p5:EventName>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
@@ -1252,7 +1255,7 @@ Item3 as Right)</scr:Expression>
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.HarpUtils:HarpLicketySplitDevice.bonsai">
-                    <PortName>COMx</PortName>
+                    <PortName>COM15</PortName>
                     <TriggerHarpReadDumpSubjectName>TriggerHarpReadDump</TriggerHarpReadDumpSubjectName>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
@@ -1304,7 +1307,7 @@ Item3 as Right)</scr:Expression>
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.HarpUtils:HarpBehaviorDevice.bonsai">
-                    <PortName>COM4</PortName>
+                    <PortName>COM14</PortName>
                     <TriggerHarpReadDumpSubjectName>TriggerHarpReadDump</TriggerHarpReadDumpSubjectName>
                   </Expression>
                   <Expression xsi:type="rx:PublishSubject" TypeArguments="sys:Int32">
@@ -1501,21 +1504,22 @@ Item3 as Right)</scr:Expression>
                           </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p4:AindSpinnakerCapture">
+                          <Combinator xsi:type="p5:AindSpinnakerCapture">
                             <spk:Index xsi:nil="true" />
+                            <spk:SerialNumber>24233229</spk:SerialNumber>
                             <spk:ColorProcessing>Default</spk:ColorProcessing>
-                            <p4:ExposureTime>19000</p4:ExposureTime>
-                            <p4:Gain>0</p4:Gain>
-                            <p4:Binning>1</p4:Binning>
-                            <p4:Gamma xsi:nil="true" />
-                            <p4:PixelFormat>Mono8</p4:PixelFormat>
-                            <p4:RegionOfInterest>
-                              <p4:X>0</p4:X>
-                              <p4:Y>0</p4:Y>
-                              <p4:Width>0</p4:Width>
-                              <p4:Height>0</p4:Height>
-                            </p4:RegionOfInterest>
-                            <p4:AdcBitDepth xsi:nil="true" />
+                            <p5:ExposureTime>1000</p5:ExposureTime>
+                            <p5:Gain>0</p5:Gain>
+                            <p5:Binning>1</p5:Binning>
+                            <p5:Gamma xsi:nil="true" />
+                            <p5:PixelFormat>Mono8</p5:PixelFormat>
+                            <p5:RegionOfInterest>
+                              <p5:X>0</p5:X>
+                              <p5:Y>0</p5:Y>
+                              <p5:Width>0</p5:Width>
+                              <p5:Height>0</p5:Height>
+                            </p5:RegionOfInterest>
+                            <p5:AdcBitDepth>Bit8</p5:AdcBitDepth>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
@@ -1628,7 +1632,7 @@ Item3 as Right)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="GreaterThanOrEqual">
                     <Operand xsi:type="IntProperty">
-                      <Value>0</Value>
+                      <Value>1</Value>
                     </Operand>
                   </Expression>
                   <Expression xsi:type="rx:Condition">
@@ -1656,6 +1660,63 @@ Item3 as Right)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="rx:BehaviorSubject">
                     <Name>TriggeredCamerasReady</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>HarpBehaviorEvents</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>TriggeredCamerasReady</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Zip" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="gl:Delay">
+                      <gl:DueTime>PT2S</gl:DueTime>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="BooleanProperty">
+                      <Value>true</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>CameraState</Name>
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Boolean">
+                    <rx:Name>CameraState</rx:Name>
+                  </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="beh:CreateMessage">
+                    <harp:MessageType>Write</harp:MessageType>
+                    <harp:Payload xsi:type="beh:CreateStartCamerasPayload">
+                      <beh:StartCameras>CameraOutput0</beh:StartCameras>
+                    </harp:Payload>
+                  </Expression>
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>HarpBehaviorCommands</Name>
                   </Expression>
                 </Nodes>
                 <Edges>
@@ -1698,6 +1759,16 @@ Item3 as Right)</scr:Expression>
                   <Edge From="38" To="39" Label="Source1" />
                   <Edge From="39" To="40" Label="Source1" />
                   <Edge From="40" To="41" Label="Source1" />
+                  <Edge From="42" To="43" Label="Source1" />
+                  <Edge From="43" To="45" Label="Source1" />
+                  <Edge From="44" To="45" Label="Source2" />
+                  <Edge From="45" To="46" Label="Source1" />
+                  <Edge From="46" To="47" Label="Source1" />
+                  <Edge From="47" To="48" Label="Source1" />
+                  <Edge From="48" To="49" Label="Source1" />
+                  <Edge From="50" To="51" Label="Source1" />
+                  <Edge From="51" To="52" Label="Source1" />
+                  <Edge From="52" To="53" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -1734,7 +1805,7 @@ Item3 as Right)</scr:Expression>
               <Combinator xsi:type="rx:WithLatestFrom" />
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p4:FramestampSoftwareEvent" />
+              <Combinator xsi:type="p5:FramestampSoftwareEvent" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>TimeBase</Name>
@@ -1751,7 +1822,7 @@ Item3 as Right)</scr:Expression>
               <Combinator xsi:type="harp:CreateTimestamped" />
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p4:TimestampSoftwareEvent" />
+              <Combinator xsi:type="p5:TimestampSoftwareEvent" />
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogSoftwareEventsDemux.bonsai">
               <LoggerName>SoftwareEvents</LoggerName>
@@ -3299,8 +3370,8 @@ bitMasks:
                                 <Name>Trial</Name>
                               </Expression>
                               <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p4:CreateSoftwareEvent">
-                                  <p4:EventName>TrialStartEvent</p4:EventName>
+                                <Combinator xsi:type="p5:CreateSoftwareEvent">
+                                  <p5:EventName>TrialStartEvent</p5:EventName>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="MulticastSubject">
@@ -4273,6 +4344,15 @@ bitMasks:
           </Edges>
         </Workflow>
       </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>StartExperiment</Name>
+      </Expression>
+      <Expression xsi:type="rx:PublishSubject">
+        <Name>TriggerHarpReadDump</Name>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:SubscribeWhen" />
+      </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="wie:KeyDown">
           <wie:Filter>LButton RButton Cancel ShiftKey ControlKey Menu Pause A B C P Q R S Shift</wie:Filter>
@@ -4280,19 +4360,17 @@ bitMasks:
         </Combinator>
       </Expression>
       <Expression xsi:type="Unit" />
-      <Expression xsi:type="rx:PublishSubject">
-        <Name>TriggerHarpReadDump</Name>
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="rx:SubscribeWhen" />
+      <Expression xsi:type="MulticastSubject">
+        <Name>StartExperiment</Name>
       </Expression>
     </Nodes>
     <Edges>
       <Edge From="0" To="1" Label="Source1" />
-      <Edge From="7" To="11" Label="Source1" />
+      <Edge From="7" To="10" Label="Source1" />
       <Edge From="8" To="9" Label="Source1" />
-      <Edge From="9" To="10" Label="Source1" />
-      <Edge From="10" To="11" Label="Source2" />
+      <Edge From="9" To="10" Label="Source2" />
+      <Edge From="11" To="12" Label="Source1" />
+      <Edge From="12" To="13" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>

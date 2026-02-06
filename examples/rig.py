@@ -14,13 +14,13 @@ rig = AindBehaviorDynamicRoutingBonsaiRig(
     camera_controller=rig.cameras.CameraController(
         cameras={
             "Camera1": rig.cameras.SpinnakerCamera(
-                serial_number=""
+                serial_number="24228162"
             ),
             "Camera1": rig.cameras.SpinnakerCamera(
-                serial_number=""
+                serial_number="24210983"
             ),
             "Camera1": rig.cameras.SpinnakerCamera(
-                serial_number=""
+                serial_number="24233229"
             ),
         }
     ),
