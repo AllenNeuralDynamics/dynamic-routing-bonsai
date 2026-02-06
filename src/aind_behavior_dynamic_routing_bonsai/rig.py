@@ -20,6 +20,7 @@ class AindBehaviorDynamicRoutingBonsaiRig(rig.AindBehaviorRigModel):
     screen: rig.visual_stimulation.Screen = Field(
         default=rig.visual_stimulation.Screen(), description="Screen settings"
     )
+    camera_controller: rig.cameras.CameraController[rig.cameras.SpinnakerCamera]
     calibrations: RigCalibration = Field(default=RigCalibration(water_valve=wvc.WaterValveCalibration(
         input=wvc.WaterValveCalibrationInput(),
         output=wvc.WaterValveCalibrationOutput(slope=1, offset=0)

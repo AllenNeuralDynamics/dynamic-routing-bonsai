@@ -11,6 +11,19 @@ rig = AindBehaviorDynamicRoutingBonsaiRig(
     harp_behavior=rig.harp.HarpBehavior(port_name="COM14"),
     harp_sound_card=rig.harp.HarpSoundCard(port_name="COM4"),
     harp_lickety_split=rig.harp.HarpLicketySplit(port_name="COM15"),
+    camera_controller=rig.cameras.CameraController(
+        cameras={
+            "Camera1": rig.cameras.SpinnakerCamera(
+                serial_number=""
+            ),
+            "Camera1": rig.cameras.SpinnakerCamera(
+                serial_number=""
+            ),
+            "Camera1": rig.cameras.SpinnakerCamera(
+                serial_number=""
+            ),
+        }
+    ),
     screen=rig.visual_stimulation.Screen(
         calibration=rig.visual_stimulation.DisplaysCalibration(
             center=rig.visual_stimulation.DisplayCalibration(
