@@ -9,13 +9,13 @@
                  xmlns:p3="clr-namespace:AllenNeuralDynamics.AindBehaviorServices.DataTypes;assembly=AllenNeuralDynamics.AindBehaviorServices"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
+                 xmlns:beh="clr-namespace:Harp.Behavior;assembly=Harp.Behavior"
+                 xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
                  xmlns:p4="clr-namespace:AllenNeuralDynamics.Core;assembly=AllenNeuralDynamics.Core"
                  xmlns:p5="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
-                 xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
                  xmlns:p6="clr-namespace:Harp.SoundCard;assembly=Harp.SoundCard"
                  xmlns:p7="clr-namespace:AllenNeuralDynamics.LicketySplit;assembly=AllenNeuralDynamics.LicketySplit"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
-                 xmlns:beh="clr-namespace:Harp.Behavior;assembly=Harp.Behavior"
                  xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
                  xmlns:p8="clr-namespace:OpenCV.Net;assembly=OpenCV.Net"
                  xmlns:spk="clr-namespace:Bonsai.Spinnaker;assembly=Bonsai.Spinnaker"
@@ -556,12 +556,14 @@ Item3 as Right)</scr:Expression>
               </Combinator>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>RenderFrame</Name>
+              <Name>HarpBehaviorEvents</Name>
+            </Expression>
+            <Expression xsi:type="beh:Parse">
+              <harp:Register xsi:type="beh:TimestampedAnalogData" />
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>TimeStep.ElapsedTime</Selector>
+              <Selector>Seconds</Selector>
             </Expression>
-            <Expression xsi:type="rx:Accumulate" />
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>TimeBase</Name>
             </Expression>
