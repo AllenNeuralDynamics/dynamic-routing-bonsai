@@ -83,11 +83,11 @@ task_logic = AindBehaviorDynamicRoutingBonsaiTaskLogic(
                         repeats=10,
                         available_trials=[
                             Trial(
-                                stimulus=AudioStimulus(stimulus_type="audio", frequency=120),
+                                stimulus=AudioStimulus(stimulus_type="audio", waveform_index=4, attenuation=1),
                                 presentation_parameters=rewarded_presentation,
                             ),
                             Trial(
-                                stimulus=AudioStimulus(stimulus_type="audio", frequency=700),
+                                stimulus=AudioStimulus(stimulus_type="audio", waveform_index=5, attenuation=1),
                                 presentation_parameters=unrewarded_presentation,
                             ),
                         ],

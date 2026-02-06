@@ -827,7 +827,9 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     public partial class AudioStimulus : Stimulus
     {
     
-        private double _frequency;
+        private int _waveformIndex;
+    
+        private double _attenuation;
     
         public AudioStimulus()
         {
@@ -836,19 +838,33 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
         protected AudioStimulus(AudioStimulus other) : 
                 base(other)
         {
-            _frequency = other._frequency;
+            _waveformIndex = other._waveformIndex;
+            _attenuation = other._attenuation;
         }
     
-        [Newtonsoft.Json.JsonPropertyAttribute("frequency", Required=Newtonsoft.Json.Required.Always)]
-        public double Frequency
+        [Newtonsoft.Json.JsonPropertyAttribute("waveform_index", Required=Newtonsoft.Json.Required.Always)]
+        public int WaveformIndex
         {
             get
             {
-                return _frequency;
+                return _waveformIndex;
             }
             set
             {
-                _frequency = value;
+                _waveformIndex = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("attenuation", Required=Newtonsoft.Json.Required.Always)]
+        public double Attenuation
+        {
+            get
+            {
+                return _attenuation;
+            }
+            set
+            {
+                _attenuation = value;
             }
         }
     
@@ -868,7 +884,8 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("Frequency = " + _frequency);
+            stringBuilder.Append("WaveformIndex = " + _waveformIndex + ", ");
+            stringBuilder.Append("Attenuation = " + _attenuation);
             return true;
         }
     }

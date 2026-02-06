@@ -345,14 +345,19 @@
           "title": "Stimulus Type",
           "type": "string"
         },
-        "frequency": {
-          "title": "Frequency",
+        "waveform_index": {
+          "title": "Waveform Index",
+          "type": "integer"
+        },
+        "attenuation": {
+          "title": "Attenuation",
           "type": "number"
         }
       },
       "required": [
         "stimulus_type",
-        "frequency"
+        "waveform_index",
+        "attenuation"
       ],
       "title": "AudioStimulus",
       "type": "object"
