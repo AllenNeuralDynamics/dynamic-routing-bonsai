@@ -15,6 +15,7 @@
                  xmlns:p6="clr-namespace:Harp.SoundCard;assembly=Harp.SoundCard"
                  xmlns:p7="clr-namespace:AllenNeuralDynamics.LicketySplit;assembly=AllenNeuralDynamics.LicketySplit"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                 xmlns:beh="clr-namespace:Harp.Behavior;assembly=Harp.Behavior"
                  xmlns:p8="clr-namespace:;assembly=Extensions"
                  xmlns:wie="clr-namespace:Bonsai.Windows.Input;assembly=Bonsai.Windows.Input"
                  xmlns="https://bonsai-rx.org/2018/workflow">
@@ -1283,14 +1284,61 @@ Item3 as Right)</scr:Expression>
               </Workflow>
             </Expression>
             <Expression xsi:type="GroupWorkflow">
-              <Name>Reward</Name>
+              <Name>Behavior</Name>
               <Workflow>
                 <Nodes>
-                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p5:Unit">
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>RigSchema</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>HarpBehavior.PortName</Selector>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="PortName" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.HarpUtils:HarpBehaviorDevice.bonsai">
+                    <PortName>COM4</PortName>
+                    <TriggerHarpReadDumpSubjectName>TriggerHarpReadDump</TriggerHarpReadDumpSubjectName>
+                  </Expression>
+                  <Expression xsi:type="rx:PublishSubject" TypeArguments="sys:Int32">
                     <rx:Name>GiveReward</rx:Name>
                   </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="PulseSupplyPort0" Selector="it" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="beh:CreateMessage">
+                    <harp:MessageType>Write</harp:MessageType>
+                    <harp:Payload xsi:type="beh:CreatePulseSupplyPort0Payload">
+                      <beh:PulseSupplyPort0>24</beh:PulseSupplyPort0>
+                    </harp:Payload>
+                  </Expression>
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>HarpBehaviorCommands</Name>
+                  </Expression>
+                  <Expression xsi:type="beh:CreateMessage">
+                    <harp:MessageType>Write</harp:MessageType>
+                    <harp:Payload xsi:type="beh:CreateOutputSetPayload">
+                      <beh:OutputSet>SupplyPort0</beh:OutputSet>
+                    </harp:Payload>
+                  </Expression>
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>HarpBehaviorCommands</Name>
+                  </Expression>
                 </Nodes>
-                <Edges />
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
+                </Edges>
               </Workflow>
             </Expression>
           </Nodes>
@@ -1815,7 +1863,7 @@ Item3 as Right)</scr:Expression>
                                             <Name>Trial</Name>
                                           </Expression>
                                           <Expression xsi:type="MemberSelector">
-                                            <Selector>Item1.PresentationParameters.Rewarded</Selector>
+                                            <Selector>Item1.PresentationParameters</Selector>
                                           </Expression>
                                           <Expression xsi:type="Combinator">
                                             <Combinator xsi:type="rx:Zip" />
@@ -1828,7 +1876,7 @@ Item3 as Right)</scr:Expression>
                                                   <Name>Source1</Name>
                                                 </Expression>
                                                 <Expression xsi:type="MemberSelector">
-                                                  <Selector>Item2</Selector>
+                                                  <Selector>Item2.Rewarded</Selector>
                                                 </Expression>
                                                 <Expression xsi:type="WorkflowOutput" />
                                               </Nodes>
@@ -1838,7 +1886,9 @@ Item3 as Right)</scr:Expression>
                                               </Edges>
                                             </Workflow>
                                           </Expression>
-                                          <Expression xsi:type="Unit" />
+                                          <Expression xsi:type="MemberSelector">
+                                            <Selector>Item2.RewardAmount</Selector>
+                                          </Expression>
                                           <Expression xsi:type="MulticastSubject">
                                             <Name>GiveReward</Name>
                                           </Expression>
@@ -1855,7 +1905,7 @@ Item3 as Right)</scr:Expression>
                                                   <Name>Source1</Name>
                                                 </Expression>
                                                 <Expression xsi:type="MemberSelector">
-                                                  <Selector>Item2</Selector>
+                                                  <Selector>Item2.Rewarded</Selector>
                                                 </Expression>
                                                 <Expression xsi:type="BitwiseNot" />
                                                 <Expression xsi:type="WorkflowOutput" />
@@ -2017,7 +2067,9 @@ Item3 as Right)</scr:Expression>
                                                 <Expression xsi:type="WorkflowInput">
                                                   <Name>Source1</Name>
                                                 </Expression>
-                                                <Expression xsi:type="Unit" />
+                                                <Expression xsi:type="MemberSelector">
+                                                  <Selector>Item2.Item1.PresentationParameters.RewardAmount</Selector>
+                                                </Expression>
                                                 <Expression xsi:type="MulticastSubject">
                                                   <Name>GiveReward</Name>
                                                 </Expression>

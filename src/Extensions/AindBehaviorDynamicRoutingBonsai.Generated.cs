@@ -31,6 +31,8 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     
         private Screen _screen;
     
+        private RigCalibration _calibrations;
+    
         public AindBehaviorDynamicRoutingBonsaiRig()
         {
             _aindBehaviorServicesPkgVersion = "0.12.5";
@@ -39,6 +41,7 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             _harpSoundCard = new HarpSoundCard();
             _harpLicketySplit = new HarpLicketySplit();
             _screen = new Screen();
+            _calibrations = new RigCalibration();
         }
     
         protected AindBehaviorDynamicRoutingBonsaiRig(AindBehaviorDynamicRoutingBonsaiRig other)
@@ -51,6 +54,7 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             _harpSoundCard = other._harpSoundCard;
             _harpLicketySplit = other._harpLicketySplit;
             _screen = other._screen;
+            _calibrations = other._calibrations;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("aind_behavior_services_pkg_version")]
@@ -185,6 +189,20 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("calibrations")]
+        public RigCalibration Calibrations
+        {
+            get
+            {
+                return _calibrations;
+            }
+            set
+            {
+                _calibrations = value;
+            }
+        }
+    
         public System.IObservable<AindBehaviorDynamicRoutingBonsaiRig> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindBehaviorDynamicRoutingBonsaiRig(this)));
@@ -204,7 +222,8 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             stringBuilder.Append("HarpBehavior = " + _harpBehavior + ", ");
             stringBuilder.Append("HarpSoundCard = " + _harpSoundCard + ", ");
             stringBuilder.Append("HarpLicketySplit = " + _harpLicketySplit + ", ");
-            stringBuilder.Append("Screen = " + _screen);
+            stringBuilder.Append("Screen = " + _screen + ", ");
+            stringBuilder.Append("Calibrations = " + _calibrations);
             return true;
         }
     
@@ -2171,6 +2190,140 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     }
 
 
+    /// <summary>
+    /// Input for water valve calibration class
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Input for water valve calibration class")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class Measurement
+    {
+    
+        private double _valveOpenInterval;
+    
+        private double _valveOpenTime;
+    
+        private System.Collections.Generic.List<double> _waterWeight;
+    
+        private int _repeatCount;
+    
+        public Measurement()
+        {
+            _waterWeight = new System.Collections.Generic.List<double>();
+        }
+    
+        protected Measurement(Measurement other)
+        {
+            _valveOpenInterval = other._valveOpenInterval;
+            _valveOpenTime = other._valveOpenTime;
+            _waterWeight = other._waterWeight;
+            _repeatCount = other._repeatCount;
+        }
+    
+        /// <summary>
+        /// Time between two consecutive valve openings (s)
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("valve_open_interval", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Time between two consecutive valve openings (s)")]
+        public double ValveOpenInterval
+        {
+            get
+            {
+                return _valveOpenInterval;
+            }
+            set
+            {
+                _valveOpenInterval = value;
+            }
+        }
+    
+        /// <summary>
+        /// Valve open interval (s)
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("valve_open_time", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Valve open interval (s)")]
+        public double ValveOpenTime
+        {
+            get
+            {
+                return _valveOpenTime;
+            }
+            set
+            {
+                _valveOpenTime = value;
+            }
+        }
+    
+        /// <summary>
+        /// Weight of water delivered (g)
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("water_weight", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Weight of water delivered (g)")]
+        public System.Collections.Generic.List<double> WaterWeight
+        {
+            get
+            {
+                return _waterWeight;
+            }
+            set
+            {
+                _waterWeight = value;
+            }
+        }
+    
+        /// <summary>
+        /// Number of times the valve opened.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("repeat_count", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Number of times the valve opened.")]
+        public int RepeatCount
+        {
+            get
+            {
+                return _repeatCount;
+            }
+            set
+            {
+                _repeatCount = value;
+            }
+        }
+    
+        public System.IObservable<Measurement> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Measurement(this)));
+        }
+    
+        public System.IObservable<Measurement> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Measurement(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("ValveOpenInterval = " + _valveOpenInterval + ", ");
+            stringBuilder.Append("ValveOpenTime = " + _valveOpenTime + ", ");
+            stringBuilder.Append("WaterWeight = " + _waterWeight + ", ");
+            stringBuilder.Append("RepeatCount = " + _repeatCount);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
@@ -2187,6 +2340,8 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     
         private bool _rewarded;
     
+        private int _rewardAmount;
+    
         private bool _nonContingentReward;
     
         private double _timeoutDuration;
@@ -2195,6 +2350,7 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     
         public PresentationParameters()
         {
+            _rewardAmount = 10;
         }
     
         protected PresentationParameters(PresentationParameters other)
@@ -2204,6 +2360,7 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             _responseWindowStartTime = other._responseWindowStartTime;
             _responseWindowDuration = other._responseWindowDuration;
             _rewarded = other._rewarded;
+            _rewardAmount = other._rewardAmount;
             _nonContingentReward = other._nonContingentReward;
             _timeoutDuration = other._timeoutDuration;
             _timeoutStimulus = other._timeoutStimulus;
@@ -2274,6 +2431,23 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        /// <summary>
+        /// The reward amount, in milliseconds open time.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("reward_amount")]
+        [System.ComponentModel.DescriptionAttribute("The reward amount, in milliseconds open time.")]
+        public int RewardAmount
+        {
+            get
+            {
+                return _rewardAmount;
+            }
+            set
+            {
+                _rewardAmount = value;
+            }
+        }
+    
         [Newtonsoft.Json.JsonPropertyAttribute("non_contingent_reward", Required=Newtonsoft.Json.Required.Always)]
         public bool NonContingentReward
         {
@@ -2331,6 +2505,7 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             stringBuilder.Append("ResponseWindowStartTime = " + _responseWindowStartTime + ", ");
             stringBuilder.Append("ResponseWindowDuration = " + _responseWindowDuration + ", ");
             stringBuilder.Append("Rewarded = " + _rewarded + ", ");
+            stringBuilder.Append("RewardAmount = " + _rewardAmount + ", ");
             stringBuilder.Append("NonContingentReward = " + _nonContingentReward + ", ");
             stringBuilder.Append("TimeoutDuration = " + _timeoutDuration + ", ");
             stringBuilder.Append("TimeoutStimulus = " + _timeoutStimulus);
@@ -2520,6 +2695,73 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             stringBuilder.Append("ColorB = " + _colorB + ", ");
             stringBuilder.Append("ColorA = " + _colorA);
             return true;
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class RigCalibration
+    {
+    
+        private WaterValveCalibration _waterValve;
+    
+        public RigCalibration()
+        {
+            _waterValve = new WaterValveCalibration();
+        }
+    
+        protected RigCalibration(RigCalibration other)
+        {
+            _waterValve = other._waterValve;
+        }
+    
+        /// <summary>
+        /// Water valve calibration
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("water_valve", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Water valve calibration")]
+        public WaterValveCalibration WaterValve
+        {
+            get
+            {
+                return _waterValve;
+            }
+            set
+            {
+                _waterValve = value;
+            }
+        }
+    
+        public System.IObservable<RigCalibration> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new RigCalibration(this)));
+        }
+    
+        public System.IObservable<RigCalibration> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new RigCalibration(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("WaterValve = " + _waterValve);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
         }
     }
 
@@ -3536,6 +3778,391 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     }
 
 
+    /// <summary>
+    /// Water valve calibration class
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Water valve calibration class")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class WaterValveCalibration
+    {
+    
+        private string _deviceName;
+    
+        private WaterValveCalibrationInput _input;
+    
+        private WaterValveCalibrationOutput _output;
+    
+        private System.DateTimeOffset? _date;
+    
+        private string _description;
+    
+        private string _notes;
+    
+        public WaterValveCalibration()
+        {
+            _deviceName = "WaterValve";
+            _input = new WaterValveCalibrationInput();
+            _output = new WaterValveCalibrationOutput();
+            _description = "Calibration of the water valve delivery system";
+        }
+    
+        protected WaterValveCalibration(WaterValveCalibration other)
+        {
+            _deviceName = other._deviceName;
+            _input = other._input;
+            _output = other._output;
+            _date = other._date;
+            _description = other._description;
+            _notes = other._notes;
+        }
+    
+        /// <summary>
+        /// Name of the device being calibrated
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device_name")]
+        [System.ComponentModel.DescriptionAttribute("Name of the device being calibrated")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("input", Required=Newtonsoft.Json.Required.Always)]
+        public WaterValveCalibrationInput Input
+        {
+            get
+            {
+                return _input;
+            }
+            set
+            {
+                _input = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("output", Required=Newtonsoft.Json.Required.Always)]
+        public WaterValveCalibrationOutput Output
+        {
+            get
+            {
+                return _output;
+            }
+            set
+            {
+                _output = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("date")]
+        public System.DateTimeOffset? Date
+        {
+            get
+            {
+                return _date;
+            }
+            set
+            {
+                _date = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("description")]
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+            set
+            {
+                _description = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("notes")]
+        public string Notes
+        {
+            get
+            {
+                return _notes;
+            }
+            set
+            {
+                _notes = value;
+            }
+        }
+    
+        public System.IObservable<WaterValveCalibration> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new WaterValveCalibration(this)));
+        }
+    
+        public System.IObservable<WaterValveCalibration> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new WaterValveCalibration(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("DeviceName = " + _deviceName + ", ");
+            stringBuilder.Append("Input = " + _input + ", ");
+            stringBuilder.Append("Output = " + _output + ", ");
+            stringBuilder.Append("Date = " + _date + ", ");
+            stringBuilder.Append("Description = " + _description + ", ");
+            stringBuilder.Append("Notes = " + _notes);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class WaterValveCalibrationInput
+    {
+    
+        private System.Collections.Generic.List<Measurement> _measurements;
+    
+        public WaterValveCalibrationInput()
+        {
+            _measurements = new System.Collections.Generic.List<Measurement>();
+        }
+    
+        protected WaterValveCalibrationInput(WaterValveCalibrationInput other)
+        {
+            _measurements = other._measurements;
+        }
+    
+        /// <summary>
+        /// List of measurements
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("measurements")]
+        [System.ComponentModel.DescriptionAttribute("List of measurements")]
+        public System.Collections.Generic.List<Measurement> Measurements
+        {
+            get
+            {
+                return _measurements;
+            }
+            set
+            {
+                _measurements = value;
+            }
+        }
+    
+        public System.IObservable<WaterValveCalibrationInput> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new WaterValveCalibrationInput(this)));
+        }
+    
+        public System.IObservable<WaterValveCalibrationInput> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new WaterValveCalibrationInput(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("Measurements = " + _measurements);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    /// <summary>
+    /// Output for water valve calibration class
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Output for water valve calibration class")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class WaterValveCalibrationOutput
+    {
+    
+        private System.Collections.Generic.Dictionary<string, double> _intervalAverage;
+    
+        private double _slope;
+    
+        private double _offset;
+    
+        private double? _r2;
+    
+        private System.Collections.Generic.List<double> _validDomain;
+    
+        public WaterValveCalibrationOutput()
+        {
+        }
+    
+        protected WaterValveCalibrationOutput(WaterValveCalibrationOutput other)
+        {
+            _intervalAverage = other._intervalAverage;
+            _slope = other._slope;
+            _offset = other._offset;
+            _r2 = other._r2;
+            _validDomain = other._validDomain;
+        }
+    
+        /// <summary>
+        /// Dictionary keyed by measured valve interval and corresponding average single event volume.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("interval_average")]
+        [System.ComponentModel.DescriptionAttribute("Dictionary keyed by measured valve interval and corresponding average single even" +
+            "t volume.")]
+        public System.Collections.Generic.Dictionary<string, double> IntervalAverage
+        {
+            get
+            {
+                return _intervalAverage;
+            }
+            set
+            {
+                _intervalAverage = value;
+            }
+        }
+    
+        /// <summary>
+        /// Slope of the linear regression : Volume(g) = Slope(g/s) * time(s) + offset(g)
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("slope", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Slope of the linear regression : Volume(g) = Slope(g/s) * time(s) + offset(g)")]
+        public double Slope
+        {
+            get
+            {
+                return _slope;
+            }
+            set
+            {
+                _slope = value;
+            }
+        }
+    
+        /// <summary>
+        /// Offset of the linear regression : Volume(g) = Slope(g/s) * time(s) + offset(g)
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("offset", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Offset of the linear regression : Volume(g) = Slope(g/s) * time(s) + offset(g)")]
+        public double Offset
+        {
+            get
+            {
+                return _offset;
+            }
+            set
+            {
+                _offset = value;
+            }
+        }
+    
+        /// <summary>
+        /// R2 metric from the linear model.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("r2")]
+        [System.ComponentModel.DescriptionAttribute("R2 metric from the linear model.")]
+        public double? R2
+        {
+            get
+            {
+                return _r2;
+            }
+            set
+            {
+                _r2 = value;
+            }
+        }
+    
+        /// <summary>
+        /// The optional time-intervals the calibration curve was calculated on.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("valid_domain")]
+        [System.ComponentModel.DescriptionAttribute("The optional time-intervals the calibration curve was calculated on.")]
+        public System.Collections.Generic.List<double> ValidDomain
+        {
+            get
+            {
+                return _validDomain;
+            }
+            set
+            {
+                _validDomain = value;
+            }
+        }
+    
+        public System.IObservable<WaterValveCalibrationOutput> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new WaterValveCalibrationOutput(this)));
+        }
+    
+        public System.IObservable<WaterValveCalibrationOutput> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new WaterValveCalibrationOutput(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("IntervalAverage = " + _intervalAverage + ", ");
+            stringBuilder.Append("Slope = " + _slope + ", ");
+            stringBuilder.Append("Offset = " + _offset + ", ");
+            stringBuilder.Append("R2 = " + _r2 + ", ");
+            stringBuilder.Append("ValidDomain = " + _validDomain);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.6.1.0 (Newtonsoft.Json v13.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "stimulus_type")]
     [JsonInheritanceAttribute("audio", typeof(AudioStimulus))]
@@ -3960,6 +4587,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             return Process<HarpSoundCard>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Measurement> source)
+        {
+            return Process<Measurement>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<PresentationParameters> source)
         {
             return Process<PresentationParameters>(source);
@@ -3968,6 +4600,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
         public System.IObservable<string> Process(System.IObservable<QuadStimulus> source)
         {
             return Process<QuadStimulus>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<RigCalibration> source)
+        {
+            return Process<RigCalibration>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<ScalingParameters> source)
@@ -4010,6 +4647,21 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             return Process<Vector3>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<WaterValveCalibration> source)
+        {
+            return Process<WaterValveCalibration>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<WaterValveCalibrationInput> source)
+        {
+            return Process<WaterValveCalibrationInput>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<WaterValveCalibrationOutput> source)
+        {
+            return Process<WaterValveCalibrationOutput>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Stimulus> source)
         {
             return Process<Stimulus>(source);
@@ -4045,8 +4697,10 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBehavior>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpLicketySplit>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpSoundCard>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Measurement>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PresentationParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<QuadStimulus>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RigCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScalingParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Screen>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Trial>))]
@@ -4055,6 +4709,9 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UniformDistribution>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UniformDistributionParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Vector3>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WaterValveCalibration>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WaterValveCalibrationInput>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WaterValveCalibrationOutput>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Stimulus>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<TimeoutStimulus>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
