@@ -20,7 +20,8 @@ class StimulusBase(BaseModel):
 
 class AudioStimulus(StimulusBase):
     stimulus_type: Literal["audio"]
-    frequency: float
+    waveform_index: int
+    attenuation: float
 
 
 class GratingStimulus(StimulusBase):
@@ -55,6 +56,7 @@ class PresentationParameters(BaseModel):
     response_window_start_time: float
     response_window_duration: float
     rewarded: bool
+    reward_amount: int = Field(default=10, description="The reward amount, in milliseconds open time.")
     non_contingent_reward: bool
     timeout_duration: float
     timeout_stimulus: Annotated[

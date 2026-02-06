@@ -16,6 +16,12 @@ class AindBehaviorDynamicRoutingBonsaiRig(rig.AindBehaviorRigModel):
     version: Literal[__semver__] = __semver__
     harp_behavior: rig.harp.HarpBehavior = Field(..., description="Harp behavior")
     harp_sound_card: rig.harp.HarpSoundCard = Field(..., description="Harp sound card")
+    harp_lickety_split: rig.harp.HarpLicketySplit = Field(..., description="Harp lickometer")
     screen: rig.visual_stimulation.Screen = Field(
         default=rig.visual_stimulation.Screen(), description="Screen settings"
     )
+    camera_controller: rig.cameras.CameraController[rig.cameras.SpinnakerCamera]
+    calibrations: RigCalibration = Field(default=RigCalibration(water_valve=wvc.WaterValveCalibration(
+        input=wvc.WaterValveCalibrationInput(),
+        output=wvc.WaterValveCalibrationOutput(slope=1, offset=0)
+    )))

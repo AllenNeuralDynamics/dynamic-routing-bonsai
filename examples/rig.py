@@ -6,10 +6,31 @@ from aind_behavior_dynamic_routing_bonsai.rig import (
     AindBehaviorDynamicRoutingBonsaiRig,
 )
 
+frame_rate=60
+video_writer = rig.cameras.VideoWriterFfmpeg(frame_rate=frame_rate, container_extension="mp4")
+
 rig = AindBehaviorDynamicRoutingBonsaiRig(
     rig_name="test_rig",
-    harp_behavior=rig.harp.HarpBehavior(port_name="COM1"),
-    harp_sound_card=rig.harp.HarpSoundCard(port_name="COM2"),
+    harp_behavior=rig.harp.HarpBehavior(port_name="COM14"),
+    harp_sound_card=rig.harp.HarpSoundCard(port_name="COM4"),
+    harp_lickety_split=rig.harp.HarpLicketySplit(port_name="COM15"),
+    camera_controller=rig.cameras.CameraController(
+        frame_rate=frame_rate,
+        cameras={
+            "Camera1": rig.cameras.SpinnakerCamera(
+                serial_number="24228162",
+                video_writer=video_writer
+            ),
+            "Camera2": rig.cameras.SpinnakerCamera(
+                serial_number="24210983",
+                video_writer=video_writer
+            ),
+            "Camera3": rig.cameras.SpinnakerCamera(
+                serial_number="24233229",
+                video_writer=video_writer
+            ),
+        }
+    ),
     screen=rig.visual_stimulation.Screen(
         calibration=rig.visual_stimulation.DisplaysCalibration(
             center=rig.visual_stimulation.DisplayCalibration(
