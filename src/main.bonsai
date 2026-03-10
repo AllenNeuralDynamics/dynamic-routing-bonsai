@@ -10,13 +10,13 @@
                  xmlns:p4="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
+                 xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
                  xmlns:beh="clr-namespace:Harp.Behavior;assembly=Harp.Behavior"
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
                  xmlns:p5="clr-namespace:AllenNeuralDynamics.Core;assembly=AllenNeuralDynamics.Core"
                  xmlns:p6="clr-namespace:Harp.SoundCard;assembly=Harp.SoundCard"
                  xmlns:p7="clr-namespace:AllenNeuralDynamics.LicketySplit;assembly=AllenNeuralDynamics.LicketySplit"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
-                 xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
                  xmlns:p8="clr-namespace:OpenCV.Net;assembly=OpenCV.Net"
                  xmlns:spk="clr-namespace:Bonsai.Spinnaker;assembly=Bonsai.Spinnaker"
                  xmlns:p9="clr-namespace:;assembly=Extensions"
@@ -148,7 +148,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="num:CreateRandom">
-                <num:Seed>2</num:Seed>
+                <num:Seed>3</num:Seed>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -417,13 +417,136 @@ Item3 as Right)</scr:Expression>
                                 <Name>RenderFrame</Name>
                               </Expression>
                               <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.OrthographicView.bonsai">
-                                <Left>-1</Left>
-                                <Right>1</Right>
-                                <Bottom>-1</Bottom>
-                                <Top>1</Top>
+                                <Left>-180</Left>
+                                <Right>180</Right>
+                                <Bottom>-180</Bottom>
+                                <Top>180</Top>
                               </Expression>
                               <Expression xsi:type="rx:PublishSubject">
                                 <Name>Draw2DStim</Name>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>RigSchema</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Screen.Calibration.Center.Intrinsics.FrameWidth</Selector>
+                              </Expression>
+                              <Expression xsi:type="PropertyMapping">
+                                <PropertyMappings>
+                                  <Property Name="Width" />
+                                </PropertyMappings>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>RigSchema</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Screen.Calibration.Center.Intrinsics.FrameHeight</Selector>
+                              </Expression>
+                              <Expression xsi:type="PropertyMapping">
+                                <PropertyMappings>
+                                  <Property Name="Height" />
+                                </PropertyMappings>
+                              </Expression>
+                              <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.SphereMapping.bonsai">
+                                <ClearColor>Gray</ClearColor>
+                                <Width>1000</Width>
+                                <Height>1000</Height>
+                                <RotationZ>0</RotationZ>
+                                <RotationY>0</RotationY>
+                                <RotationX>0</RotationX>
+                                <FaceSize xsi:nil="true" />
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>RigSchema</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Screen.Calibration.Center.Intrinsics.DisplayWidth</Selector>
+                              </Expression>
+                              <Expression xsi:type="PropertyMapping">
+                                <PropertyMappings>
+                                  <Property Name="Width" />
+                                </PropertyMappings>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>RigSchema</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Screen.Calibration.Center.Intrinsics.DisplayHeight</Selector>
+                              </Expression>
+                              <Expression xsi:type="PropertyMapping">
+                                <PropertyMappings>
+                                  <Property Name="Height" />
+                                </PropertyMappings>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>RigSchema</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Screen.Calibration.Center</Selector>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Extrinsics.Rotation</Selector>
+                              </Expression>
+                              <Expression xsi:type="InputMapping">
+                                <PropertyMappings>
+                                  <Property Name="X" Selector="X" />
+                                  <Property Name="Y" Selector="Y" />
+                                  <Property Name="Z" Selector="Z" />
+                                </PropertyMappings>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="cv:CreatePoint3d">
+                                  <cv:X>0</cv:X>
+                                  <cv:Y>0</cv:Y>
+                                  <cv:Z>0</cv:Z>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="PropertyMapping">
+                                <PropertyMappings>
+                                  <Property Name="Rotation" />
+                                </PropertyMappings>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>RigSchema</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Screen.Calibration.Center</Selector>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Extrinsics.Translation</Selector>
+                              </Expression>
+                              <Expression xsi:type="InputMapping">
+                                <PropertyMappings>
+                                  <Property Name="X" Selector="X" />
+                                  <Property Name="Y" Selector="Y" />
+                                  <Property Name="Z" Selector="Z" />
+                                </PropertyMappings>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="cv:CreatePoint3d">
+                                  <cv:X>0</cv:X>
+                                  <cv:Y>0</cv:Y>
+                                  <cv:Z>-20</cv:Z>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="PropertyMapping">
+                                <PropertyMappings>
+                                  <Property Name="Translation" />
+                                </PropertyMappings>
+                              </Expression>
+                              <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.ViewWindow.bonsai">
+                                <Width>30</Width>
+                                <Height>20</Height>
+                                <Rotation>
+                                  <X>0</X>
+                                  <Y>0</Y>
+                                  <Z>0</Z>
+                                </Rotation>
+                                <Translation>
+                                  <X>0</X>
+                                  <Y>0</Y>
+                                  <Z>-20</Z>
+                                </Translation>
                               </Expression>
                               <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.DrawViewport.bonsai">
                                 <X>0</X>
@@ -440,9 +563,35 @@ Item3 as Right)</scr:Expression>
                               <Edge From="0" To="1" Label="Source1" />
                               <Edge From="1" To="2" Label="Source1" />
                               <Edge From="2" To="3" Label="Source1" />
-                              <Edge From="3" To="4" Label="Source1" />
+                              <Edge From="3" To="10" Label="Source1" />
                               <Edge From="4" To="5" Label="Source1" />
                               <Edge From="5" To="6" Label="Source1" />
+                              <Edge From="6" To="10" Label="Source2" />
+                              <Edge From="7" To="8" Label="Source1" />
+                              <Edge From="8" To="9" Label="Source1" />
+                              <Edge From="9" To="10" Label="Source3" />
+                              <Edge From="10" To="29" Label="Source1" />
+                              <Edge From="11" To="12" Label="Source1" />
+                              <Edge From="12" To="13" Label="Source1" />
+                              <Edge From="13" To="29" Label="Source2" />
+                              <Edge From="14" To="15" Label="Source1" />
+                              <Edge From="15" To="16" Label="Source1" />
+                              <Edge From="16" To="29" Label="Source3" />
+                              <Edge From="17" To="18" Label="Source1" />
+                              <Edge From="18" To="19" Label="Source1" />
+                              <Edge From="19" To="20" Label="Source1" />
+                              <Edge From="20" To="21" Label="Source1" />
+                              <Edge From="21" To="22" Label="Source1" />
+                              <Edge From="22" To="29" Label="Source4" />
+                              <Edge From="23" To="24" Label="Source1" />
+                              <Edge From="24" To="25" Label="Source1" />
+                              <Edge From="25" To="26" Label="Source1" />
+                              <Edge From="26" To="27" Label="Source1" />
+                              <Edge From="27" To="28" Label="Source1" />
+                              <Edge From="28" To="29" Label="Source5" />
+                              <Edge From="29" To="30" Label="Source1" />
+                              <Edge From="30" To="31" Label="Source1" />
+                              <Edge From="31" To="32" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>
@@ -671,9 +820,9 @@ Item3 as Right)</scr:Expression>
                           <LocationX>0</LocationX>
                           <LocationY>0</LocationY>
                           <Layer>0</Layer>
-                          <ExtentX>2</ExtentX>
-                          <ExtentY>2</ExtentY>
-                          <SpatialFrequency>10</SpatialFrequency>
+                          <ExtentX>360</ExtentX>
+                          <ExtentY>360</ExtentY>
+                          <SpatialFrequency>0.05</SpatialFrequency>
                           <TemporalFrequency>2</TemporalFrequency>
                           <Phase>0</Phase>
                           <Angle>0</Angle>
@@ -681,7 +830,7 @@ Item3 as Right)</scr:Expression>
                           <Contrast>1</Contrast>
                           <DutyCycle xsi:nil="true" />
                           <Radius>1</Radius>
-                          <Aperture>1</Aperture>
+                          <Aperture>2</Aperture>
                           <Opacity>1</Opacity>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
@@ -1523,7 +1672,7 @@ Item3 as Right)</scr:Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="p5:AindSpinnakerCapture">
                             <spk:Index xsi:nil="true" />
-                            <spk:SerialNumber>24233229</spk:SerialNumber>
+                            <spk:SerialNumber />
                             <spk:ColorProcessing>Default</spk:ColorProcessing>
                             <p5:ExposureTime>1000</p5:ExposureTime>
                             <p5:Gain>0</p5:Gain>
@@ -1649,7 +1798,7 @@ Item3 as Right)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="GreaterThanOrEqual">
                     <Operand xsi:type="IntProperty">
-                      <Value>3</Value>
+                      <Value>1</Value>
                     </Operand>
                   </Expression>
                   <Expression xsi:type="rx:Condition">
@@ -1953,11 +2102,14 @@ Item3 as Right)</scr:Expression>
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>HarpSoundCardEvents</Name>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="SubscribeSubject">
+                <Name>HarpSoundCardEvents</Name>
+              </Builder>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.HarpUtils:LogHarpDeviceWithMetadata.bonsai">
-              <DeviceMetadata>%YAML 1.1
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.HarpUtils:LogHarpDeviceWithMetadata.bonsai">
+                <DeviceMetadata>%YAML 1.1
 ---
 # yaml-language-server: $schema=https://harp-tech.org/draft-02/schema/device.json
 device: SoundCard
@@ -2278,14 +2430,18 @@ groupMasks:
       AmplitudeRightAdc: 4
       AmplitudeLeftAmplitudeRight: 5
       AmplitudeBothFrequency: 6</DeviceMetadata>
-              <Modality>Behavior</Modality>
-              <DeviceName>SoundCard</DeviceName>
+                <Modality>Behavior</Modality>
+                <DeviceName>SoundCard</DeviceName>
+              </Builder>
             </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>HarpBehaviorEvents</Name>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="SubscribeSubject">
+                <Name>HarpBehaviorEvents</Name>
+              </Builder>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.HarpUtils:LogHarpDeviceWithMetadata.bonsai">
-              <DeviceMetadata>%YAML 1.1
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.HarpUtils:LogHarpDeviceWithMetadata.bonsai">
+                <DeviceMetadata>%YAML 1.1
 ---
 # yaml-language-server: $schema=https://harp-tech.org/draft-02/schema/device.json
 device: Behavior
@@ -2801,14 +2957,18 @@ groupMasks:
     values:
       Position: 0
       Displacement: 1</DeviceMetadata>
-              <Modality>Behavior</Modality>
-              <DeviceName>Behavior</DeviceName>
+                <Modality>Behavior</Modality>
+                <DeviceName>Behavior</DeviceName>
+              </Builder>
             </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>HarpLickometerEvents</Name>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="SubscribeSubject">
+                <Name>HarpLickometerEvents</Name>
+              </Builder>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.HarpUtils:LogHarpDeviceWithMetadata.bonsai">
-              <DeviceMetadata>%YAML 1.1
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.HarpUtils:LogHarpDeviceWithMetadata.bonsai">
+                <DeviceMetadata>%YAML 1.1
 ---
 # yaml-language-server: $schema=https://harp-tech.org/draft-02/schema/device.json
 device: LicketySplit
@@ -2837,346 +2997,349 @@ bitMasks:
     bits:
       Channel0: 0x1
       Channel1: 0x2</DeviceMetadata>
-              <Modality>Behavior</Modality>
-              <DeviceName>LicketySplit</DeviceName>
+                <Modality>Behavior</Modality>
+                <DeviceName>LicketySplit</DeviceName>
+              </Builder>
             </Expression>
-            <Expression xsi:type="GroupWorkflow">
-              <Name>TriggeredCameras</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>TriggeredCameraController</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Cameras</Selector>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Merge" />
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Value.VideoWriter</Selector>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:FilterNotNull.bonsai" />
-                  <Expression xsi:type="p1:MatchVideoWriter">
-                    <p1:Type xsi:type="TypeMapping" TypeArguments="p1:VideoWriterFfmpeg" />
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Key</Selector>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:WithLatestFrom" />
-                  </Expression>
-                  <Expression xsi:type="rx:CreateObservable">
-                    <Name>FfmpegWriter</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Take">
-                            <rx:Count>1</rx:Count>
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="rx:AsyncSubject">
-                          <Name>This</Name>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>This</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Item2</Selector>
-                        </Expression>
-                        <Expression xsi:type="rx:AsyncSubject">
-                          <Name>ThisCameraName</Name>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>This</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Item1</Selector>
-                        </Expression>
-                        <Expression xsi:type="rx:AsyncSubject">
-                          <Name>ThisWriter</Name>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>TriggeredCamerasStream</Name>
-                        </Expression>
-                        <Expression xsi:type="rx:Condition">
-                          <Workflow>
-                            <Nodes>
-                              <Expression xsi:type="WorkflowInput">
-                                <Name>Source1</Name>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Key</Selector>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>ThisCameraName</Name>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="rx:CombineLatest" />
-                              </Expression>
-                              <Expression xsi:type="Equal" />
-                              <Expression xsi:type="WorkflowOutput" />
-                            </Nodes>
-                            <Edges>
-                              <Edge From="0" To="1" Label="Source1" />
-                              <Edge From="1" To="3" Label="Source1" />
-                              <Edge From="2" To="3" Label="Source2" />
-                              <Edge From="3" To="4" Label="Source1" />
-                              <Edge From="4" To="5" Label="Source1" />
-                            </Edges>
-                          </Workflow>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Take">
-                            <rx:Count>1</rx:Count>
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Merge" />
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>ThisCameraName</Name>
-                        </Expression>
-                        <Expression xsi:type="PropertyMapping">
-                          <PropertyMappings>
-                            <Property Name="LogName" />
-                          </PropertyMappings>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>ThisWriter</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>ContainerExtension</Selector>
-                        </Expression>
-                        <Expression xsi:type="PropertyMapping">
-                          <PropertyMappings>
-                            <Property Name="VideoExtension" />
-                          </PropertyMappings>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>ThisWriter</Name>
-                        </Expression>
-                        <Expression xsi:type="PropertyMapping">
-                          <PropertyMappings>
-                            <Property Name="OutputArguments" Selector="OutputArguments" />
-                            <Property Name="InputArguments" Selector="InputArguments" />
-                            <Property Name="FrameRate" Selector="FrameRate" />
-                          </PropertyMappings>
-                        </Expression>
-                        <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogSpinnakerFfmpeg.bonsai">
-                          <Modality>BehaviorVideos</Modality>
-                          <LogName>Camera3</LogName>
-                          <VideoExtension>mp4</VideoExtension>
-                          <OutputArguments>-vf "scale=out_color_matrix=bt709:out_range=full,format=bgr24,scale=out_range=full" -c:v h264_nvenc -pix_fmt yuv420p -color_range full -colorspace bt709 -color_trc linear -tune hq -preset p4 -rc vbr -cq 12 -b:v 0M -metadata author="Allen Institute for Neural Dynamics" -maxrate 700M -bufsize 350M</OutputArguments>
-                          <InputArguments>-colorspace bt709 -color_primaries bt709 -color_range full -color_trc linear</InputArguments>
-                          <Verbosity>Verbose</Verbosity>
-                          <FrameRate>60</FrameRate>
-                        </Expression>
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="2" Label="Source1" />
-                        <Edge From="3" To="4" Label="Source1" />
-                        <Edge From="4" To="5" Label="Source1" />
-                        <Edge From="6" To="7" Label="Source1" />
-                        <Edge From="7" To="8" Label="Source1" />
-                        <Edge From="9" To="10" Label="Source1" />
-                        <Edge From="10" To="11" Label="Source1" />
-                        <Edge From="11" To="12" Label="Source1" />
-                        <Edge From="12" To="20" Label="Source1" />
-                        <Edge From="13" To="14" Label="Source1" />
-                        <Edge From="14" To="20" Label="Source2" />
-                        <Edge From="15" To="16" Label="Source1" />
-                        <Edge From="16" To="17" Label="Source1" />
-                        <Edge From="17" To="20" Label="Source3" />
-                        <Edge From="18" To="19" Label="Source1" />
-                        <Edge From="19" To="20" Label="Source4" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Merge" />
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>TriggeredCameraController</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Cameras</Selector>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Merge" />
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Value.VideoWriter</Selector>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:FilterNotNull.bonsai" />
-                  <Expression xsi:type="p1:MatchVideoWriter">
-                    <p1:Type xsi:type="TypeMapping" TypeArguments="p1:VideoWriterOpenCv" />
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Key</Selector>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:WithLatestFrom" />
-                  </Expression>
-                  <Expression xsi:type="rx:CreateObservable">
-                    <Name>OpenCvWriter</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Take">
-                            <rx:Count>1</rx:Count>
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="rx:AsyncSubject">
-                          <Name>This</Name>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>This</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Item2</Selector>
-                        </Expression>
-                        <Expression xsi:type="rx:AsyncSubject">
-                          <Name>ThisCameraName</Name>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>This</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Item1</Selector>
-                        </Expression>
-                        <Expression xsi:type="rx:AsyncSubject">
-                          <Name>ThisWriter</Name>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>TriggeredCamerasStream</Name>
-                        </Expression>
-                        <Expression xsi:type="rx:Condition">
-                          <Workflow>
-                            <Nodes>
-                              <Expression xsi:type="WorkflowInput">
-                                <Name>Source1</Name>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Key</Selector>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>ThisCameraName</Name>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="rx:CombineLatest" />
-                              </Expression>
-                              <Expression xsi:type="Equal" />
-                              <Expression xsi:type="WorkflowOutput" />
-                            </Nodes>
-                            <Edges>
-                              <Edge From="0" To="1" Label="Source1" />
-                              <Edge From="1" To="3" Label="Source1" />
-                              <Edge From="2" To="3" Label="Source2" />
-                              <Edge From="3" To="4" Label="Source1" />
-                              <Edge From="4" To="5" Label="Source1" />
-                            </Edges>
-                          </Workflow>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Take">
-                            <rx:Count>1</rx:Count>
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Merge" />
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>ThisCameraName</Name>
-                        </Expression>
-                        <Expression xsi:type="PropertyMapping">
-                          <PropertyMappings>
-                            <Property Name="LogName" />
-                          </PropertyMappings>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>ThisWriter</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>ContainerExtension</Selector>
-                        </Expression>
-                        <Expression xsi:type="PropertyMapping">
-                          <PropertyMappings>
-                            <Property Name="VideoExtension" />
-                          </PropertyMappings>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>ThisWriter</Name>
-                        </Expression>
-                        <Expression xsi:type="PropertyMapping">
-                          <PropertyMappings>
-                            <Property Name="FrameRate" Selector="FrameRate" />
-                            <Property Name="FourCC" Selector="FourCC" />
-                          </PropertyMappings>
-                        </Expression>
-                        <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogSpinnakerOpenCv.bonsai">
-                          <Modality>BehaviorVideos</Modality>
-                          <LogName>FaceCamera</LogName>
-                          <VideoExtension>mp4</VideoExtension>
-                          <FrameRate>30</FrameRate>
-                          <FourCC>FMP4</FourCC>
-                        </Expression>
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="2" Label="Source1" />
-                        <Edge From="3" To="4" Label="Source1" />
-                        <Edge From="4" To="5" Label="Source1" />
-                        <Edge From="6" To="7" Label="Source1" />
-                        <Edge From="7" To="8" Label="Source1" />
-                        <Edge From="9" To="10" Label="Source1" />
-                        <Edge From="10" To="11" Label="Source1" />
-                        <Edge From="11" To="12" Label="Source1" />
-                        <Edge From="12" To="20" Label="Source1" />
-                        <Edge From="13" To="14" Label="Source1" />
-                        <Edge From="14" To="20" Label="Source2" />
-                        <Edge From="15" To="16" Label="Source1" />
-                        <Edge From="16" To="17" Label="Source1" />
-                        <Edge From="17" To="20" Label="Source3" />
-                        <Edge From="18" To="19" Label="Source1" />
-                        <Edge From="19" To="20" Label="Source4" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Merge" />
-                  </Expression>
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="2" To="6" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="7" Label="Source1" />
-                  <Edge From="6" To="7" Label="Source2" />
-                  <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source1" />
-                  <Edge From="10" To="11" Label="Source1" />
-                  <Edge From="11" To="12" Label="Source1" />
-                  <Edge From="12" To="13" Label="Source1" />
-                  <Edge From="12" To="16" Label="Source1" />
-                  <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="14" To="15" Label="Source1" />
-                  <Edge From="15" To="17" Label="Source1" />
-                  <Edge From="16" To="17" Label="Source2" />
-                  <Edge From="17" To="18" Label="Source1" />
-                  <Edge From="18" To="19" Label="Source1" />
-                </Edges>
-              </Workflow>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="GroupWorkflow">
+                <Name>TriggeredCameras</Name>
+                <Workflow>
+                  <Nodes>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>TriggeredCameraController</Name>
+                    </Expression>
+                    <Expression xsi:type="MemberSelector">
+                      <Selector>Cameras</Selector>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:Merge" />
+                    </Expression>
+                    <Expression xsi:type="MemberSelector">
+                      <Selector>Value.VideoWriter</Selector>
+                    </Expression>
+                    <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:FilterNotNull.bonsai" />
+                    <Expression xsi:type="p1:MatchVideoWriter">
+                      <p1:Type xsi:type="TypeMapping" TypeArguments="p1:VideoWriterFfmpeg" />
+                    </Expression>
+                    <Expression xsi:type="MemberSelector">
+                      <Selector>Key</Selector>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:WithLatestFrom" />
+                    </Expression>
+                    <Expression xsi:type="rx:CreateObservable">
+                      <Name>FfmpegWriter</Name>
+                      <Workflow>
+                        <Nodes>
+                          <Expression xsi:type="WorkflowInput">
+                            <Name>Source1</Name>
+                          </Expression>
+                          <Expression xsi:type="Combinator">
+                            <Combinator xsi:type="rx:Take">
+                              <rx:Count>1</rx:Count>
+                            </Combinator>
+                          </Expression>
+                          <Expression xsi:type="rx:AsyncSubject">
+                            <Name>This</Name>
+                          </Expression>
+                          <Expression xsi:type="SubscribeSubject">
+                            <Name>This</Name>
+                          </Expression>
+                          <Expression xsi:type="MemberSelector">
+                            <Selector>Item2</Selector>
+                          </Expression>
+                          <Expression xsi:type="rx:AsyncSubject">
+                            <Name>ThisCameraName</Name>
+                          </Expression>
+                          <Expression xsi:type="SubscribeSubject">
+                            <Name>This</Name>
+                          </Expression>
+                          <Expression xsi:type="MemberSelector">
+                            <Selector>Item1</Selector>
+                          </Expression>
+                          <Expression xsi:type="rx:AsyncSubject">
+                            <Name>ThisWriter</Name>
+                          </Expression>
+                          <Expression xsi:type="SubscribeSubject">
+                            <Name>TriggeredCamerasStream</Name>
+                          </Expression>
+                          <Expression xsi:type="rx:Condition">
+                            <Workflow>
+                              <Nodes>
+                                <Expression xsi:type="WorkflowInput">
+                                  <Name>Source1</Name>
+                                </Expression>
+                                <Expression xsi:type="MemberSelector">
+                                  <Selector>Key</Selector>
+                                </Expression>
+                                <Expression xsi:type="SubscribeSubject">
+                                  <Name>ThisCameraName</Name>
+                                </Expression>
+                                <Expression xsi:type="Combinator">
+                                  <Combinator xsi:type="rx:CombineLatest" />
+                                </Expression>
+                                <Expression xsi:type="Equal" />
+                                <Expression xsi:type="WorkflowOutput" />
+                              </Nodes>
+                              <Edges>
+                                <Edge From="0" To="1" Label="Source1" />
+                                <Edge From="1" To="3" Label="Source1" />
+                                <Edge From="2" To="3" Label="Source2" />
+                                <Edge From="3" To="4" Label="Source1" />
+                                <Edge From="4" To="5" Label="Source1" />
+                              </Edges>
+                            </Workflow>
+                          </Expression>
+                          <Expression xsi:type="Combinator">
+                            <Combinator xsi:type="rx:Take">
+                              <rx:Count>1</rx:Count>
+                            </Combinator>
+                          </Expression>
+                          <Expression xsi:type="Combinator">
+                            <Combinator xsi:type="rx:Merge" />
+                          </Expression>
+                          <Expression xsi:type="SubscribeSubject">
+                            <Name>ThisCameraName</Name>
+                          </Expression>
+                          <Expression xsi:type="PropertyMapping">
+                            <PropertyMappings>
+                              <Property Name="LogName" />
+                            </PropertyMappings>
+                          </Expression>
+                          <Expression xsi:type="SubscribeSubject">
+                            <Name>ThisWriter</Name>
+                          </Expression>
+                          <Expression xsi:type="MemberSelector">
+                            <Selector>ContainerExtension</Selector>
+                          </Expression>
+                          <Expression xsi:type="PropertyMapping">
+                            <PropertyMappings>
+                              <Property Name="VideoExtension" />
+                            </PropertyMappings>
+                          </Expression>
+                          <Expression xsi:type="SubscribeSubject">
+                            <Name>ThisWriter</Name>
+                          </Expression>
+                          <Expression xsi:type="PropertyMapping">
+                            <PropertyMappings>
+                              <Property Name="OutputArguments" Selector="OutputArguments" />
+                              <Property Name="InputArguments" Selector="InputArguments" />
+                              <Property Name="FrameRate" Selector="FrameRate" />
+                            </PropertyMappings>
+                          </Expression>
+                          <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogSpinnakerFfmpeg.bonsai">
+                            <Modality>BehaviorVideos</Modality>
+                            <LogName>Camera3</LogName>
+                            <VideoExtension>mp4</VideoExtension>
+                            <OutputArguments>-vf "scale=out_color_matrix=bt709:out_range=full,format=bgr24,scale=out_range=full" -c:v h264_nvenc -pix_fmt yuv420p -color_range full -colorspace bt709 -color_trc linear -tune hq -preset p4 -rc vbr -cq 12 -b:v 0M -metadata author="Allen Institute for Neural Dynamics" -maxrate 700M -bufsize 350M</OutputArguments>
+                            <InputArguments>-colorspace bt709 -color_primaries bt709 -color_range full -color_trc linear</InputArguments>
+                            <Verbosity>Verbose</Verbosity>
+                            <FrameRate>60</FrameRate>
+                          </Expression>
+                        </Nodes>
+                        <Edges>
+                          <Edge From="0" To="1" Label="Source1" />
+                          <Edge From="1" To="2" Label="Source1" />
+                          <Edge From="3" To="4" Label="Source1" />
+                          <Edge From="4" To="5" Label="Source1" />
+                          <Edge From="6" To="7" Label="Source1" />
+                          <Edge From="7" To="8" Label="Source1" />
+                          <Edge From="9" To="10" Label="Source1" />
+                          <Edge From="10" To="11" Label="Source1" />
+                          <Edge From="11" To="12" Label="Source1" />
+                          <Edge From="12" To="20" Label="Source1" />
+                          <Edge From="13" To="14" Label="Source1" />
+                          <Edge From="14" To="20" Label="Source2" />
+                          <Edge From="15" To="16" Label="Source1" />
+                          <Edge From="16" To="17" Label="Source1" />
+                          <Edge From="17" To="20" Label="Source3" />
+                          <Edge From="18" To="19" Label="Source1" />
+                          <Edge From="19" To="20" Label="Source4" />
+                        </Edges>
+                      </Workflow>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:Merge" />
+                    </Expression>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>TriggeredCameraController</Name>
+                    </Expression>
+                    <Expression xsi:type="MemberSelector">
+                      <Selector>Cameras</Selector>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:Merge" />
+                    </Expression>
+                    <Expression xsi:type="MemberSelector">
+                      <Selector>Value.VideoWriter</Selector>
+                    </Expression>
+                    <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:FilterNotNull.bonsai" />
+                    <Expression xsi:type="p1:MatchVideoWriter">
+                      <p1:Type xsi:type="TypeMapping" TypeArguments="p1:VideoWriterOpenCv" />
+                    </Expression>
+                    <Expression xsi:type="MemberSelector">
+                      <Selector>Key</Selector>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:WithLatestFrom" />
+                    </Expression>
+                    <Expression xsi:type="rx:CreateObservable">
+                      <Name>OpenCvWriter</Name>
+                      <Workflow>
+                        <Nodes>
+                          <Expression xsi:type="WorkflowInput">
+                            <Name>Source1</Name>
+                          </Expression>
+                          <Expression xsi:type="Combinator">
+                            <Combinator xsi:type="rx:Take">
+                              <rx:Count>1</rx:Count>
+                            </Combinator>
+                          </Expression>
+                          <Expression xsi:type="rx:AsyncSubject">
+                            <Name>This</Name>
+                          </Expression>
+                          <Expression xsi:type="SubscribeSubject">
+                            <Name>This</Name>
+                          </Expression>
+                          <Expression xsi:type="MemberSelector">
+                            <Selector>Item2</Selector>
+                          </Expression>
+                          <Expression xsi:type="rx:AsyncSubject">
+                            <Name>ThisCameraName</Name>
+                          </Expression>
+                          <Expression xsi:type="SubscribeSubject">
+                            <Name>This</Name>
+                          </Expression>
+                          <Expression xsi:type="MemberSelector">
+                            <Selector>Item1</Selector>
+                          </Expression>
+                          <Expression xsi:type="rx:AsyncSubject">
+                            <Name>ThisWriter</Name>
+                          </Expression>
+                          <Expression xsi:type="SubscribeSubject">
+                            <Name>TriggeredCamerasStream</Name>
+                          </Expression>
+                          <Expression xsi:type="rx:Condition">
+                            <Workflow>
+                              <Nodes>
+                                <Expression xsi:type="WorkflowInput">
+                                  <Name>Source1</Name>
+                                </Expression>
+                                <Expression xsi:type="MemberSelector">
+                                  <Selector>Key</Selector>
+                                </Expression>
+                                <Expression xsi:type="SubscribeSubject">
+                                  <Name>ThisCameraName</Name>
+                                </Expression>
+                                <Expression xsi:type="Combinator">
+                                  <Combinator xsi:type="rx:CombineLatest" />
+                                </Expression>
+                                <Expression xsi:type="Equal" />
+                                <Expression xsi:type="WorkflowOutput" />
+                              </Nodes>
+                              <Edges>
+                                <Edge From="0" To="1" Label="Source1" />
+                                <Edge From="1" To="3" Label="Source1" />
+                                <Edge From="2" To="3" Label="Source2" />
+                                <Edge From="3" To="4" Label="Source1" />
+                                <Edge From="4" To="5" Label="Source1" />
+                              </Edges>
+                            </Workflow>
+                          </Expression>
+                          <Expression xsi:type="Combinator">
+                            <Combinator xsi:type="rx:Take">
+                              <rx:Count>1</rx:Count>
+                            </Combinator>
+                          </Expression>
+                          <Expression xsi:type="Combinator">
+                            <Combinator xsi:type="rx:Merge" />
+                          </Expression>
+                          <Expression xsi:type="SubscribeSubject">
+                            <Name>ThisCameraName</Name>
+                          </Expression>
+                          <Expression xsi:type="PropertyMapping">
+                            <PropertyMappings>
+                              <Property Name="LogName" />
+                            </PropertyMappings>
+                          </Expression>
+                          <Expression xsi:type="SubscribeSubject">
+                            <Name>ThisWriter</Name>
+                          </Expression>
+                          <Expression xsi:type="MemberSelector">
+                            <Selector>ContainerExtension</Selector>
+                          </Expression>
+                          <Expression xsi:type="PropertyMapping">
+                            <PropertyMappings>
+                              <Property Name="VideoExtension" />
+                            </PropertyMappings>
+                          </Expression>
+                          <Expression xsi:type="SubscribeSubject">
+                            <Name>ThisWriter</Name>
+                          </Expression>
+                          <Expression xsi:type="PropertyMapping">
+                            <PropertyMappings>
+                              <Property Name="FrameRate" Selector="FrameRate" />
+                              <Property Name="FourCC" Selector="FourCC" />
+                            </PropertyMappings>
+                          </Expression>
+                          <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogSpinnakerOpenCv.bonsai">
+                            <Modality>BehaviorVideos</Modality>
+                            <LogName>FaceCamera</LogName>
+                            <VideoExtension>mp4</VideoExtension>
+                            <FrameRate>30</FrameRate>
+                            <FourCC>FMP4</FourCC>
+                          </Expression>
+                        </Nodes>
+                        <Edges>
+                          <Edge From="0" To="1" Label="Source1" />
+                          <Edge From="1" To="2" Label="Source1" />
+                          <Edge From="3" To="4" Label="Source1" />
+                          <Edge From="4" To="5" Label="Source1" />
+                          <Edge From="6" To="7" Label="Source1" />
+                          <Edge From="7" To="8" Label="Source1" />
+                          <Edge From="9" To="10" Label="Source1" />
+                          <Edge From="10" To="11" Label="Source1" />
+                          <Edge From="11" To="12" Label="Source1" />
+                          <Edge From="12" To="20" Label="Source1" />
+                          <Edge From="13" To="14" Label="Source1" />
+                          <Edge From="14" To="20" Label="Source2" />
+                          <Edge From="15" To="16" Label="Source1" />
+                          <Edge From="16" To="17" Label="Source1" />
+                          <Edge From="17" To="20" Label="Source3" />
+                          <Edge From="18" To="19" Label="Source1" />
+                          <Edge From="19" To="20" Label="Source4" />
+                        </Edges>
+                      </Workflow>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:Merge" />
+                    </Expression>
+                  </Nodes>
+                  <Edges>
+                    <Edge From="0" To="1" Label="Source1" />
+                    <Edge From="1" To="2" Label="Source1" />
+                    <Edge From="2" To="3" Label="Source1" />
+                    <Edge From="2" To="6" Label="Source1" />
+                    <Edge From="3" To="4" Label="Source1" />
+                    <Edge From="4" To="5" Label="Source1" />
+                    <Edge From="5" To="7" Label="Source1" />
+                    <Edge From="6" To="7" Label="Source2" />
+                    <Edge From="7" To="8" Label="Source1" />
+                    <Edge From="8" To="9" Label="Source1" />
+                    <Edge From="10" To="11" Label="Source1" />
+                    <Edge From="11" To="12" Label="Source1" />
+                    <Edge From="12" To="13" Label="Source1" />
+                    <Edge From="12" To="16" Label="Source1" />
+                    <Edge From="13" To="14" Label="Source1" />
+                    <Edge From="14" To="15" Label="Source1" />
+                    <Edge From="15" To="17" Label="Source1" />
+                    <Edge From="16" To="17" Label="Source2" />
+                    <Edge From="17" To="18" Label="Source1" />
+                    <Edge From="18" To="19" Label="Source1" />
+                  </Edges>
+                </Workflow>
+              </Builder>
             </Expression>
           </Nodes>
           <Edges>
@@ -3386,7 +3549,7 @@ bitMasks:
                               </Expression>
                               <Expression xsi:type="Index">
                                 <Operand xsi:type="IntProperty">
-                                  <Value>2</Value>
+                                  <Value>4</Value>
                                 </Operand>
                               </Expression>
                               <Expression xsi:type="Combinator">
@@ -4032,7 +4195,7 @@ bitMasks:
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="rx:Delay">
-                                  <rx:DueTime>PT2.639S</rx:DueTime>
+                                  <rx:DueTime>PT1.11S</rx:DueTime>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="WorkflowOutput" />

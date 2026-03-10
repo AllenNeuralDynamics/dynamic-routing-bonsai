@@ -34,8 +34,16 @@ rig = AindBehaviorDynamicRoutingBonsaiRig(
     screen=rig.visual_stimulation.Screen(
         calibration=rig.visual_stimulation.DisplaysCalibration(
             center=rig.visual_stimulation.DisplayCalibration(
-                intrinsics=rig.visual_stimulation.DisplayIntrinsics(),
-                extrinsics=rig.visual_stimulation.DisplayExtrinsics(),
+                intrinsics=rig.visual_stimulation.DisplayIntrinsics(
+                    frame_width=1000,
+                    frame_height=1000,
+                    display_height=20,
+                    display_width=30
+                ),
+                extrinsics=rig.visual_stimulation.DisplayExtrinsics(
+                    rotation=rig.visual_stimulation.Vector3(x=0, y=0, z=0),
+                    translation=rig.visual_stimulation.Vector3(x=0, y=0, z=-20)
+                ),
             )
         )
     ),
