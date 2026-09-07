@@ -30,7 +30,7 @@
         <Property Name="SessionPath" />
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:ReadSchemas.bonsai">
-        <TaskLogicPath>..\local\example_AindBehaviorDynamicRoutingBonsaiTaskLogic.json</TaskLogicPath>
+        <TaskLogicPath>..\local\stage0_AindBehaviorDynamicRoutingBonsaiTaskLogic.json</TaskLogicPath>
         <RigPath>..\local\AindBehaviorDynamicRoutingBonsaiRig.json</RigPath>
         <SessionPath>..\local\AindBehaviorSessionModel.json</SessionPath>
       </Expression>
@@ -447,106 +447,146 @@ Item3 as Right)</scr:Expression>
                                   <Property Name="Height" />
                                 </PropertyMappings>
                               </Expression>
-                              <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.SphereMapping.bonsai">
-                                <ClearColor>Gray</ClearColor>
-                                <Width>1000</Width>
-                                <Height>1000</Height>
-                                <RotationZ>0</RotationZ>
-                                <RotationY>0</RotationY>
-                                <RotationX>0</RotationX>
-                                <FaceSize xsi:nil="true" />
+                              <Expression xsi:type="Disable">
+                                <Builder xsi:type="IncludeWorkflow" Path="BonVision:Environment.SphereMapping.bonsai">
+                                  <ClearColor>Gray</ClearColor>
+                                  <Width>1000</Width>
+                                  <Height>1000</Height>
+                                  <RotationZ>0</RotationZ>
+                                  <RotationY>0</RotationY>
+                                  <RotationX>0</RotationX>
+                                  <FaceSize xsi:nil="true" />
+                                </Builder>
                               </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>RigSchema</Name>
+                              <Expression xsi:type="Disable">
+                                <Builder xsi:type="SubscribeSubject">
+                                  <Name>RigSchema</Name>
+                                </Builder>
                               </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Screen.Calibration.Center.Intrinsics.DisplayWidth</Selector>
+                              <Expression xsi:type="Disable">
+                                <Builder xsi:type="MemberSelector">
+                                  <Selector>Screen.Calibration.Center.Intrinsics.DisplayWidth</Selector>
+                                </Builder>
                               </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="Width" />
-                                </PropertyMappings>
+                              <Expression xsi:type="Disable">
+                                <Builder xsi:type="PropertyMapping">
+                                  <PropertyMappings>
+                                    <Property Name="Width" />
+                                  </PropertyMappings>
+                                </Builder>
                               </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>RigSchema</Name>
+                              <Expression xsi:type="Disable">
+                                <Builder xsi:type="SubscribeSubject">
+                                  <Name>RigSchema</Name>
+                                </Builder>
                               </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Screen.Calibration.Center.Intrinsics.DisplayHeight</Selector>
+                              <Expression xsi:type="Disable">
+                                <Builder xsi:type="MemberSelector">
+                                  <Selector>Screen.Calibration.Center.Intrinsics.DisplayHeight</Selector>
+                                </Builder>
                               </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="Height" />
-                                </PropertyMappings>
+                              <Expression xsi:type="Disable">
+                                <Builder xsi:type="PropertyMapping">
+                                  <PropertyMappings>
+                                    <Property Name="Height" />
+                                  </PropertyMappings>
+                                </Builder>
                               </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>RigSchema</Name>
+                              <Expression xsi:type="Disable">
+                                <Builder xsi:type="SubscribeSubject">
+                                  <Name>RigSchema</Name>
+                                </Builder>
                               </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Screen.Calibration.Center</Selector>
+                              <Expression xsi:type="Disable">
+                                <Builder xsi:type="MemberSelector">
+                                  <Selector>Screen.Calibration.Center</Selector>
+                                </Builder>
                               </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Extrinsics.Rotation</Selector>
+                              <Expression xsi:type="Disable">
+                                <Builder xsi:type="MemberSelector">
+                                  <Selector>Extrinsics.Rotation</Selector>
+                                </Builder>
                               </Expression>
-                              <Expression xsi:type="InputMapping">
-                                <PropertyMappings>
-                                  <Property Name="X" Selector="X" />
-                                  <Property Name="Y" Selector="Y" />
-                                  <Property Name="Z" Selector="Z" />
-                                </PropertyMappings>
+                              <Expression xsi:type="Disable">
+                                <Builder xsi:type="InputMapping">
+                                  <PropertyMappings>
+                                    <Property Name="X" Selector="X" />
+                                    <Property Name="Y" Selector="Y" />
+                                    <Property Name="Z" Selector="Z" />
+                                  </PropertyMappings>
+                                </Builder>
                               </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="cv:CreatePoint3d">
-                                  <cv:X>0</cv:X>
-                                  <cv:Y>0</cv:Y>
-                                  <cv:Z>0</cv:Z>
-                                </Combinator>
+                              <Expression xsi:type="Disable">
+                                <Builder xsi:type="Combinator">
+                                  <Combinator xsi:type="cv:CreatePoint3d">
+                                    <cv:X>0</cv:X>
+                                    <cv:Y>0</cv:Y>
+                                    <cv:Z>0</cv:Z>
+                                  </Combinator>
+                                </Builder>
                               </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="Rotation" />
-                                </PropertyMappings>
+                              <Expression xsi:type="Disable">
+                                <Builder xsi:type="PropertyMapping">
+                                  <PropertyMappings>
+                                    <Property Name="Rotation" />
+                                  </PropertyMappings>
+                                </Builder>
                               </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>RigSchema</Name>
+                              <Expression xsi:type="Disable">
+                                <Builder xsi:type="SubscribeSubject">
+                                  <Name>RigSchema</Name>
+                                </Builder>
                               </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Screen.Calibration.Center</Selector>
+                              <Expression xsi:type="Disable">
+                                <Builder xsi:type="MemberSelector">
+                                  <Selector>Screen.Calibration.Center</Selector>
+                                </Builder>
                               </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Extrinsics.Translation</Selector>
+                              <Expression xsi:type="Disable">
+                                <Builder xsi:type="MemberSelector">
+                                  <Selector>Extrinsics.Translation</Selector>
+                                </Builder>
                               </Expression>
-                              <Expression xsi:type="InputMapping">
-                                <PropertyMappings>
-                                  <Property Name="X" Selector="X" />
-                                  <Property Name="Y" Selector="Y" />
-                                  <Property Name="Z" Selector="Z" />
-                                </PropertyMappings>
+                              <Expression xsi:type="Disable">
+                                <Builder xsi:type="InputMapping">
+                                  <PropertyMappings>
+                                    <Property Name="X" Selector="X" />
+                                    <Property Name="Y" Selector="Y" />
+                                    <Property Name="Z" Selector="Z" />
+                                  </PropertyMappings>
+                                </Builder>
                               </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="cv:CreatePoint3d">
-                                  <cv:X>0</cv:X>
-                                  <cv:Y>0</cv:Y>
-                                  <cv:Z>-20</cv:Z>
-                                </Combinator>
+                              <Expression xsi:type="Disable">
+                                <Builder xsi:type="Combinator">
+                                  <Combinator xsi:type="cv:CreatePoint3d">
+                                    <cv:X>0</cv:X>
+                                    <cv:Y>0</cv:Y>
+                                    <cv:Z>-20</cv:Z>
+                                  </Combinator>
+                                </Builder>
                               </Expression>
-                              <Expression xsi:type="PropertyMapping">
-                                <PropertyMappings>
-                                  <Property Name="Translation" />
-                                </PropertyMappings>
+                              <Expression xsi:type="Disable">
+                                <Builder xsi:type="PropertyMapping">
+                                  <PropertyMappings>
+                                    <Property Name="Translation" />
+                                  </PropertyMappings>
+                                </Builder>
                               </Expression>
-                              <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.ViewWindow.bonsai">
-                                <Width>30</Width>
-                                <Height>20</Height>
-                                <Rotation>
-                                  <X>0</X>
-                                  <Y>0</Y>
-                                  <Z>0</Z>
-                                </Rotation>
-                                <Translation>
-                                  <X>0</X>
-                                  <Y>0</Y>
-                                  <Z>-20</Z>
-                                </Translation>
+                              <Expression xsi:type="Disable">
+                                <Builder xsi:type="IncludeWorkflow" Path="BonVision:Environment.ViewWindow.bonsai">
+                                  <Width>30</Width>
+                                  <Height>20</Height>
+                                  <Rotation>
+                                    <X>0</X>
+                                    <Y>0</Y>
+                                    <Z>0</Z>
+                                  </Rotation>
+                                  <Translation>
+                                    <X>0</X>
+                                    <Y>0</Y>
+                                    <Z>-20</Z>
+                                  </Translation>
+                                </Builder>
                               </Expression>
                               <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.DrawViewport.bonsai">
                                 <X>0</X>
@@ -823,9 +863,9 @@ Item3 as Right)</scr:Expression>
                           <LocationX>0</LocationX>
                           <LocationY>0</LocationY>
                           <Layer>0</Layer>
-                          <ExtentX>360</ExtentX>
-                          <ExtentY>360</ExtentY>
-                          <SpatialFrequency>0.05</SpatialFrequency>
+                          <ExtentX>50</ExtentX>
+                          <ExtentY>50</ExtentY>
+                          <SpatialFrequency>0.04</SpatialFrequency>
                           <TemporalFrequency>2</TemporalFrequency>
                           <Phase>0</Phase>
                           <Angle>90</Angle>
@@ -833,7 +873,7 @@ Item3 as Right)</scr:Expression>
                           <Contrast>1</Contrast>
                           <DutyCycle xsi:nil="true" />
                           <Radius>1</Radius>
-                          <Aperture>2</Aperture>
+                          <Aperture>0</Aperture>
                           <Opacity>1</Opacity>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
@@ -3514,7 +3554,7 @@ bitMasks:
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Range">
                             <rx:Start>0</rx:Start>
-                            <rx:Count>2</rx:Count>
+                            <rx:Count>150</rx:Count>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="rx:SelectMany">
@@ -3561,7 +3601,7 @@ bitMasks:
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Take">
-                            <rx:Count>8</rx:Count>
+                            <rx:Count>300</rx:Count>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
@@ -3610,7 +3650,7 @@ bitMasks:
                               </Expression>
                               <Expression xsi:type="Index">
                                 <Operand xsi:type="IntProperty">
-                                  <Value>4</Value>
+                                  <Value>10</Value>
                                 </Operand>
                               </Expression>
                               <Expression xsi:type="Combinator">
@@ -4256,7 +4296,7 @@ bitMasks:
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="rx:Delay">
-                                  <rx:DueTime>PT2.111S</rx:DueTime>
+                                  <rx:DueTime>PT2.994S</rx:DueTime>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="WorkflowOutput" />
