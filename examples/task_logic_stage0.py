@@ -1,6 +1,8 @@
 import os
 
 from aind_behavior_curriculum import Stage, TrainerState
+import aind_behavior_services.task.distributions as distributions
+import aind_behavior_services.task.distributions_utils as dist_utils
 
 from aind_behavior_dynamic_routing_bonsai.task_logic import (
     AindBehaviorDynamicRoutingBonsaiTaskLogic,
@@ -44,6 +46,16 @@ unrewarded_presentation = PresentationParameters(
     timeout_stimulus=null_stim,
 )
 
+pre_stimulus_distribution = distributions.ExponentialDistribution(
+    distribution_parameters=distributions.ExponentialDistributionParameters(
+        rate=1
+    ),
+    truncation_parameters=distributions.TruncationParameters(
+        min=0.5,
+        max=6
+    )
+)
+
 task_logic = AindBehaviorDynamicRoutingBonsaiTaskLogic(
     task_parameters=AindBehaviorDynamicRoutingBonsaiTaskParameters(
         task_blocks=[
@@ -59,7 +71,8 @@ task_logic = AindBehaviorDynamicRoutingBonsaiTaskLogic(
                     ),
                 ],
             )
-        ]
+        ],
+        pre_stimulus_time_distribution=pre_stimulus_distribution
     )
 )
 

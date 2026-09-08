@@ -42,7 +42,7 @@
               <Name>RawSessionSchema</Name>
             </Expression>
             <Expression xsi:type="p1:DeserializeFromJson">
-              <p1:Type xsi:type="TypeMapping" TypeArguments="p1:AindBehaviorSessionModel" />
+              <p1:Type xsi:type="TypeMapping" TypeArguments="p1:Session" />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
@@ -148,7 +148,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="num:CreateRandom">
-                <num:Seed>0</num:Seed>
+                <num:Seed>1</num:Seed>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -162,17 +162,21 @@
             <Expression xsi:type="SubscribeSubject">
               <Name>SubjectSchema</Name>
             </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="RootFolder" Selector="RootPath" />
-                <Property Name="Subject" Selector="Subject" />
-              </PropertyMappings>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="PropertyMapping">
+                <PropertyMappings>
+                  <Property Name="RootFolder" Selector="RootPath" />
+                  <Property Name="Subject" Selector="Subject" />
+                </PropertyMappings>
+              </Builder>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateRootLoggingPath.bonsai">
-              <RootFolder>C:/Users/neurogears/source/repos/AllenNeuralDynamics/dynamic-routing-bonsai/temp_data</RootFolder>
-              <Subject>Plimbo</Subject>
-              <DateTimeOffset>0001-01-01T00:00:00.0000000+00:00</DateTimeOffset>
-              <SubjectName>LoggingRootPath</SubjectName>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateRootLoggingPath.bonsai">
+                <RootFolder>C:\Users\neurogears\source\repos\AllenNeuralDynamics\dynamic-routing-bonsai\temp_data</RootFolder>
+                <Subject>Plimbo</Subject>
+                <DateTimeOffset>0001-01-01T00:00:00.0000000+00:00</DateTimeOffset>
+                <SubjectName>LoggingRootPath</SubjectName>
+              </Builder>
             </Expression>
           </Nodes>
           <Edges>
@@ -200,49 +204,82 @@
             <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p3:SoftwareEvent">
               <rx:Name>SoftwareEvent</rx:Name>
             </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="SubscribeSubject">
+                <Name>TaskLogicParameters</Name>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="MemberSelector">
+                <Selector>RngSeed</Selector>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="PropertyMapping">
+                <PropertyMappings>
+                  <Property Name="Seed" />
+                </PropertyMappings>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="num:CreateRandom">
+                  <num:Seed xsi:nil="true" />
+                </Combinator>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="SubscribeSubject">
+                <Name>TaskLogicParameters</Name>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="MemberSelector">
+                <Selector>InterTrialInterval.DistributionParameters.Min</Selector>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="PropertyMapping">
+                <PropertyMappings>
+                  <Property Name="Lower" />
+                </PropertyMappings>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="SubscribeSubject">
+                <Name>TaskLogicParameters</Name>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="MemberSelector">
+                <Selector>InterTrialInterval.DistributionParameters.Max</Selector>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="PropertyMapping">
+                <PropertyMappings>
+                  <Property Name="Upper" />
+                </PropertyMappings>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="p2:CreateContinuousUniform">
+                  <p2:Lower>1</p2:Lower>
+                  <p2:Upper>3</p2:Upper>
+                </Combinator>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="rx:BehaviorSubject">
+                <Name>InterTrialIntervalDistribution</Name>
+              </Builder>
+            </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>TaskLogicParameters</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>RngSeed</Selector>
-            </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="Seed" />
-              </PropertyMappings>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="num:CreateRandom">
-                <num:Seed xsi:nil="true" />
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>TaskLogicParameters</Name>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>InterTrialInterval.DistributionParameters.Min</Selector>
-            </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="Lower" />
-              </PropertyMappings>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>TaskLogicParameters</Name>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>InterTrialInterval.DistributionParameters.Max</Selector>
-            </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="Upper" />
-              </PropertyMappings>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p2:CreateContinuousUniform">
-                <p2:Lower>1</p2:Lower>
-                <p2:Upper>3</p2:Upper>
-              </Combinator>
+              <Selector>PreStimulusTimeDistribution</Selector>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>InterTrialIntervalDistribution</Name>
@@ -263,6 +300,8 @@
             <Edge From="9" To="10" Label="Source1" />
             <Edge From="10" To="11" Label="Source3" />
             <Edge From="11" To="12" Label="Source1" />
+            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="14" To="15" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -3650,7 +3689,7 @@ bitMasks:
                               </Expression>
                               <Expression xsi:type="Index">
                                 <Operand xsi:type="IntProperty">
-                                  <Value>10</Value>
+                                  <Value>0</Value>
                                 </Operand>
                               </Expression>
                               <Expression xsi:type="Combinator">
@@ -4296,7 +4335,7 @@ bitMasks:
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="rx:Delay">
-                                  <rx:DueTime>PT2.994S</rx:DueTime>
+                                  <rx:DueTime>PT1.852S</rx:DueTime>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="WorkflowOutput" />

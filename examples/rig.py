@@ -1,48 +1,56 @@
 import os
 
 import aind_behavior_services.rig as rig
+import aind_behavior_services.rig.cameras as cameras
+import aind_behavior_services.rig.harp as harp
+import aind_behavior_services.rig.visual_stimulation as visual_stimulation
+from aind_behavior_services.common import Vector3
 
 from aind_behavior_dynamic_routing_bonsai.rig import (
     AindBehaviorDynamicRoutingBonsaiRig,
 )
 
+from pathlib import Path
+
 frame_rate=60
-video_writer = rig.cameras.VideoWriterFfmpeg(frame_rate=frame_rate, container_extension="mp4")
+video_writer = cameras.VideoWriterFfmpeg(frame_rate=frame_rate, container_extension="mp4")
 
 rig = AindBehaviorDynamicRoutingBonsaiRig(
+    computer_name="",
+    data_directory=Path("C:/Users/neurogears/source/repos/AllenNeuralDynamics/dynamic-routing-bonsai/temp_data"),
     rig_name="test_rig",
-    harp_behavior=rig.harp.HarpBehavior(port_name="COM14"),
-    harp_sound_card=rig.harp.HarpSoundCard(port_name="COM4"),
-    harp_lickety_split=rig.harp.HarpLicketySplit(port_name="COM15"),
-    camera_controller=rig.cameras.CameraController(
+    harp_behavior=harp.HarpBehavior(port_name="COM14"),
+    harp_sound_card=harp.HarpSoundCard(port_name="COM4"),
+    harp_lickety_split=harp.HarpLicketySplit(port_name="COM15"),
+    camera_controller=cameras.CameraController(
         frame_rate=frame_rate,
         cameras={
-            "Camera1": rig.cameras.SpinnakerCamera(
+            "Camera1": cameras.SpinnakerCamera(
                 serial_number="24228162",
                 video_writer=video_writer
             ),
-            "Camera2": rig.cameras.SpinnakerCamera(
+            "Camera2": cameras.SpinnakerCamera(
                 serial_number="24210983",
                 video_writer=video_writer
             ),
-            "Camera3": rig.cameras.SpinnakerCamera(
+            "Camera3": cameras.SpinnakerCamera(
                 serial_number="24233229",
                 video_writer=video_writer
             ),
         }
     ),
-    screen=rig.visual_stimulation.Screen(
-        calibration=rig.visual_stimulation.DisplaysCalibration(
-            center=rig.visual_stimulation.DisplayCalibration(
-                intrinsics=rig.visual_stimulation.DisplayIntrinsics(
+    screen=visual_stimulation.ScreenAssembly(
+        calibration=visual_stimulation.ScreenAssemblyCalibration(
+            center=visual_stimulation.DisplayCalibration(
+                intrinsics=visual_stimulation.DisplayIntrinsics(
                     frame_width=1000,
                     frame_height=1000,
                     display_height=20,
                     display_width=30
                 ),
-                extrinsics=rig.visual_stimulation.DisplayExtrinsics(
-                    rotation=rig.visual_stimulation.Vector3(x=0, y=0, z=0),
-                    translation=rig.visual_stimulation.Vector3(x=0, y=0, z=-20)
+                extrinsics=visual_stimulation.DisplayExtrinsics(
+                    rotation=Vector3(x=0, y=0, z=0),
+                    translation=Vector3(x=0, y=0, z=-20)
                 ),
             )
         )

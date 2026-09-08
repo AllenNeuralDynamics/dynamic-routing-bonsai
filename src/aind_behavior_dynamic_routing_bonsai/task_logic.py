@@ -1,8 +1,8 @@
 import logging
 from typing import Annotated, List, Literal, Union
 
-import aind_behavior_services.task_logic.distributions as distributions
-from aind_behavior_services.task_logic import AindBehaviorTaskLogicModel, TaskParameters
+import aind_behavior_services.task.distributions as distributions
+from aind_behavior_services.task import Task, TaskParameters
 from pydantic import BaseModel, Field
 
 from aind_behavior_dynamic_routing_bonsai import (
@@ -87,14 +87,10 @@ class AindBehaviorDynamicRoutingBonsaiTaskParameters(TaskParameters):
     """
 
     task_blocks: List[Block]
-    inter_trial_interval: distributions.UniformDistribution = Field(
-        default=distributions.UniformDistribution(
-            distribution_parameters=distributions.UniformDistributionParameters(min=1, max=3)
-        )
-    )
+    pre_stimulus_time_distribution: distributions.ExponentialDistribution
 
 
-class AindBehaviorDynamicRoutingBonsaiTaskLogic(AindBehaviorTaskLogicModel):
+class AindBehaviorDynamicRoutingBonsaiTaskLogic(Task):
     """
     Main task logic model for the dynamic-routing-bonsai task.
     """
