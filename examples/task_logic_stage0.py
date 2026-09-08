@@ -26,9 +26,9 @@ null_stim = QuadStimulus(
     stimulus_type="quad", extent_x=0, extent_y=0, position_x=0, position_y=0, color_r=1, color_g=0, color_b=0, color_a=0
 )
 non_contingent_presentation = PresentationParameters(
-    stimulus_start_time=1.5,
+    stimulus_start_time=0,
     stimulus_duration=0.5,
-    response_window_start_time=1.6,
+    response_window_start_time=0.6,
     response_window_duration=0.9,
     rewarded=True,
     non_contingent_reward=True,
@@ -36,9 +36,9 @@ non_contingent_presentation = PresentationParameters(
     timeout_stimulus=null_stim,
 )
 unrewarded_presentation = PresentationParameters(
-    stimulus_start_time=1.5,
+    stimulus_start_time=0,
     stimulus_duration=0.5,
-    response_window_start_time=1.6,
+    response_window_start_time=0.6,
     response_window_duration=0.9,
     rewarded=False,
     non_contingent_reward=False,
@@ -63,11 +63,11 @@ task_logic = AindBehaviorDynamicRoutingBonsaiTaskLogic(
                 maximum_block_time=600,
                 trial_sets=[
                     TrialSet(
-                        repeats=150,
+                        repeats=1,
                         available_trials=[
                             Trial(stimulus=grating1, presentation_parameters=non_contingent_presentation),
                             Trial(stimulus=grating2, presentation_parameters=unrewarded_presentation),
-                        ]
+                        ] * 75
                     ),
                 ],
             )
