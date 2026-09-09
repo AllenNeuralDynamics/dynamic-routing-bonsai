@@ -47,41 +47,20 @@ The workflow can thus be executed using the [Bonsai CLI](https://bonsai-rx.org/d
 "./bonsai/bonsai.exe" "./src/main.bonsai" -p SessionPath=<path-to-session.json> -p RigPath=<path-to-rig.json> -p TaskLogicPath=<path-to-task_logic.json>
 ```
 
-However, for a better experiment management user experience, it is recommended to use the provided experiment launcher below.
+Since some parameters are generated per-experiment (e.g. data of experiment session), it can be useful to use a launcher to generate settings files and initiate the workflow in a single step, for example:
 
-## CLI tools
-
-The platform exposes a few CLI tools to facilitate various tasks. Tools are available via:
-
-```powershell
-uv run dynamic-routing-bonsai <subcommand>
+```
+$scriptPath = Split-Path -Parent $MyInvocation.MyCommand.Path
+Set-Location -Path (Split-Path -Parent $scriptPath)
+uv run ./examples/rig.py
+uv run ./examples/session.py
+uv run ./examples/task_logic_stage0.py
+./bonsai/bonsai.exe ./src/main.bonsai -p SessionPath=../local/Session.json -p RigPath=../local/AindBehaviorDynamicRoutingBonsaiRig.json -p TaskLogicPath=../local/stage0_AindBehaviorDynamicRoutingBonsaiTaskLogic.json
 ```
 
-for a list of all sub commands available:
+would generate all three settings files based on the current generation scripts in `examples` and launch the workflow with these settings. An example is given in `scripts/launcher.ps1`.
 
-```powershell
-uv run dynamic-routing-bonsai -h
-```
-
-You may need to install optional dependencies depending on the sub-commands you run.
-
-## Experiment launcher (CLABE)
-
-To manage experiments and input files, this repository contains a launcher script that can be used to run the task. This script is located at `./src/aind_behavior_dynamic_routing_bonsai/launcher.py`. It can be run from the command line as follows:
-
-```powershell
-uv run dynamic-routing-bonsai clabe
-```
-
-Additional arguments can be passed to the script as needed:
-
-```powershell
-uv run dynamic-routing-bonsai clabe -h
-```
-
-or via a `./local/clabe.yml` file. (An example can be found in `./examples/clabe.yml`)
-
-## Primary data quality-control
+## Primary data quality-control (not yet implemented)
 
 Once an experiment is collected, the primary data quality-control script can be run to check the data for issues. This script can be launched using:
 
@@ -89,7 +68,7 @@ Once an experiment is collected, the primary data quality-control script can be 
 uv run dynamic-routing-bonsai data-qc <path-to-data-dir>
 ```
 
-## Mapping to aind-data-schema
+## Mapping to aind-data-schema (not yet implemented)
 
 Once an experiment is collected, data can be mapped to aind-data-schema using the `data-mapper` sub-command:
 
