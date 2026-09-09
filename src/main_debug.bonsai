@@ -152,7 +152,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="num:CreateRandom">
-                <num:Seed>5</num:Seed>
+                <num:Seed>3</num:Seed>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -3628,7 +3628,7 @@ bitMasks:
                               </Expression>
                               <Expression xsi:type="Index">
                                 <Operand xsi:type="IntProperty">
-                                  <Value>3</Value>
+                                  <Value>6</Value>
                                 </Operand>
                               </Expression>
                               <Expression xsi:type="Combinator">
@@ -3688,7 +3688,7 @@ bitMasks:
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="rx:Delay">
-                                  <rx:DueTime>PT2.193S</rx:DueTime>
+                                  <rx:DueTime>PT1.532S</rx:DueTime>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="IncludeWorkflow" Path="Extensions\MulticastSoftwareEvent.bonsai">
@@ -4752,6 +4752,53 @@ bitMasks:
             <p9:TimestampedOfSoftwareEvent />
             <p9:TimestampedOfSoftwareEvent />
             <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
           </p9:SoftwareEvents>
           <p9:TrialBreakEventName>TrialEnd</p9:TrialBreakEventName>
           <p9:PlotHeight>200</p9:PlotHeight>
@@ -4786,6 +4833,13 @@ bitMasks:
               <p9:YPosition>0.9</p9:YPosition>
               <p9:MarkerSize>3</p9:MarkerSize>
               <p9:Marker>Down</p9:Marker>
+            </p9:PointPlotter>
+            <p9:PointPlotter>
+              <p9:EventName>StimulusStop</p9:EventName>
+              <p9:Color>Red</p9:Color>
+              <p9:YPosition>0.1</p9:YPosition>
+              <p9:MarkerSize>3</p9:MarkerSize>
+              <p9:Marker>Up</p9:Marker>
             </p9:PointPlotter>
           </p9:PointPlotters>
         </Combinator>
