@@ -812,6 +812,10 @@
             }
           ],
           "title": "Timeout Stimulus"
+        },
+        "post_response_time": {
+          "title": "Post Response Time",
+          "type": "number"
         }
       },
       "required": [
@@ -822,7 +826,8 @@
         "rewarded",
         "non_contingent_reward",
         "timeout_duration",
-        "timeout_stimulus"
+        "timeout_stimulus",
+        "post_response_time"
       ],
       "title": "PresentationParameters",
       "type": "object"

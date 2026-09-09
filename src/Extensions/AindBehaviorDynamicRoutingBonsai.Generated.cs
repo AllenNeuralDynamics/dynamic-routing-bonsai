@@ -1986,6 +1986,8 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     
         private Stimulus _timeoutStimulus;
     
+        private double _postResponseTime;
+    
         public PresentationParameters()
         {
             _rewardAmount = 10;
@@ -2002,6 +2004,7 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             _nonContingentReward = other._nonContingentReward;
             _timeoutDuration = other._timeoutDuration;
             _timeoutStimulus = other._timeoutStimulus;
+            _postResponseTime = other._postResponseTime;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("stimulus_start_time", Required=Newtonsoft.Json.Required.Always)]
@@ -2126,6 +2129,19 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("post_response_time", Required=Newtonsoft.Json.Required.Always)]
+        public double PostResponseTime
+        {
+            get
+            {
+                return _postResponseTime;
+            }
+            set
+            {
+                _postResponseTime = value;
+            }
+        }
+    
         public System.IObservable<PresentationParameters> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PresentationParameters(this)));
@@ -2146,7 +2162,8 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             stringBuilder.Append("RewardAmount = " + _rewardAmount + ", ");
             stringBuilder.Append("NonContingentReward = " + _nonContingentReward + ", ");
             stringBuilder.Append("TimeoutDuration = " + _timeoutDuration + ", ");
-            stringBuilder.Append("TimeoutStimulus = " + _timeoutStimulus);
+            stringBuilder.Append("TimeoutStimulus = " + _timeoutStimulus + ", ");
+            stringBuilder.Append("PostResponseTime = " + _postResponseTime);
             return true;
         }
     

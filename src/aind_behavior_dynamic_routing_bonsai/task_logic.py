@@ -63,6 +63,7 @@ class PresentationParameters(BaseModel):
     timeout_stimulus: Annotated[
         Union[AudioStimulus, GratingStimulus, QuadStimulus, BlankStimulus], Field(discriminator="stimulus_type")
     ]
+    post_response_time: float
 
 
 class Trial(BaseModel):

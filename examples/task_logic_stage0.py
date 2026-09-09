@@ -40,6 +40,7 @@ non_contingent_presentation = PresentationParameters(
     non_contingent_reward=True,
     timeout_duration=0,
     timeout_stimulus=null_stim,
+    post_response_time=3.0
 )
 unrewarded_presentation = PresentationParameters(
     stimulus_start_time=1.5,
@@ -50,6 +51,7 @@ unrewarded_presentation = PresentationParameters(
     non_contingent_reward=False,
     timeout_duration=0,
     timeout_stimulus=null_stim,
+    post_response_time=3.0
 )
 
 pre_stimulus_distribution = distributions.ExponentialDistribution(
