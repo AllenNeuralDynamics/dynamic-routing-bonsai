@@ -5,7 +5,7 @@ from typing import Optional
 
 import pydantic
 import pydantic_settings
-from aind_behavior_services.session import AindBehaviorSessionModel
+from aind_behavior_services.session import Session
 from aind_behavior_services.utils import model_from_json_file
 from git import Repo
 
