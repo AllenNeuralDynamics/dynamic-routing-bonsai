@@ -538,6 +538,10 @@
         "temporal_frequency": {
           "title": "Temporal Frequency",
           "type": "number"
+        },
+        "phase": {
+          "title": "Phase",
+          "type": "number"
         }
       },
       "required": [
@@ -547,7 +551,8 @@
         "extent_x",
         "extent_y",
         "spatial_frequency",
-        "temporal_frequency"
+        "temporal_frequency",
+        "phase"
       ],
       "title": "GratingStimulus",
       "type": "object"

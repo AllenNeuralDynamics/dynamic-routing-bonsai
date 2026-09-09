@@ -32,6 +32,7 @@ class GratingStimulus(StimulusBase):
     extent_y: float
     spatial_frequency: float
     temporal_frequency: float
+    phase: float
 
 
 class QuadStimulus(StimulusBase):

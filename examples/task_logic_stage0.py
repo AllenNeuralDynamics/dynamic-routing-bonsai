@@ -16,11 +16,17 @@ from aind_behavior_dynamic_routing_bonsai.task_logic import (
     TrialSet,
 )
 
-grating1 = GratingStimulus(
-    stimulus_type="grating", angle=0, aperture=0, extent_x=50, extent_y=50, spatial_frequency=0.04, temporal_frequency=-2
+target_grating1 = GratingStimulus(
+    stimulus_type="grating", angle=0, aperture=0, extent_x=50, extent_y=50, spatial_frequency=0.04, temporal_frequency=-2, phase=0
 )
-grating2 = GratingStimulus(
-    stimulus_type="grating", angle=90, aperture=0, extent_x=50, extent_y=50, spatial_frequency=0.04, temporal_frequency=2
+target_grating2 = GratingStimulus(
+    stimulus_type="grating", angle=0, aperture=0, extent_x=50, extent_y=50, spatial_frequency=0.04, temporal_frequency=-2, phase=90
+)
+non_target_grating1 = GratingStimulus(
+    stimulus_type="grating", angle=90, aperture=0, extent_x=50, extent_y=50, spatial_frequency=0.04, temporal_frequency=2, phase=0
+)
+non_target_grating2 = GratingStimulus(
+    stimulus_type="grating", angle=90, aperture=0, extent_x=50, extent_y=50, spatial_frequency=0.04, temporal_frequency=2, phase=90
 )
 null_stim = QuadStimulus(
     stimulus_type="quad", extent_x=0, extent_y=0, position_x=0, position_y=0, color_r=1, color_g=0, color_b=0, color_a=0
@@ -29,7 +35,7 @@ non_contingent_presentation = PresentationParameters(
     stimulus_start_time=1.5,
     stimulus_duration=0.5,
     response_window_start_time=1.6,
-    response_window_duration=1.0,
+    response_window_duration=0.9,
     rewarded=True,
     non_contingent_reward=True,
     timeout_duration=0,
@@ -39,7 +45,7 @@ unrewarded_presentation = PresentationParameters(
     stimulus_start_time=1.5,
     stimulus_duration=0.5,
     response_window_start_time=1.6,
-    response_window_duration=1.0,
+    response_window_duration=0.9,
     rewarded=False,
     non_contingent_reward=False,
     timeout_duration=0,
@@ -65,9 +71,11 @@ task_logic = AindBehaviorDynamicRoutingBonsaiTaskLogic(
                     TrialSet(
                         repeats=1,
                         available_trials=[
-                            Trial(stimulus=grating1, presentation_parameters=non_contingent_presentation),
-                            Trial(stimulus=grating2, presentation_parameters=unrewarded_presentation),
-                        ] * 75
+                            Trial(stimulus=target_grating1, presentation_parameters=non_contingent_presentation),
+                            Trial(stimulus=target_grating2, presentation_parameters=non_contingent_presentation),
+                            Trial(stimulus=non_target_grating1, presentation_parameters=unrewarded_presentation),
+                            Trial(stimulus=non_target_grating2, presentation_parameters=unrewarded_presentation)
+                        ] * 37
                     ),
                 ],
             )

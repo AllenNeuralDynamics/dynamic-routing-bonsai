@@ -1259,6 +1259,8 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     
         private double _temporalFrequency;
     
+        private double _phase;
+    
         public GratingStimulus()
         {
         }
@@ -1272,6 +1274,7 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             _extentY = other._extentY;
             _spatialFrequency = other._spatialFrequency;
             _temporalFrequency = other._temporalFrequency;
+            _phase = other._phase;
         }
     
         [Newtonsoft.Json.JsonPropertyAttribute("angle", Required=Newtonsoft.Json.Required.Always)]
@@ -1352,6 +1355,19 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        [Newtonsoft.Json.JsonPropertyAttribute("phase", Required=Newtonsoft.Json.Required.Always)]
+        public double Phase
+        {
+            get
+            {
+                return _phase;
+            }
+            set
+            {
+                _phase = value;
+            }
+        }
+    
         public System.IObservable<GratingStimulus> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new GratingStimulus(this)));
@@ -1373,7 +1389,8 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             stringBuilder.Append("ExtentX = " + _extentX + ", ");
             stringBuilder.Append("ExtentY = " + _extentY + ", ");
             stringBuilder.Append("SpatialFrequency = " + _spatialFrequency + ", ");
-            stringBuilder.Append("TemporalFrequency = " + _temporalFrequency);
+            stringBuilder.Append("TemporalFrequency = " + _temporalFrequency + ", ");
+            stringBuilder.Append("Phase = " + _phase);
             return true;
         }
     }
