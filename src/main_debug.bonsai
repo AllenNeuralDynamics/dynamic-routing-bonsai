@@ -152,7 +152,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="num:CreateRandom">
-                <num:Seed>3</num:Seed>
+                <num:Seed>5</num:Seed>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -840,9 +840,9 @@ Item3 as Right)</scr:Expression>
                           <ExtentX>50</ExtentX>
                           <ExtentY>50</ExtentY>
                           <SpatialFrequency>0.04</SpatialFrequency>
-                          <TemporalFrequency>2</TemporalFrequency>
+                          <TemporalFrequency>-2</TemporalFrequency>
                           <Phase>0</Phase>
-                          <Angle>90</Angle>
+                          <Angle>0</Angle>
                           <SquareWave>false</SquareWave>
                           <Contrast>1</Contrast>
                           <DutyCycle xsi:nil="true" />
@@ -1982,7 +1982,7 @@ Item3 as Right)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="wie:KeyDown">
-                <wie:Filter>None</wie:Filter>
+                <wie:Filter>L</wie:Filter>
                 <wie:SuppressRepetitions>false</wie:SuppressRepetitions>
               </Combinator>
             </Expression>
@@ -3628,7 +3628,7 @@ bitMasks:
                               </Expression>
                               <Expression xsi:type="Index">
                                 <Operand xsi:type="IntProperty">
-                                  <Value>2</Value>
+                                  <Value>3</Value>
                                 </Operand>
                               </Expression>
                               <Expression xsi:type="Combinator">
@@ -3688,7 +3688,7 @@ bitMasks:
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="rx:Delay">
-                                  <rx:DueTime>PT3.693S</rx:DueTime>
+                                  <rx:DueTime>PT2.193S</rx:DueTime>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="IncludeWorkflow" Path="Extensions\MulticastSoftwareEvent.bonsai">
@@ -3717,7 +3717,7 @@ bitMasks:
                                     </Expression>
                                     <Expression xsi:type="Combinator">
                                       <Combinator xsi:type="rx:Timer">
-                                        <rx:DueTime>PT0S</rx:DueTime>
+                                        <rx:DueTime>PT1.5S</rx:DueTime>
                                       </Combinator>
                                     </Expression>
                                     <Expression xsi:type="Combinator">
@@ -3808,7 +3808,7 @@ bitMasks:
                                     </Expression>
                                     <Expression xsi:type="Combinator">
                                       <Combinator xsi:type="rx:Delay">
-                                        <rx:DueTime>PT0.6S</rx:DueTime>
+                                        <rx:DueTime>PT1.6S</rx:DueTime>
                                       </Combinator>
                                     </Expression>
                                     <Expression xsi:type="IncludeWorkflow" Path="Extensions\MulticastSoftwareEvent.bonsai">
@@ -3900,7 +3900,7 @@ bitMasks:
                                           </Expression>
                                           <Expression xsi:type="Combinator">
                                             <Combinator xsi:type="rx:Timer">
-                                              <rx:DueTime>PT0.9S</rx:DueTime>
+                                              <rx:DueTime>PT1S</rx:DueTime>
                                             </Combinator>
                                           </Expression>
                                           <Expression xsi:type="SubscribeSubject">
@@ -4289,6 +4289,9 @@ bitMasks:
                                   <rx:Count>1</rx:Count>
                                 </Combinator>
                               </Expression>
+                              <Expression xsi:type="IncludeWorkflow" Path="Extensions\MulticastSoftwareEvent.bonsai">
+                                <EventName>TrialEnd</EventName>
+                              </Expression>
                               <Expression xsi:type="WorkflowOutput" />
                               <Expression xsi:type="rx:CreateObservable">
                                 <Name>Stimulus</Name>
@@ -4313,8 +4316,11 @@ bitMasks:
                                     </Expression>
                                     <Expression xsi:type="Combinator">
                                       <Combinator xsi:type="rx:Delay">
-                                        <rx:DueTime>PT0S</rx:DueTime>
+                                        <rx:DueTime>PT1.5S</rx:DueTime>
                                       </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="IncludeWorkflow" Path="Extensions\MulticastSoftwareEvent.bonsai">
+                                      <EventName>StimulusStart</EventName>
                                     </Expression>
                                     <Expression xsi:type="MemberSelector">
                                       <Selector>Item1.Stimulus</Selector>
@@ -4345,6 +4351,9 @@ bitMasks:
                                         <rx:DueTime>PT0.5S</rx:DueTime>
                                       </Combinator>
                                     </Expression>
+                                    <Expression xsi:type="IncludeWorkflow" Path="Extensions\MulticastSoftwareEvent.bonsai">
+                                      <EventName>StimulusStop</EventName>
+                                    </Expression>
                                     <Expression xsi:type="MulticastSubject">
                                       <Name>StopDrawing</Name>
                                     </Expression>
@@ -4363,14 +4372,16 @@ bitMasks:
                                     <Edge From="6" To="7" Label="Source1" />
                                     <Edge From="7" To="8" Label="Source1" />
                                     <Edge From="8" To="9" Label="Source1" />
-                                    <Edge From="9" To="14" Label="Source1" />
-                                    <Edge From="10" To="11" Label="Source1" />
+                                    <Edge From="9" To="10" Label="Source1" />
+                                    <Edge From="10" To="15" Label="Source1" />
                                     <Edge From="11" To="12" Label="Source1" />
                                     <Edge From="12" To="13" Label="Source1" />
-                                    <Edge From="13" To="14" Label="Source2" />
-                                    <Edge From="14" To="15" Label="Source1" />
+                                    <Edge From="13" To="14" Label="Source1" />
+                                    <Edge From="14" To="15" Label="Source2" />
                                     <Edge From="15" To="16" Label="Source1" />
                                     <Edge From="16" To="17" Label="Source1" />
+                                    <Edge From="17" To="18" Label="Source1" />
+                                    <Edge From="18" To="19" Label="Source1" />
                                   </Edges>
                                 </Workflow>
                               </Expression>
@@ -4463,7 +4474,7 @@ bitMasks:
                               <Edge From="20" To="21" Label="Source1" />
                               <Edge From="21" To="22" Label="Source1" />
                               <Edge From="21" To="28" Label="Source1" />
-                              <Edge From="21" To="48" Label="Source1" />
+                              <Edge From="21" To="49" Label="Source1" />
                               <Edge From="22" To="23" Label="Source1" />
                               <Edge From="23" To="26" Label="Source1" />
                               <Edge From="24" To="25" Label="Source1" />
@@ -4475,7 +4486,7 @@ bitMasks:
                               <Edge From="29" To="31" Label="Source1" />
                               <Edge From="30" To="31" Label="Source2" />
                               <Edge From="31" To="32" Label="Source1" />
-                              <Edge From="31" To="49" Label="Source1" />
+                              <Edge From="31" To="50" Label="Source1" />
                               <Edge From="32" To="37" Label="Source1" />
                               <Edge From="33" To="34" Label="Source1" />
                               <Edge From="34" To="35" Label="Source1" />
@@ -4491,9 +4502,10 @@ bitMasks:
                               <Edge From="44" To="45" Label="Source1" />
                               <Edge From="45" To="46" Label="Source1" />
                               <Edge From="46" To="47" Label="Source1" />
-                              <Edge From="48" To="50" Label="Source1" />
-                              <Edge From="49" To="50" Label="Source2" />
-                              <Edge From="50" To="51" Label="Source1" />
+                              <Edge From="47" To="48" Label="Source1" />
+                              <Edge From="49" To="51" Label="Source1" />
+                              <Edge From="50" To="51" Label="Source2" />
+                              <Edge From="51" To="52" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>
@@ -4740,12 +4752,8 @@ bitMasks:
             <p9:TimestampedOfSoftwareEvent />
             <p9:TimestampedOfSoftwareEvent />
             <p9:TimestampedOfSoftwareEvent />
-            <p9:TimestampedOfSoftwareEvent />
-            <p9:TimestampedOfSoftwareEvent />
-            <p9:TimestampedOfSoftwareEvent />
-            <p9:TimestampedOfSoftwareEvent />
-            <p9:TimestampedOfSoftwareEvent />
           </p9:SoftwareEvents>
+          <p9:TrialBreakEventName>TrialEnd</p9:TrialBreakEventName>
           <p9:PlotHeight>200</p9:PlotHeight>
           <p9:ShadedAreaPlotters>
             <p9:ShadedAreaPlotter>
@@ -4771,6 +4779,13 @@ bitMasks:
               <p9:YPosition>0.5</p9:YPosition>
               <p9:MarkerSize>3</p9:MarkerSize>
               <p9:Marker>Circle</p9:Marker>
+            </p9:PointPlotter>
+            <p9:PointPlotter>
+              <p9:EventName>StimulusStart</p9:EventName>
+              <p9:Color>Red</p9:Color>
+              <p9:YPosition>0.9</p9:YPosition>
+              <p9:MarkerSize>3</p9:MarkerSize>
+              <p9:Marker>Down</p9:Marker>
             </p9:PointPlotter>
           </p9:PointPlotters>
         </Combinator>
