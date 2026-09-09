@@ -22,6 +22,9 @@
                  xmlns:wie="clr-namespace:Bonsai.Windows.Input;assembly=Bonsai.Windows.Input"
                  xmlns:p9="clr-namespace:;assembly=Extensions"
                  xmlns:p10="clr-namespace:AllenNeuralDynamics.AindBehaviorServices.Distributions;assembly=AllenNeuralDynamics.AindBehaviorServices.Distributions"
+                 xmlns:p11="clr-namespace:AllenNeuralDynamics.Core.Design;assembly=AllenNeuralDynamics.Core.Design"
+                 xmlns:imvizui="clr-namespace:Bonsai.ImGui.Visualizers;assembly=Bonsai.ImGui.Visualizers.Design"
+                 xmlns:imgui="clr-namespace:Bonsai.ImGui;assembly=Bonsai.ImGui"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -149,7 +152,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="num:CreateRandom">
-                <num:Seed>7</num:Seed>
+                <num:Seed>9</num:Seed>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -3621,7 +3624,7 @@ bitMasks:
                               </Expression>
                               <Expression xsi:type="Index">
                                 <Operand xsi:type="IntProperty">
-                                  <Value>19</Value>
+                                  <Value>9</Value>
                                 </Operand>
                               </Expression>
                               <Expression xsi:type="Combinator">
@@ -3638,13 +3641,8 @@ bitMasks:
                               <Expression xsi:type="SubscribeSubject">
                                 <Name>Trial</Name>
                               </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p5:CreateSoftwareEvent">
-                                  <p5:EventName>TrialStartEvent</p5:EventName>
-                                </Combinator>
-                              </Expression>
-                              <Expression xsi:type="MulticastSubject">
-                                <Name>SoftwareEvent</Name>
+                              <Expression xsi:type="IncludeWorkflow" Path="Extensions\MulticastSoftwareEvent.bonsai">
+                                <EventName>TrialStart</EventName>
                               </Expression>
                               <Expression xsi:type="SubscribeSubject">
                                 <Name>InterTrialIntervalDistribution</Name>
@@ -3686,8 +3684,11 @@ bitMasks:
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="rx:Delay">
-                                  <rx:DueTime>PT0.581S</rx:DueTime>
+                                  <rx:DueTime>PT1.647S</rx:DueTime>
                                 </Combinator>
+                              </Expression>
+                              <Expression xsi:type="IncludeWorkflow" Path="Extensions\MulticastSoftwareEvent.bonsai">
+                                <EventName>Quiescence</EventName>
                               </Expression>
                               <Expression xsi:type="rx:SelectMany">
                                 <Name>Quiescence</Name>
@@ -3806,6 +3807,9 @@ bitMasks:
                                         <rx:DueTime>PT0.6S</rx:DueTime>
                                       </Combinator>
                                     </Expression>
+                                    <Expression xsi:type="IncludeWorkflow" Path="Extensions\MulticastSoftwareEvent.bonsai">
+                                      <EventName>ResponseWindow</EventName>
+                                    </Expression>
                                     <Expression xsi:type="rx:SelectMany">
                                       <Name>ResponseWindow</Name>
                                       <Workflow>
@@ -3892,7 +3896,7 @@ bitMasks:
                                           </Expression>
                                           <Expression xsi:type="Combinator">
                                             <Combinator xsi:type="rx:Timer">
-                                              <rx:DueTime>PT0.9S</rx:DueTime>
+                                              <rx:DueTime>PT1.9S</rx:DueTime>
                                             </Combinator>
                                           </Expression>
                                           <Expression xsi:type="SubscribeSubject">
@@ -4160,6 +4164,7 @@ bitMasks:
                                     <Edge From="5" To="6" Label="Source1" />
                                     <Edge From="6" To="7" Label="Source1" />
                                     <Edge From="7" To="8" Label="Source1" />
+                                    <Edge From="8" To="9" Label="Source1" />
                                   </Edges>
                                 </Workflow>
                               </Expression>
@@ -4442,16 +4447,16 @@ bitMasks:
                               <Edge From="5" To="6" Label="Source1" />
                               <Edge From="6" To="7" Label="Source1" />
                               <Edge From="8" To="9" Label="Source1" />
-                              <Edge From="9" To="10" Label="Source1" />
-                              <Edge From="11" To="14" Label="Source1" />
-                              <Edge From="12" To="13" Label="Source1" />
-                              <Edge From="13" To="14" Label="Source2" />
+                              <Edge From="10" To="13" Label="Source1" />
+                              <Edge From="11" To="12" Label="Source1" />
+                              <Edge From="12" To="13" Label="Source2" />
+                              <Edge From="13" To="14" Label="Source1" />
                               <Edge From="14" To="15" Label="Source1" />
-                              <Edge From="15" To="16" Label="Source1" />
-                              <Edge From="17" To="21" Label="Source1" />
+                              <Edge From="16" To="20" Label="Source1" />
+                              <Edge From="17" To="18" Label="Source1" />
                               <Edge From="18" To="19" Label="Source1" />
-                              <Edge From="19" To="20" Label="Source1" />
-                              <Edge From="20" To="21" Label="Source2" />
+                              <Edge From="19" To="20" Label="Source2" />
+                              <Edge From="20" To="21" Label="Source1" />
                               <Edge From="21" To="22" Label="Source1" />
                               <Edge From="21" To="28" Label="Source1" />
                               <Edge From="21" To="48" Label="Source1" />
@@ -4647,6 +4652,141 @@ bitMasks:
       <Expression xsi:type="SubscribeSubject">
         <Name>SoftwareEvent</Name>
       </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>SoftwareEvent</Name>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>TimeBase</Name>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:WithLatestFrom" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="harp:CreateTimestamped" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="p5:TimestampSoftwareEvent" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Timestamp" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="p11:AccumulateToImmutableList" />
+      </Expression>
+      <Expression xsi:type="rx:BehaviorSubject">
+        <Name>SoftwareEventHistory</Name>
+      </Expression>
+      <Expression xsi:type="imvizui:ImPlotVisualizerBuilder" />
+      <Expression xsi:type="imgui:TableBuilder">
+        <imgui:Visible>true</imgui:Visible>
+        <imgui:Columns>1</imgui:Columns>
+        <imgui:Flags>None</imgui:Flags>
+        <imgui:OuterSize>
+          <imgui:X>0</imgui:X>
+          <imgui:Y>0</imgui:Y>
+        </imgui:OuterSize>
+        <imgui:InnerWidth>0</imgui:InnerWidth>
+      </Expression>
+      <Expression xsi:type="rx:PublishSubject">
+        <Name>Frame</Name>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>Frame</Name>
+      </Expression>
+      <Expression xsi:type="imgui:TableNextColumnBuilder">
+        <imgui:Visible>true</imgui:Visible>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>SoftwareEventHistory</Name>
+      </Expression>
+      <Expression xsi:type="PropertyMapping">
+        <PropertyMappings>
+          <Property Name="SoftwareEvents" />
+        </PropertyMappings>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="p9:SoftwareEventVisualizer">
+          <p9:Visible>true</p9:Visible>
+          <p9:SoftwareEvents>
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+            <p9:TimestampedOfSoftwareEvent />
+          </p9:SoftwareEvents>
+          <p9:PlotHeight>200</p9:PlotHeight>
+          <p9:ShadedAreaPlotters>
+            <p9:ShadedAreaPlotter>
+              <p9:EventName>TrialStart</p9:EventName>
+              <p9:Color>CornflowerBlue</p9:Color>
+              <p9:Alpha>0.3</p9:Alpha>
+            </p9:ShadedAreaPlotter>
+            <p9:ShadedAreaPlotter>
+              <p9:EventName>Quiescence</p9:EventName>
+              <p9:Color>Green</p9:Color>
+              <p9:Alpha>0.3</p9:Alpha>
+            </p9:ShadedAreaPlotter>
+            <p9:ShadedAreaPlotter>
+              <p9:EventName>ResponseWindow</p9:EventName>
+              <p9:Color>Red</p9:Color>
+              <p9:Alpha>0.3</p9:Alpha>
+            </p9:ShadedAreaPlotter>
+          </p9:ShadedAreaPlotters>
+          <p9:PointPlotters />
+        </Combinator>
+      </Expression>
     </Nodes>
     <Edges>
       <Edge From="0" To="1" Label="Source1" />
@@ -4655,6 +4795,19 @@ bitMasks:
       <Edge From="9" To="10" Label="Source2" />
       <Edge From="11" To="12" Label="Source1" />
       <Edge From="12" To="13" Label="Source1" />
+      <Edge From="15" To="17" Label="Source1" />
+      <Edge From="16" To="17" Label="Source2" />
+      <Edge From="17" To="18" Label="Source1" />
+      <Edge From="18" To="19" Label="Source1" />
+      <Edge From="19" To="20" Label="Source1" />
+      <Edge From="20" To="21" Label="Source1" />
+      <Edge From="21" To="22" Label="Source1" />
+      <Edge From="23" To="24" Label="Source1" />
+      <Edge From="24" To="25" Label="Source1" />
+      <Edge From="26" To="27" Label="Source1" />
+      <Edge From="27" To="30" Label="Source1" />
+      <Edge From="28" To="29" Label="Source1" />
+      <Edge From="29" To="30" Label="Source2" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
