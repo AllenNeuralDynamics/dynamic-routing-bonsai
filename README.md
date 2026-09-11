@@ -44,7 +44,7 @@ Examples on how to generate these files can be found in the `./examples` directo
 The workflow can thus be executed using the [Bonsai CLI](https://bonsai-rx.org/docs/articles/cli.html):
 
 ```powershell
-"./bonsai/bonsai.exe" "./src/main.bonsai" -p SessionPath=<path-to-session.json> -p RigPath=<path-to-rig.json> -p TaskLogicPath=<path-to-task_logic.json>
+./bonsai/bonsai.exe ./src/main.bonsai -p SessionPath=<path-to-session.json> -p RigPath=<path-to-rig.json> -p TaskLogicPath=<path-to-task_logic.json>
 ```
 
 Since some parameters are generated per-experiment (e.g. data of experiment session), it can be useful to use a launcher to generate settings files and initiate the workflow in a single step, for example:
