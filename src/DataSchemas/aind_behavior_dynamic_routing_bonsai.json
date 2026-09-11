@@ -3,7 +3,7 @@
     "AindBehaviorDynamicRoutingBonsaiRig": {
       "properties": {
         "aind_behavior_services_pkg_version": {
-          "default": "0.12.5",
+          "default": "0.13.8",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
@@ -24,6 +24,12 @@
           "title": "Rig Name",
           "type": "string"
         },
+        "data_directory": {
+          "description": "Directory where data will be saved to",
+          "format": "path",
+          "title": "Data Directory",
+          "type": "string"
+        },
         "harp_behavior": {
           "$ref": "#/$defs/HarpBehavior",
           "description": "Harp behavior"
@@ -37,11 +43,9 @@
           "description": "Harp lickometer"
         },
         "screen": {
-          "$ref": "#/$defs/Screen",
+          "$ref": "#/$defs/ScreenAssembly",
           "default": {
-            "device_type": "Screen",
-            "device_name": "Screen",
-            "additional_settings": null,
+            "device_type": "ScreenAssembly",
             "calibration": {
               "center": {
                 "extrinsics": {
@@ -121,25 +125,20 @@
           "default": {
             "water_valve": {
               "date": null,
-              "description": "Calibration of the water valve delivery system",
-              "device_name": "WaterValve",
-              "input": {
-                "measurements": []
-              },
-              "notes": null,
-              "output": {
-                "interval_average": null,
-                "offset": 0.0,
-                "r2": null,
-                "slope": 1.0,
-                "valid_domain": null
-              }
+              "interval_average": null,
+              "measurements": [],
+              "offset": 0.0,
+              "r2": null,
+              "slope": 1.0,
+              "valid_domain": null
             }
           }
         }
       },
       "required": [
+        "computer_name",
         "rig_name",
+        "data_directory",
         "harp_behavior",
         "harp_sound_card",
         "harp_lickety_split",
@@ -213,7 +212,7 @@
           "title": "Rng Seed"
         },
         "aind_behavior_services_pkg_version": {
-          "default": "0.12.5",
+          "default": "0.13.8",
           "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
           "title": "aind_behavior_services package version",
           "type": "string"
@@ -225,142 +224,15 @@
           "title": "Task Blocks",
           "type": "array"
         },
-        "inter_trial_interval": {
-          "$ref": "#/$defs/UniformDistribution",
-          "default": {
-            "family": "Uniform",
-            "distribution_parameters": {
-              "family": "Uniform",
-              "max": 3.0,
-              "min": 1.0
-            },
-            "truncation_parameters": null,
-            "scaling_parameters": null
-          }
+        "pre_stimulus_time_distribution": {
+          "$ref": "#/$defs/ExponentialDistribution"
         }
       },
       "required": [
-        "task_blocks"
+        "task_blocks",
+        "pre_stimulus_time_distribution"
       ],
       "title": "AindBehaviorDynamicRoutingBonsaiTaskParameters",
-      "type": "object"
-    },
-    "AindBehaviorSessionModel": {
-      "properties": {
-        "aind_behavior_services_pkg_version": {
-          "default": "0.12.5",
-          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
-          "title": "aind_behavior_services package version",
-          "type": "string"
-        },
-        "version": {
-          "const": "0.12.5",
-          "default": "0.12.5",
-          "title": "Version",
-          "type": "string"
-        },
-        "experiment": {
-          "default": null,
-          "description": "Name of the experiment",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Experiment"
-        },
-        "experimenter": {
-          "default": [],
-          "description": "Name of the experimenter",
-          "items": {
-            "type": "string"
-          },
-          "title": "Experimenter",
-          "type": "array"
-        },
-        "date": {
-          "description": "Date of the experiment",
-          "format": "date-time",
-          "title": "Date",
-          "type": "string"
-        },
-        "root_path": {
-          "description": "Root path where data will be logged",
-          "title": "Root Path",
-          "type": "string"
-        },
-        "session_name": {
-          "default": null,
-          "description": "Name of the session. This will be used to create a folder in the root path. If not provided, it will be generated using subject and date.",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Session Name"
-        },
-        "subject": {
-          "description": "Name of the subject",
-          "title": "Subject",
-          "type": "string"
-        },
-        "experiment_version": {
-          "default": "",
-          "deprecated": true,
-          "description": "Version of the experiment",
-          "title": "Experiment Version",
-          "type": "string"
-        },
-        "notes": {
-          "default": null,
-          "description": "Notes about the experiment",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Notes"
-        },
-        "commit_hash": {
-          "default": null,
-          "description": "Commit hash of the repository",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Commit Hash"
-        },
-        "allow_dirty_repo": {
-          "default": false,
-          "description": "Allow running from a dirty repository",
-          "title": "Allow Dirty Repo",
-          "type": "boolean"
-        },
-        "skip_hardware_validation": {
-          "default": false,
-          "description": "Skip hardware validation",
-          "title": "Skip Hardware Validation",
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "root_path",
-        "subject"
-      ],
-      "title": "AindBehaviorSessionModel",
       "type": "object"
     },
     "AudioStimulus": {
@@ -435,34 +307,9 @@
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
           "default": null,
-          "description": "Calibration",
+          "description": "Calibration for the device.",
           "oneOf": [
             {
               "$ref": "#/$defs/BaseModel"
@@ -502,6 +349,7 @@
       "type": "object"
     },
     "DisplayCalibration": {
+      "description": "Represents the calibration parameters of a display.",
       "properties": {
         "intrinsics": {
           "$ref": "#/$defs/DisplayIntrinsics",
@@ -534,6 +382,7 @@
       "type": "object"
     },
     "DisplayExtrinsics": {
+      "description": "Represents the extrinsic parameters of a display.",
       "properties": {
         "rotation": {
           "$ref": "#/$defs/Vector3",
@@ -558,6 +407,7 @@
       "type": "object"
     },
     "DisplayIntrinsics": {
+      "description": "Represents the intrinsic parameters of a display.",
       "properties": {
         "frame_width": {
           "default": 1920,
@@ -591,83 +441,72 @@
       "title": "DisplayIntrinsics",
       "type": "object"
     },
-    "DisplaysCalibration": {
+    "ExponentialDistribution": {
+      "description": "An exponential probability distribution.\n\nModels time between events in a Poisson process. Commonly used\nfor wait times and inter-event intervals.",
       "properties": {
-        "left": {
-          "$ref": "#/$defs/DisplayCalibration",
-          "default": {
-            "intrinsics": {
-              "display_height": 15.0,
-              "display_width": 20.0,
-              "frame_height": 1080,
-              "frame_width": 1920
-            },
-            "extrinsics": {
-              "rotation": {
-                "x": 0.0,
-                "y": 1.0472,
-                "z": 0.0
-              },
-              "translation": {
-                "x": -16.6917756,
-                "y": 1.309016,
-                "z": -3.575264
-              }
-            }
-          },
-          "description": "Left display calibration"
+        "family": {
+          "const": "Exponential",
+          "default": "Exponential",
+          "title": "Family",
+          "type": "string"
         },
-        "center": {
-          "$ref": "#/$defs/DisplayCalibration",
+        "distribution_parameters": {
+          "$ref": "#/$defs/ExponentialDistributionParameters",
           "default": {
-            "intrinsics": {
-              "display_height": 15.0,
-              "display_width": 20.0,
-              "frame_height": 1080,
-              "frame_width": 1920
-            },
-            "extrinsics": {
-              "rotation": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-              },
-              "translation": {
-                "x": 0.0,
-                "y": 1.309016,
-                "z": -13.27
-              }
-            }
+            "family": "Exponential",
+            "rate": 0.0
           },
-          "description": "Center display calibration"
+          "description": "Parameters of the distribution"
         },
-        "right": {
-          "$ref": "#/$defs/DisplayCalibration",
-          "default": {
-            "intrinsics": {
-              "display_height": 15.0,
-              "display_width": 20.0,
-              "frame_height": 1080,
-              "frame_width": 1920
+        "truncation_parameters": {
+          "default": null,
+          "description": "Truncation parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/TruncationParameters"
             },
-            "extrinsics": {
-              "rotation": {
-                "x": 0.0,
-                "y": -1.0472,
-                "z": 0.0
-              },
-              "translation": {
-                "x": 16.6917756,
-                "y": 1.309016,
-                "z": -3.575264
-              }
+            {
+              "type": "null"
             }
-          },
-          "description": "Right display calibration"
+          ]
+        },
+        "scaling_parameters": {
+          "default": null,
+          "description": "Scaling parameters of the distribution",
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ScalingParameters"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
-      "title": "DisplaysCalibration",
-      "type": "object"
+      "title": "ExponentialDistribution",
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.ExponentialDistribution"
+    },
+    "ExponentialDistributionParameters": {
+      "description": "Parameters for an exponential distribution.\n\nDefined by the rate parameter (inverse of mean).",
+      "properties": {
+        "family": {
+          "const": "Exponential",
+          "default": "Exponential",
+          "title": "Family",
+          "type": "string"
+        },
+        "rate": {
+          "default": 0,
+          "description": "Rate parameter of the distribution",
+          "minimum": 0,
+          "title": "Rate",
+          "type": "number"
+        }
+      },
+      "title": "ExponentialDistributionParameters",
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.ExponentialDistributionParameters"
     },
     "GratingStimulus": {
       "properties": {
@@ -699,6 +538,10 @@
         "temporal_frequency": {
           "title": "Temporal Frequency",
           "type": "number"
+        },
+        "phase": {
+          "title": "Phase",
+          "type": "number"
         }
       },
       "required": [
@@ -708,7 +551,8 @@
         "extent_x",
         "extent_y",
         "spatial_frequency",
-        "temporal_frequency"
+        "temporal_frequency",
+        "phase"
       ],
       "title": "GratingStimulus",
       "type": "object"
@@ -721,34 +565,9 @@
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
           "default": null,
-          "description": "Calibration",
+          "description": "Calibration for the device.",
           "oneOf": [
             {
               "$ref": "#/$defs/BaseModel"
@@ -797,34 +616,9 @@
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
           "default": null,
-          "description": "Calibration",
+          "description": "Calibration for the device.",
           "oneOf": [
             {
               "$ref": "#/$defs/BaseModel"
@@ -873,34 +667,9 @@
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
           "default": null,
-          "description": "Calibration",
+          "description": "Calibration for the device.",
           "oneOf": [
             {
               "$ref": "#/$defs/BaseModel"
@@ -1043,6 +812,10 @@
             }
           ],
           "title": "Timeout Stimulus"
+        },
+        "post_response_time": {
+          "title": "Post Response Time",
+          "type": "number"
         }
       },
       "required": [
@@ -1053,7 +826,8 @@
         "rewarded",
         "non_contingent_reward",
         "timeout_duration",
-        "timeout_stimulus"
+        "timeout_stimulus",
+        "post_response_time"
       ],
       "title": "PresentationParameters",
       "type": "object"
@@ -1113,6 +887,7 @@
       "type": "object"
     },
     "Rect": {
+      "description": "Represents a rectangle defined by its top-left corner, width, and height.",
       "properties": {
         "x": {
           "default": 0,
@@ -1176,44 +951,20 @@
         }
       },
       "title": "ScalingParameters",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.ScalingParameters"
     },
-    "Screen": {
+    "ScreenAssembly": {
+      "description": "Represents a screen assembly (left, center and right screens) and respective configuration.",
       "properties": {
         "device_type": {
-          "const": "Screen",
-          "default": "Screen",
-          "description": "Device type",
+          "const": "ScreenAssembly",
+          "default": "ScreenAssembly",
           "title": "Device Type",
           "type": "string"
         },
-        "device_name": {
-          "default": null,
-          "description": "Device name",
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Device Name"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/BaseModel"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "calibration": {
-          "$ref": "#/$defs/DisplaysCalibration",
+          "$ref": "#/$defs/ScreenAssemblyCalibration",
           "default": {
             "left": {
               "extrinsics": {
@@ -1276,7 +1027,7 @@
               }
             }
           },
-          "description": "Screen calibration"
+          "description": "Screen assembly calibration"
         },
         "display_index": {
           "default": 1,
@@ -1319,21 +1070,105 @@
           "type": "number"
         }
       },
-      "title": "Screen",
+      "title": "ScreenAssembly",
       "type": "object"
     },
-    "SpinnakerCamera": {
+    "ScreenAssemblyCalibration": {
+      "description": "Represents the calibration parameters for a screen assembly with three displays.",
       "properties": {
-        "device_type": {
-          "const": "SpinnakerCamera",
-          "default": "SpinnakerCamera",
-          "description": "Device type",
-          "title": "Device Type",
+        "left": {
+          "$ref": "#/$defs/DisplayCalibration",
+          "default": {
+            "intrinsics": {
+              "display_height": 15.0,
+              "display_width": 20.0,
+              "frame_height": 1080,
+              "frame_width": 1920
+            },
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": 1.0472,
+                "z": 0.0
+              },
+              "translation": {
+                "x": -16.6917756,
+                "y": 1.309016,
+                "z": -3.575264
+              }
+            }
+          },
+          "description": "Left display calibration"
+        },
+        "center": {
+          "$ref": "#/$defs/DisplayCalibration",
+          "default": {
+            "intrinsics": {
+              "display_height": 15.0,
+              "display_width": 20.0,
+              "frame_height": 1080,
+              "frame_width": 1920
+            },
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "translation": {
+                "x": 0.0,
+                "y": 1.309016,
+                "z": -13.27
+              }
+            }
+          },
+          "description": "Center display calibration"
+        },
+        "right": {
+          "$ref": "#/$defs/DisplayCalibration",
+          "default": {
+            "intrinsics": {
+              "display_height": 15.0,
+              "display_width": 20.0,
+              "frame_height": 1080,
+              "frame_width": 1920
+            },
+            "extrinsics": {
+              "rotation": {
+                "x": 0.0,
+                "y": -1.0472,
+                "z": 0.0
+              },
+              "translation": {
+                "x": 16.6917756,
+                "y": 1.309016,
+                "z": -3.575264
+              }
+            }
+          },
+          "description": "Right display calibration"
+        }
+      },
+      "title": "ScreenAssemblyCalibration",
+      "type": "object"
+    },
+    "Session": {
+      "properties": {
+        "aind_behavior_services_pkg_version": {
+          "default": "0.13.8",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
+          "title": "aind_behavior_services package version",
           "type": "string"
         },
-        "device_name": {
+        "version": {
+          "const": "0.13.8",
+          "default": "0.13.8",
+          "title": "Version",
+          "type": "string"
+        },
+        "experiment": {
           "default": null,
-          "description": "Device name",
+          "description": "Name of the experiment",
           "oneOf": [
             {
               "type": "string"
@@ -1342,23 +1177,98 @@
               "type": "null"
             }
           ],
-          "title": "Device Name"
+          "title": "Experiment"
         },
-        "additional_settings": {
+        "experimenter": {
+          "default": [],
+          "description": "Name of the experimenter",
+          "items": {
+            "type": "string"
+          },
+          "title": "Experimenter",
+          "type": "array"
+        },
+        "date": {
+          "description": "Date of the experiment",
+          "format": "date-time",
+          "title": "Date",
+          "type": "string"
+        },
+        "session_name": {
           "default": null,
-          "description": "Additional settings",
+          "description": "Name of the session. This will be used to create a folder in the root path. If not provided, it will be generated using subject and date.",
           "oneOf": [
             {
-              "$ref": "#/$defs/BaseModel"
+              "type": "string"
             },
             {
               "type": "null"
             }
-          ]
+          ],
+          "title": "Session Name"
+        },
+        "subject": {
+          "description": "Name of the subject",
+          "title": "Subject",
+          "type": "string"
+        },
+        "notes": {
+          "default": null,
+          "description": "Notes about the experiment",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Notes"
+        },
+        "commit_hash": {
+          "default": null,
+          "description": "Commit hash of the repository",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Commit Hash"
+        },
+        "allow_dirty_repo": {
+          "default": false,
+          "description": "Allow running from a dirty repository",
+          "title": "Allow Dirty Repo",
+          "type": "boolean"
+        },
+        "skip_hardware_validation": {
+          "default": false,
+          "description": "Skip hardware validation",
+          "title": "Skip Hardware Validation",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "subject"
+      ],
+      "title": "Session",
+      "type": "object"
+    },
+    "SpinnakerCamera": {
+      "description": "Spinnaker camera device configuration.",
+      "properties": {
+        "device_type": {
+          "const": "SpinnakerCamera",
+          "default": "SpinnakerCamera",
+          "title": "Device Type",
+          "type": "string"
         },
         "calibration": {
           "default": null,
-          "description": "Calibration",
+          "description": "Calibration for the device.",
           "oneOf": [
             {
               "$ref": "#/$defs/BaseModel"
@@ -1472,6 +1382,7 @@
       "type": "object"
     },
     "SpinnakerCameraAdcBitDepth": {
+      "description": "ADC bit depth options for Spinnaker cameras.",
       "enum": [
         0,
         1,
@@ -1486,6 +1397,7 @@
       ]
     },
     "SpinnakerCameraPixelFormat": {
+      "description": "Pixel format options for Spinnaker cameras.",
       "enum": [
         0,
         1,
@@ -1868,96 +1780,27 @@
         }
       },
       "title": "TruncationParameters",
-      "type": "object"
-    },
-    "UniformDistribution": {
-      "description": "A uniform probability distribution.\n\nAll values between min and max have equal probability of being sampled.",
-      "properties": {
-        "family": {
-          "const": "Uniform",
-          "default": "Uniform",
-          "title": "Family",
-          "type": "string"
-        },
-        "distribution_parameters": {
-          "$ref": "#/$defs/UniformDistributionParameters",
-          "default": {
-            "family": "Uniform",
-            "min": 0.0,
-            "max": 0.0
-          },
-          "description": "Parameters of the distribution"
-        },
-        "truncation_parameters": {
-          "default": null,
-          "description": "Truncation parameters of the distribution",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/TruncationParameters"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "scaling_parameters": {
-          "default": null,
-          "description": "Scaling parameters of the distribution",
-          "oneOf": [
-            {
-              "$ref": "#/$defs/ScalingParameters"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        }
-      },
-      "title": "UniformDistribution",
-      "type": "object"
-    },
-    "UniformDistributionParameters": {
-      "description": "Parameters for a uniform distribution.\n\nDefined by minimum and maximum bounds of the distribution.",
-      "properties": {
-        "family": {
-          "const": "Uniform",
-          "default": "Uniform",
-          "title": "Family",
-          "type": "string"
-        },
-        "min": {
-          "default": 0,
-          "description": "Minimum value of the distribution",
-          "title": "Min",
-          "type": "number"
-        },
-        "max": {
-          "default": 0,
-          "description": "Maximum value of the distribution",
-          "title": "Max",
-          "type": "number"
-        }
-      },
-      "title": "UniformDistributionParameters",
-      "type": "object"
+      "type": "object",
+      "x-sgen-typename": "AllenNeuralDynamics.AindBehaviorServices.Distributions.TruncationParameters"
     },
     "Vector3": {
+      "description": "Represents a 3D vector with float coordinates.",
       "properties": {
         "x": {
           "default": 0,
-          "description": "X coordinate of the point",
+          "description": "X coordinate of the vector",
           "title": "X",
           "type": "number"
         },
         "y": {
           "default": 0,
-          "description": "Y coordinate of the point",
+          "description": "Y coordinate of the vector",
           "title": "Y",
           "type": "number"
         },
         "z": {
           "default": 0,
-          "description": "Z coordinate of the point",
+          "description": "Z coordinate of the vector",
           "title": "Z",
           "type": "number"
         }
@@ -1983,6 +1826,7 @@
       ]
     },
     "VideoWriterFfmpeg": {
+      "description": "FFMPEG video writer configuration.",
       "properties": {
         "video_writer_type": {
           "const": "FFMPEG",
@@ -1998,13 +1842,13 @@
           "type": "integer"
         },
         "container_extension": {
-          "default": "mp4",
+          "default": "mkv",
           "description": "Container extension",
           "title": "Container Extension",
           "type": "string"
         },
         "output_arguments": {
-          "default": "-vf \"scale=out_color_matrix=bt709:out_range=full,format=bgr24,scale=out_range=full\" -c:v h264_nvenc -pix_fmt yuv420p -color_range full -colorspace bt709 -color_trc linear -tune hq -preset p4 -rc vbr -cq 12 -b:v 0M -metadata author=\"Allen Institute for Neural Dynamics\" -maxrate 700M -bufsize 350M",
+          "default": "-vf \"scale=out_range=full,setparams=range=full:colorspace=bt709:color_primaries=bt709:color_trc=linear\" -c:v h264_nvenc -pix_fmt yuv420p -color_range full -colorspace bt709 -color_trc linear -tune hq -preset p3 -rc vbr -cq 18 -b:v 0M -metadata author=\"Allen Institute for Neural Dynamics\" -maxrate 700M -bufsize 350M -f matroska -write_crc32 0",
           "description": "Output arguments",
           "title": "Output Arguments",
           "type": "string"
@@ -2020,6 +1864,7 @@
       "type": "object"
     },
     "VideoWriterOpenCv": {
+      "description": "OpenCV video writer configuration.",
       "properties": {
         "video_writer_type": {
           "const": "OPENCV",
@@ -2051,24 +1896,11 @@
       "type": "object"
     },
     "WaterValveCalibration": {
-      "description": "Water valve calibration class",
+      "description": "Represents a water valve calibration.",
       "properties": {
-        "device_name": {
-          "default": "WaterValve",
-          "description": "Name of the device being calibrated",
-          "title": "Device name",
-          "type": "string"
-        },
-        "input": {
-          "$ref": "#/$defs/WaterValveCalibrationInput",
-          "title": "Input of the calibration"
-        },
-        "output": {
-          "$ref": "#/$defs/WaterValveCalibrationOutput",
-          "title": "Output of the calibration."
-        },
         "date": {
           "default": null,
+          "description": "Date of the calibration",
           "oneOf": [
             {
               "format": "date-time",
@@ -2080,34 +1912,6 @@
           ],
           "title": "Date"
         },
-        "description": {
-          "const": "Calibration of the water valve delivery system",
-          "default": "Calibration of the water valve delivery system",
-          "title": "Description",
-          "type": "string"
-        },
-        "notes": {
-          "default": null,
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Notes"
-        }
-      },
-      "required": [
-        "input",
-        "output"
-      ],
-      "title": "WaterValveCalibration",
-      "type": "object"
-    },
-    "WaterValveCalibrationInput": {
-      "properties": {
         "measurements": {
           "default": [],
           "description": "List of measurements",
@@ -2116,14 +1920,7 @@
           },
           "title": "Measurements",
           "type": "array"
-        }
-      },
-      "title": "WaterValveCalibrationInput",
-      "type": "object"
-    },
-    "WaterValveCalibrationOutput": {
-      "description": "Output for water valve calibration class",
-      "properties": {
+        },
         "interval_average": {
           "default": null,
           "description": "Dictionary keyed by measured valve interval and corresponding average single event volume.",
@@ -2189,7 +1986,7 @@
         "slope",
         "offset"
       ],
-      "title": "WaterValveCalibrationOutput",
+      "title": "WaterValveCalibration",
       "type": "object"
     }
   }
