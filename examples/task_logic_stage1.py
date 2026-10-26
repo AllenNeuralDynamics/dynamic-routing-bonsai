@@ -103,7 +103,7 @@ task_logic = AindBehaviorDynamicRoutingBonsaiTaskLogic(
 )
 
 # The last step is to compile our task logic definition into a named .json file that can be used to define task parameters in Bonsai.
-def main(path_seed: str = "./local/stage0_{schema}.json"):
+def main(path_seed: str = "./local/stage1_{schema}.json"):
     example_task_logic = task_logic
     example_trainer_state = TrainerState(
         stage=Stage(name="example_stage", task=example_task_logic), curriculum=None, is_on_curriculum=False

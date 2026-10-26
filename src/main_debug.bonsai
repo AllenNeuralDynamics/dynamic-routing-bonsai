@@ -34,7 +34,7 @@
         <Property Name="SessionPath" />
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:ReadSchemas.bonsai">
-        <TaskLogicPath>..\local\stage0_AindBehaviorDynamicRoutingBonsaiTaskLogic.json</TaskLogicPath>
+        <TaskLogicPath>..\local\stage1_AindBehaviorDynamicRoutingBonsaiTaskLogic.json</TaskLogicPath>
         <RigPath>..\local\AindBehaviorDynamicRoutingBonsaiRig.json</RigPath>
         <SessionPath>..\local\Session.json</SessionPath>
       </Expression>
@@ -3546,44 +3546,7 @@ bitMasks:
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p10:SoftwareEventVisualizer">
                 <p10:Visible>true</p10:Visible>
-                <p10:SoftwareEvents>
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                </p10:SoftwareEvents>
+                <p10:SoftwareEvents />
                 <p10:TrialBreakEventName>TrialEnd</p10:TrialBreakEventName>
                 <p10:PlotHeight>500</p10:PlotHeight>
                 <p10:ShadedAreaPlotters>
