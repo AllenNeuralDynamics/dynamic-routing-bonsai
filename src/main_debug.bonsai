@@ -153,7 +153,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="num:CreateRandom">
-                <num:Seed>3</num:Seed>
+                <num:Seed>8</num:Seed>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -3655,7 +3655,7 @@ bitMasks:
                                     </Expression>
                                     <Expression xsi:type="Index">
                                       <Operand xsi:type="IntProperty">
-                                        <Value>3</Value>
+                                        <Value>9</Value>
                                       </Operand>
                                     </Expression>
                                     <Expression xsi:type="Combinator">
@@ -3756,7 +3756,7 @@ bitMasks:
                                     </Expression>
                                     <Expression xsi:type="Combinator">
                                       <Combinator xsi:type="rx:Delay">
-                                        <rx:DueTime>PT3.693S</rx:DueTime>
+                                        <rx:DueTime>PT1.054S</rx:DueTime>
                                       </Combinator>
                                     </Expression>
                                     <Expression xsi:type="IncludeWorkflow" Path="Extensions\MulticastSoftwareEvent.bonsai">
@@ -4055,7 +4055,32 @@ bitMasks:
                                                   <Name>TrialResult</Name>
                                                 </Expression>
                                                 <Expression xsi:type="SubscribeSubject">
+                                                  <Name>Trial</Name>
+                                                </Expression>
+                                                <Expression xsi:type="MemberSelector">
+                                                  <Selector>Item1.PresentationParameters.ResponseWindowDuration</Selector>
+                                                </Expression>
+                                                <Expression xsi:type="scr:ExpressionTransform">
+                                                  <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
+                                                </Expression>
+                                                <Expression xsi:type="PropertyMapping">
+                                                  <PropertyMappings>
+                                                    <Property Name="DueTime" />
+                                                  </PropertyMappings>
+                                                </Expression>
+                                                <Expression xsi:type="Combinator">
+                                                  <Combinator xsi:type="rx:Timer">
+                                                    <rx:DueTime>PT0.9S</rx:DueTime>
+                                                  </Combinator>
+                                                </Expression>
+                                                <Expression xsi:type="SubscribeSubject">
                                                   <Name>TrialResult</Name>
+                                                </Expression>
+                                                <Expression xsi:type="Combinator">
+                                                  <Combinator xsi:type="rx:Zip" />
+                                                </Expression>
+                                                <Expression xsi:type="MemberSelector">
+                                                  <Selector>Item2</Selector>
                                                 </Expression>
                                                 <Expression xsi:type="SubscribeSubject">
                                                   <Name>Trial</Name>
@@ -4221,21 +4246,28 @@ bitMasks:
                                                 <Edge From="25" To="26" Label="Source4" />
                                                 <Edge From="26" To="27" Label="Source1" />
                                                 <Edge From="27" To="28" Label="Source1" />
-                                                <Edge From="29" To="31" Label="Source1" />
-                                                <Edge From="30" To="31" Label="Source2" />
+                                                <Edge From="29" To="30" Label="Source1" />
+                                                <Edge From="30" To="31" Label="Source1" />
                                                 <Edge From="31" To="32" Label="Source1" />
-                                                <Edge From="31" To="38" Label="Source1" />
                                                 <Edge From="32" To="33" Label="Source1" />
-                                                <Edge From="32" To="35" Label="Source1" />
-                                                <Edge From="33" To="34" Label="Source1" />
-                                                <Edge From="34" To="36" Label="Source1" />
-                                                <Edge From="35" To="36" Label="Source2" />
-                                                <Edge From="36" To="37" Label="Source1" />
-                                                <Edge From="37" To="40" Label="Source1" />
+                                                <Edge From="33" To="35" Label="Source1" />
+                                                <Edge From="34" To="35" Label="Source2" />
+                                                <Edge From="35" To="36" Label="Source1" />
+                                                <Edge From="36" To="38" Label="Source1" />
+                                                <Edge From="37" To="38" Label="Source2" />
                                                 <Edge From="38" To="39" Label="Source1" />
-                                                <Edge From="39" To="40" Label="Source2" />
+                                                <Edge From="38" To="45" Label="Source1" />
+                                                <Edge From="39" To="40" Label="Source1" />
+                                                <Edge From="39" To="42" Label="Source1" />
                                                 <Edge From="40" To="41" Label="Source1" />
-                                                <Edge From="41" To="42" Label="Source1" />
+                                                <Edge From="41" To="43" Label="Source1" />
+                                                <Edge From="42" To="43" Label="Source2" />
+                                                <Edge From="43" To="44" Label="Source1" />
+                                                <Edge From="44" To="47" Label="Source1" />
+                                                <Edge From="45" To="46" Label="Source1" />
+                                                <Edge From="46" To="47" Label="Source2" />
+                                                <Edge From="47" To="48" Label="Source1" />
+                                                <Edge From="48" To="49" Label="Source1" />
                                               </Edges>
                                             </Workflow>
                                           </Expression>
@@ -4865,6 +4897,196 @@ bitMasks:
               <Combinator xsi:type="p9:SoftwareEventVisualizer">
                 <p9:Visible>true</p9:Visible>
                 <p9:SoftwareEvents>
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
+                  <p9:TimestampedOfSoftwareEvent />
                   <p9:TimestampedOfSoftwareEvent />
                   <p9:TimestampedOfSoftwareEvent />
                   <p9:TimestampedOfSoftwareEvent />
