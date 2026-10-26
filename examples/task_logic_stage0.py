@@ -18,7 +18,7 @@ from aind_behavior_dynamic_routing_bonsai.task_logic import (
 
 # Here we generate the available stimuli for this experiment. 
 # Target stimuli move right on screen so we set stimulus angle to 0 and temporal frequency to -2. 
-# Non-target move down so we set angle to 0 and temporal frequecy to 2. We also want phase to be flipped in half of the trials so we make a second version of each grating with phase set to 90.
+# Non-target move down so we set angle to 0 and temporal frequency to 2. We also want phase to be flipped in half of the trials so we make a second version of each grating with phase set to 90.
 # All stimuli have the same visual extent and spatial frequency.
 target_grating1 = GratingStimulus(
     stimulus_type="grating", angle=0, aperture=0, extent_x=50, extent_y=50, spatial_frequency=0.04, temporal_frequency=-2, phase=0
