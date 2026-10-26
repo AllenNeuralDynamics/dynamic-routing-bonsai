@@ -243,10 +243,12 @@
           "type": "string"
         },
         "waveform_index": {
+          "description": "The index of the stored waveform to play",
           "title": "Waveform Index",
           "type": "integer"
         },
         "attenuation": {
+          "description": "The attenuation of the played waveform",
           "title": "Attenuation",
           "type": "number"
         }
@@ -288,6 +290,7 @@
           "type": "array"
         },
         "maximum_block_time": {
+          "minimum": 0,
           "title": "Maximum Block Time",
           "type": "number"
         }
@@ -516,30 +519,37 @@
           "type": "string"
         },
         "angle": {
+          "description": "Stimulus angle in degrees",
           "title": "Angle",
           "type": "number"
         },
         "aperture": {
+          "description": "Aperture size of grating stimulus",
           "title": "Aperture",
           "type": "number"
         },
         "extent_x": {
+          "description": "Horizontal extent of the stimulus relative to view size",
           "title": "Extent X",
           "type": "number"
         },
         "extent_y": {
+          "description": "Vertical extent of the stimulus relative to view size",
           "title": "Extent Y",
           "type": "number"
         },
         "spatial_frequency": {
+          "description": "Spatial frequency of the stimulus relative to view size",
           "title": "Spatial Frequency",
           "type": "number"
         },
         "temporal_frequency": {
+          "description": "Temporal frequency of the stimulus relative to view size",
           "title": "Temporal Frequency",
           "type": "number"
         },
         "phase": {
+          "description": "Phase of the stimulus in degrees",
           "title": "Phase",
           "type": "number"
         }
@@ -754,22 +764,31 @@
     "PresentationParameters": {
       "properties": {
         "stimulus_start_time": {
+          "description": "Time (seconds) after trial start when stimulus should appear",
+          "minimum": 0,
           "title": "Stimulus Start Time",
           "type": "number"
         },
         "stimulus_duration": {
+          "description": "Time (seconds) that stimulus should be presented for",
+          "minimum": 0,
           "title": "Stimulus Duration",
           "type": "number"
         },
         "response_window_start_time": {
+          "description": "Time (seconds) after trial start to begin the response window",
+          "minimum": 0,
           "title": "Response Window Start Time",
           "type": "number"
         },
         "response_window_duration": {
+          "description": "Duration (seconds) of response window",
+          "minimum": 0,
           "title": "Response Window Duration",
           "type": "number"
         },
         "rewarded": {
+          "description": "Whether this trial has a reward available",
           "title": "Rewarded",
           "type": "boolean"
         },
@@ -780,14 +799,17 @@
           "type": "integer"
         },
         "non_contingent_reward": {
+          "description": "Whether this trial is rewarded regardless of subject response",
           "title": "Non Contingent Reward",
           "type": "boolean"
         },
         "timeout_duration": {
+          "description": "Duration (seconds) of timeout if given",
           "title": "Timeout Duration",
           "type": "number"
         },
         "timeout_stimulus": {
+          "description": "Definition of timeout stimulus",
           "discriminator": {
             "mapping": {
               "audio": "#/$defs/AudioStimulus",
@@ -814,6 +836,7 @@
           "title": "Timeout Stimulus"
         },
         "post_response_time": {
+          "description": "Duration (seconds) of post-response period",
           "title": "Post Response Time",
           "type": "number"
         }
@@ -840,34 +863,50 @@
           "type": "string"
         },
         "extent_x": {
+          "description": "Horizontal extent of the stimulus relative to view size",
           "title": "Extent X",
           "type": "number"
         },
         "extent_y": {
+          "description": "Vertical extent of the stimulus relative to view size",
           "title": "Extent Y",
           "type": "number"
         },
         "position_x": {
+          "description": "Horizontal position of the stimulus relative to view size",
           "title": "Position X",
           "type": "number"
         },
         "position_y": {
+          "description": "Horizontal position of the stimulus relative to view size",
           "title": "Position Y",
           "type": "number"
         },
         "color_r": {
+          "description": "Stimulus red channel value",
+          "maximum": 1,
+          "minimum": 0,
           "title": "Color R",
           "type": "number"
         },
         "color_g": {
+          "description": "Stimulus green channel value",
+          "maximum": 1,
+          "minimum": 0,
           "title": "Color G",
           "type": "number"
         },
         "color_b": {
+          "description": "Stimulus blue channel value",
+          "maximum": 1,
+          "minimum": 0,
           "title": "Color B",
           "type": "number"
         },
         "color_a": {
+          "description": "Stimulus alpha channel value",
+          "maximum": 1,
+          "minimum": 0,
           "title": "Color A",
           "type": "number"
         }
@@ -1742,8 +1781,23 @@
           "type": "array"
         },
         "repeats": {
+          "minimum": 1,
           "title": "Repeats",
           "type": "integer"
+        },
+        "max_consecutive_same_reward": {
+          "default": null,
+          "description": "Maximum number of consecutive rewarded or unrewarded trials allowed when shuffling. If None, trials are shuffled without constraint.",
+          "oneOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Max Consecutive Same Reward"
         }
       },
       "required": [

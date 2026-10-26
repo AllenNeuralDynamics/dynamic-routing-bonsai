@@ -80,6 +80,7 @@ pre_stimulus_distribution = distributions.ExponentialDistribution(
 # TrialSets define a set of available trials that are shuffled and sampled uniformly without replacement during an experiment. Shuffle and sampling can be repeated within a trial set by settings repeats > 1
 # For stage 0, we want approximately 150 trials sampled equally from non contingent reward vs. unrewarded. In half of those trials stimulus phase is switched.
 # We therefore define a single block, with a single TrialSet. We add the four required Trial types to the available trials and expand that list of available trials to create ~150 trials total.
+# Setting max_consecutive_same_reward constrains the shuffle so that no more than 3 rewarded or 3 unrewarded trials are presented in a row.
 task_logic = AindBehaviorDynamicRoutingBonsaiTaskLogic(
     task_parameters=AindBehaviorDynamicRoutingBonsaiTaskParameters(
         task_blocks=[
@@ -88,6 +89,7 @@ task_logic = AindBehaviorDynamicRoutingBonsaiTaskLogic(
                 trial_sets=[
                     TrialSet(
                         repeats=1,
+                        max_consecutive_same_reward=3,
                         available_trials=[
                             Trial(stimulus=target_grating1, presentation_parameters=non_contingent_presentation),
                             Trial(stimulus=target_grating2, presentation_parameters=non_contingent_presentation),

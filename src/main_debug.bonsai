@@ -152,7 +152,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="num:CreateRandom">
-                <num:Seed>7</num:Seed>
+                <num:Seed>4</num:Seed>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -855,7 +855,7 @@ Item3 as Right)</scr:Expression>
                           <ExtentY>50</ExtentY>
                           <SpatialFrequency>0.04</SpatialFrequency>
                           <TemporalFrequency>-2</TemporalFrequency>
-                          <Phase>90</Phase>
+                          <Phase>0</Phase>
                           <Angle>0</Angle>
                           <SquareWave>false</SquareWave>
                           <Contrast>1</Contrast>
@@ -3546,7 +3546,42 @@ bitMasks:
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p10:SoftwareEventVisualizer">
                 <p10:Visible>true</p10:Visible>
-                <p10:SoftwareEvents />
+                <p10:SoftwareEvents>
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                </p10:SoftwareEvents>
                 <p10:TrialBreakEventName>TrialEnd</p10:TrialBreakEventName>
                 <p10:PlotHeight>500</p10:PlotHeight>
                 <p10:ShadedAreaPlotters>
