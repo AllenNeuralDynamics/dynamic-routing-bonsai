@@ -2,8 +2,8 @@ from pathlib import Path
 from typing import Union
 
 import pydantic
-from aind_behavior_services.session import Session
 from aind_behavior_services.schema import BonsaiSgenSerializers, convert_pydantic_to_bonsai
+from aind_behavior_services.session import Session
 
 import aind_behavior_dynamic_routing_bonsai.rig
 import aind_behavior_dynamic_routing_bonsai.task_logic

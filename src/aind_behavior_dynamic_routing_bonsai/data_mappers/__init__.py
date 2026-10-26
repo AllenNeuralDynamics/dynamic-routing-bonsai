@@ -42,7 +42,7 @@ class DataMapperCli(pydantic_settings.BaseSettings, cli_kebab_case=True):
     def cli_cmd(self):
         logger.info("Mapping metadata directly from dataset.")
         abs_schemas_path = Path(self.data_path) / "Behavior" / "Logs"
-        session = model_from_json_file(abs_schemas_path / "session_input.json", AindBehaviorSessionModel)
+        session = model_from_json_file(abs_schemas_path / "session_input.json", Session)
         rig = model_from_json_file(abs_schemas_path / "rig_input.json", AindBehaviorDynamicRoutingBonsaiRig)
         task_logic = model_from_json_file(
             abs_schemas_path / "tasklogic_input.json", AindBehaviorDynamicRoutingBonsaiTaskLogic

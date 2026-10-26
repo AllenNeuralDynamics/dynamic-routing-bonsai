@@ -1,13 +1,11 @@
 import os
 
-from aind_behavior_curriculum import Stage, TrainerState
 import aind_behavior_services.task.distributions as distributions
-import aind_behavior_services.task.distributions_utils as dist_utils
+from aind_behavior_curriculum import Stage, TrainerState
 
 from aind_behavior_dynamic_routing_bonsai.task_logic import (
     AindBehaviorDynamicRoutingBonsaiTaskLogic,
     AindBehaviorDynamicRoutingBonsaiTaskParameters,
-    AudioStimulus,
     Block,
     GratingStimulus,
     PresentationParameters,

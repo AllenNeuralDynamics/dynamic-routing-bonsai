@@ -1,6 +1,6 @@
 import os
+from pathlib import Path
 
-import aind_behavior_services.rig as rig
 import aind_behavior_services.rig.cameras as cameras
 import aind_behavior_services.rig.harp as harp
 import aind_behavior_services.rig.visual_stimulation as visual_stimulation
@@ -9,8 +9,6 @@ from aind_behavior_services.common import Vector3
 from aind_behavior_dynamic_routing_bonsai.rig import (
     AindBehaviorDynamicRoutingBonsaiRig,
 )
-
-from pathlib import Path
 
 frame_rate=60
 video_writer = cameras.VideoWriterFfmpeg(frame_rate=frame_rate, container_extension="mp4")

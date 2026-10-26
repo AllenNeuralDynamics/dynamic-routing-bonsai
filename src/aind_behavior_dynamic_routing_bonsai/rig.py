@@ -1,11 +1,11 @@
 # Import core types
 from typing import Literal
 
-import aind_behavior_services.rig.water_valve as wvc
+import aind_behavior_services.rig as rig
+import aind_behavior_services.rig.cameras as cameras
 import aind_behavior_services.rig.harp as harp
 import aind_behavior_services.rig.visual_stimulation as visual_stimulation
-import aind_behavior_services.rig.cameras as cameras
-import aind_behavior_services.rig as rig
+import aind_behavior_services.rig.water_valve as wvc
 from pydantic import BaseModel, Field
 
 from aind_behavior_dynamic_routing_bonsai import __semver__
