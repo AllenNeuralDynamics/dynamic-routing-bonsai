@@ -17,7 +17,7 @@ video_writer = cameras.VideoWriterFfmpeg(frame_rate=frame_rate, container_extens
 
 rig = AindBehaviorDynamicRoutingBonsaiRig(
     computer_name="",
-    data_directory=Path("C:/Users/neurogears/source/repos/AllenNeuralDynamics/dynamic-routing-bonsai/temp_data"),
+    data_directory=Path("../temp_data"),
     rig_name="test_rig",
     harp_behavior=harp.HarpBehavior(port_name="COM14"),
     harp_sound_card=harp.HarpSoundCard(port_name="COM4"),
