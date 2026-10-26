@@ -78,7 +78,7 @@ docs = [
 [package.metadata]
 requires-dist = [
     { name = "aind-behavior-dynamic-routing-bonsai", extras = ["data"], marker = "extra == 'launcher'" },
-    { name = "aind-behavior-services", specifier = ">=0.12,<0.13" },
+    { name = "aind-behavior-services", specifier = ">0.13" },
     { name = "aind-clabe", extras = ["aind-services"], marker = "extra == 'launcher'", specifier = ">=0.9.0" },
     { name = "aind-data-schema", marker = "extra == 'launcher'", specifier = ">=2.2" },
     { name = "contraqctor", marker = "extra == 'data'", specifier = ">=0.5.3,<0.6.0" },
@@ -105,7 +105,7 @@ docs = [
 
 [[package]]
 name = "aind-behavior-services"
-version = "0.12.5"
+version = "0.13.8"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aind-behavior-curriculum" },
@@ -114,9 +114,9 @@ dependencies = [
     { name = "pydantic" },
     { name = "semver" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c6/01/6c71f219f5078d7ec3b0507724c2b63ec0af3c8571024053daa469d32e77/aind_behavior_services-0.12.5.tar.gz", hash = "sha256:ebcb1f56852265b988a777b22eeb1a9e4952c4cc7328b0e8c749844593372ccd", size = 27423, upload-time = "2025-11-06T19:06:26.875Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/9c/88/b343182793b3063665cbf277174a724442a386f1376776f005bff8c8273b/aind_behavior_services-0.13.8.tar.gz", hash = "sha256:2408fc34d5fa48437ff7073cc0d9699004ef95ef4d66b6be16b68487838ecbe1", size = 29873, upload-time = "2026-07-28T00:51:58.471Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/89/3c/3d28d25645df3502f1a708483623e3a225c1f195adf2cef5e1727a7cf8b9/aind_behavior_services-0.12.5-py3-none-any.whl", hash = "sha256:fd6d3b60d07fd5bc31ecade227c68f97122e9591e78919098e06fe72b6e1d679", size = 38243, upload-time = "2025-11-06T19:06:25.67Z" },
+    { url = "https://files.pythonhosted.org/packages/f1/08/1c0828788aa29f8acca3a9a2ea30ed7faa5611685739549a1c2637b1232a/aind_behavior_services-0.13.8-py3-none-any.whl", hash = "sha256:acb349c63eebb7d7bb832c81d823a5eaed6e549b316a4872ad7badef96a5bdcb", size = 39881, upload-time = "2026-07-28T00:51:57.292Z" },
 ]
 
 [[package]]
@@ -1258,9 +1258,9 @@ name = "msal"
 version = "1.34.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cryptography" },
-    { name = "pyjwt", extra = ["crypto"] },
-    { name = "requests" },
+    { name = "cryptography", marker = "sys_platform == 'win32'" },
+    { name = "pyjwt", extra = ["crypto"], marker = "sys_platform == 'win32'" },
+    { name = "requests", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/cf/0e/c857c46d653e104019a84f22d4494f2119b4fe9f896c92b4b864b3b045cc/msal-1.34.0.tar.gz", hash = "sha256:76ba83b716ea5a6d75b0279c0ac353a0e05b820ca1f6682c0eb7f45190c43c2f", size = 153961, upload-time = "2025-09-22T23:05:48.989Z" }
 wheels = [
@@ -1762,7 +1762,7 @@ wheels = [
 
 [package.optional-dependencies]
 crypto = [
-    { name = "cryptography" },
+    { name = "cryptography", marker = "sys_platform == 'win32'" },
 ]
 
 [[package]]
