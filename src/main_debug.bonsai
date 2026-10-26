@@ -153,7 +153,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="num:CreateRandom">
-                <num:Seed>8</num:Seed>
+                <num:Seed>7</num:Seed>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -856,7 +856,7 @@ Item3 as Right)</scr:Expression>
                           <ExtentY>50</ExtentY>
                           <SpatialFrequency>0.04</SpatialFrequency>
                           <TemporalFrequency>2</TemporalFrequency>
-                          <Phase>90</Phase>
+                          <Phase>0</Phase>
                           <Angle>90</Angle>
                           <SquareWave>false</SquareWave>
                           <Contrast>1</Contrast>
@@ -3655,7 +3655,7 @@ bitMasks:
                                     </Expression>
                                     <Expression xsi:type="Index">
                                       <Operand xsi:type="IntProperty">
-                                        <Value>9</Value>
+                                        <Value>1</Value>
                                       </Operand>
                                     </Expression>
                                     <Expression xsi:type="Combinator">
@@ -3756,7 +3756,7 @@ bitMasks:
                                     </Expression>
                                     <Expression xsi:type="Combinator">
                                       <Combinator xsi:type="rx:Delay">
-                                        <rx:DueTime>PT1.054S</rx:DueTime>
+                                        <rx:DueTime>PT0.779S</rx:DueTime>
                                       </Combinator>
                                     </Expression>
                                     <Expression xsi:type="IncludeWorkflow" Path="Extensions\MulticastSoftwareEvent.bonsai">
@@ -4897,154 +4897,6 @@ bitMasks:
               <Combinator xsi:type="p9:SoftwareEventVisualizer">
                 <p9:Visible>true</p9:Visible>
                 <p9:SoftwareEvents>
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
-                  <p9:TimestampedOfSoftwareEvent />
                   <p9:TimestampedOfSoftwareEvent />
                   <p9:TimestampedOfSoftwareEvent />
                   <p9:TimestampedOfSoftwareEvent />
