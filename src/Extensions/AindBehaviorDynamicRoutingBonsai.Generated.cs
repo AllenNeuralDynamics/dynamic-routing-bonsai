@@ -568,9 +568,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     public partial class AudioStimulus : Stimulus
     {
     
-        private int _waveformIndex;
+        private double _frequency;
     
-        private double _attenuation;
+        private double _phase;
+    
+        private double _volume;
     
         public AudioStimulus()
         {
@@ -579,41 +581,59 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
         protected AudioStimulus(AudioStimulus other) : 
                 base(other)
         {
-            _waveformIndex = other._waveformIndex;
-            _attenuation = other._attenuation;
+            _frequency = other._frequency;
+            _phase = other._phase;
+            _volume = other._volume;
         }
     
         /// <summary>
-        /// The index of the stored waveform to play
+        /// The frequency of the sin modulation
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("waveform_index", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("The index of the stored waveform to play")]
-        public int WaveformIndex
+        [Newtonsoft.Json.JsonPropertyAttribute("frequency", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The frequency of the sin modulation")]
+        public double Frequency
         {
             get
             {
-                return _waveformIndex;
+                return _frequency;
             }
             set
             {
-                _waveformIndex = value;
+                _frequency = value;
             }
         }
     
         /// <summary>
-        /// The attenuation of the played waveform
+        /// The phase of the sin modulation
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("attenuation", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("The attenuation of the played waveform")]
-        public double Attenuation
+        [Newtonsoft.Json.JsonPropertyAttribute("phase", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The phase of the sin modulation")]
+        public double Phase
         {
             get
             {
-                return _attenuation;
+                return _phase;
             }
             set
             {
-                _attenuation = value;
+                _phase = value;
+            }
+        }
+    
+        /// <summary>
+        /// The target volume of the audio stimulus in dB
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("volume", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The target volume of the audio stimulus in dB")]
+        public double Volume
+        {
+            get
+            {
+                return _volume;
+            }
+            set
+            {
+                _volume = value;
             }
         }
     
@@ -633,8 +653,9 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("WaveformIndex = " + _waveformIndex + ", ");
-            stringBuilder.Append("Attenuation = " + _attenuation);
+            stringBuilder.Append("Frequency = " + _frequency + ", ");
+            stringBuilder.Append("Phase = " + _phase + ", ");
+            stringBuilder.Append("Volume = " + _volume);
             return true;
         }
     }

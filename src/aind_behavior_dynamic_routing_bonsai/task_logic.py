@@ -20,8 +20,9 @@ class StimulusBase(BaseModel):
 
 class AudioStimulus(StimulusBase):
     stimulus_type: Literal["audio"]
-    waveform_index: int = Field(description="The index of the stored waveform to play")
-    attenuation: float = Field(description="The attenuation of the played waveform")
+    frequency: float = Field(description="The frequency of the sin modulation")
+    phase: float = Field(description="The phase of the sin modulation")
+    volume: float = Field(description="The target volume of the audio stimulus in dB")
 
 
 class GratingStimulus(StimulusBase):

@@ -242,21 +242,27 @@
           "title": "Stimulus Type",
           "type": "string"
         },
-        "waveform_index": {
-          "description": "The index of the stored waveform to play",
-          "title": "Waveform Index",
-          "type": "integer"
+        "frequency": {
+          "description": "The frequency of the sin modulation",
+          "title": "Frequency",
+          "type": "number"
         },
-        "attenuation": {
-          "description": "The attenuation of the played waveform",
-          "title": "Attenuation",
+        "phase": {
+          "description": "The phase of the sin modulation",
+          "title": "Phase",
+          "type": "number"
+        },
+        "volume": {
+          "description": "The target volume of the audio stimulus in dB",
+          "title": "Volume",
           "type": "number"
         }
       },
       "required": [
         "stimulus_type",
-        "waveform_index",
-        "attenuation"
+        "frequency",
+        "phase",
+        "volume"
       ],
       "title": "AudioStimulus",
       "type": "object"
