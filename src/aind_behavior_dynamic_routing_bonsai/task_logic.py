@@ -1,9 +1,9 @@
 import logging
-from typing import Annotated, List, Literal, Union
+from typing import Annotated, List, Literal, Optional, Self, Union
 
 import aind_behavior_services.task.distributions as distributions
 from aind_behavior_services.task import Task, TaskParameters
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 from aind_behavior_dynamic_routing_bonsai import (
     __semver__,
@@ -20,8 +20,9 @@ class StimulusBase(BaseModel):
 
 class AudioStimulus(StimulusBase):
     stimulus_type: Literal["audio"]
-    waveform_index: int = Field(description="The index of the stored waveform to play")
-    attenuation: float = Field(description="The attenuation of the played waveform")
+    frequency: float = Field(description="The frequency of the sin modulation")
+    phase: float = Field(description="The phase of the sin modulation")
+    volume: float = Field(description="The target volume of the audio stimulus in dB")
 
 
 class GratingStimulus(StimulusBase):
@@ -76,6 +77,26 @@ class Trial(BaseModel):
 class TrialSet(BaseModel):
     available_trials: List[Trial]
     repeats: int = Field(ge=1)
+    max_consecutive_same_reward: Optional[int] = Field(
+        default=None,
+        ge=1,
+        description="Maximum number of consecutive rewarded or unrewarded trials allowed when shuffling. If None, trials are shuffled without constraint.",
+    )
+
+    @model_validator(mode="after")
+    def validate_max_consecutive_same_reward(self) -> Self:
+        if self.max_consecutive_same_reward is None:
+            return self
+        n_rewarded = sum(trial.presentation_parameters.rewarded for trial in self.available_trials)
+        n_unrewarded = len(self.available_trials) - n_rewarded
+        larger, smaller = max(n_rewarded, n_unrewarded), min(n_rewarded, n_unrewarded)
+        # The smaller group can split the larger group into at most (smaller + 1) runs
+        if larger > self.max_consecutive_same_reward * (smaller + 1):
+            raise ValueError(
+                f"Cannot order {n_rewarded} rewarded and {n_unrewarded} unrewarded trials "
+                f"with at most {self.max_consecutive_same_reward} consecutive trials of the same type."
+            )
+        return self
 
 
 class Block(BaseModel):
