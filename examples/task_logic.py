@@ -16,13 +16,35 @@ from aind_behavior_dynamic_routing_bonsai.task_logic import (
 )
 
 grating1 = GratingStimulus(
-    stimulus_type="grating", angle=0, aperture=2, extent_x=360, extent_y=90, spatial_frequency=0.05, temporal_frequency=2, phase=0
+    stimulus_type="grating",
+    angle=0,
+    aperture=2,
+    extent_x=360,
+    extent_y=90,
+    spatial_frequency=0.05,
+    temporal_frequency=2,
+    phase=0,
 )
 grating2 = GratingStimulus(
-    stimulus_type="grating", angle=90, aperture=2, extent_x=360, extent_y=90, spatial_frequency=0.05, temporal_frequency=2, phase=0
+    stimulus_type="grating",
+    angle=90,
+    aperture=2,
+    extent_x=360,
+    extent_y=90,
+    spatial_frequency=0.05,
+    temporal_frequency=2,
+    phase=0,
 )
 timeout_stim = QuadStimulus(
-    stimulus_type="quad", extent_x=90, extent_y=90, position_x=0, position_y=0, color_r=1, color_g=0, color_b=0, color_a=1
+    stimulus_type="quad",
+    extent_x=90,
+    extent_y=90,
+    position_x=0,
+    position_y=0,
+    color_r=1,
+    color_g=0,
+    color_b=0,
+    color_a=1,
 )
 
 non_contingent_presentation = PresentationParameters(
@@ -81,7 +103,8 @@ task_logic = AindBehaviorDynamicRoutingBonsaiTaskLogic(
                         available_trials=[
                             Trial(stimulus=grating1, presentation_parameters=rewarded_presentation),
                             Trial(stimulus=grating2, presentation_parameters=unrewarded_presentation),
-                        ] * 2,
+                        ]
+                        * 2,
                     ),
                 ],
             ),

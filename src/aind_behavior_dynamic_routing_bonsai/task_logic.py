@@ -54,7 +54,9 @@ class BlankStimulus(StimulusBase):
 class PresentationParameters(BaseModel):
     stimulus_start_time: float = Field(description="Time (seconds) after trial start when stimulus should appear", ge=0)
     stimulus_duration: float = Field(description="Time (seconds) that stimulus should be presented for", ge=0)
-    response_window_start_time: float = Field(description="Time (seconds) after trial start to begin the response window", ge=0)
+    response_window_start_time: float = Field(
+        description="Time (seconds) after trial start to begin the response window", ge=0
+    )
     response_window_duration: float = Field(description="Duration (seconds) of response window", ge=0)
     rewarded: bool = Field(description="Whether this trial has a reward available")
     reward_amount: int = Field(default=10, description="The reward amount, in milliseconds open time.")

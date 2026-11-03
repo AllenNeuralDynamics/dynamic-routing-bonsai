@@ -16,21 +16,49 @@ from aind_behavior_dynamic_routing_bonsai.task_logic import (
 
 # Example generation of task logic settings for a stage0 experiment
 
-# Here we generate the available stimuli for this experiment. 
-# Target stimuli move right on screen so we set stimulus angle to 0 and temporal frequency to -2. 
+# Here we generate the available stimuli for this experiment.
+# Target stimuli move right on screen so we set stimulus angle to 0 and temporal frequency to -2.
 # Non-target move down so we set angle to 0 and temporal frequency to 2. We also want phase to be flipped in half of the trials so we make a second version of each grating with phase set to 90.
 # All stimuli have the same visual extent and spatial frequency.
 target_grating1 = GratingStimulus(
-    stimulus_type="grating", angle=0, aperture=0, extent_x=50, extent_y=50, spatial_frequency=0.04, temporal_frequency=-2, phase=0
+    stimulus_type="grating",
+    angle=0,
+    aperture=0,
+    extent_x=50,
+    extent_y=50,
+    spatial_frequency=0.04,
+    temporal_frequency=-2,
+    phase=0,
 )
 target_grating2 = GratingStimulus(
-    stimulus_type="grating", angle=0, aperture=0, extent_x=50, extent_y=50, spatial_frequency=0.04, temporal_frequency=-2, phase=90
+    stimulus_type="grating",
+    angle=0,
+    aperture=0,
+    extent_x=50,
+    extent_y=50,
+    spatial_frequency=0.04,
+    temporal_frequency=-2,
+    phase=90,
 )
 non_target_grating1 = GratingStimulus(
-    stimulus_type="grating", angle=90, aperture=0, extent_x=50, extent_y=50, spatial_frequency=0.04, temporal_frequency=2, phase=0
+    stimulus_type="grating",
+    angle=90,
+    aperture=0,
+    extent_x=50,
+    extent_y=50,
+    spatial_frequency=0.04,
+    temporal_frequency=2,
+    phase=0,
 )
 non_target_grating2 = GratingStimulus(
-    stimulus_type="grating", angle=90, aperture=0, extent_x=50, extent_y=50, spatial_frequency=0.04, temporal_frequency=2, phase=90
+    stimulus_type="grating",
+    angle=90,
+    aperture=0,
+    extent_x=50,
+    extent_y=50,
+    spatial_frequency=0.04,
+    temporal_frequency=2,
+    phase=90,
 )
 null_stim = QuadStimulus(
     stimulus_type="quad", extent_x=0, extent_y=0, position_x=0, position_y=0, color_r=1, color_g=0, color_b=0, color_a=0
@@ -49,7 +77,7 @@ non_contingent_presentation = PresentationParameters(
     non_contingent_reward=True,
     timeout_duration=0,
     timeout_stimulus=null_stim,
-    post_response_time=3.0
+    post_response_time=3.0,
 )
 unrewarded_presentation = PresentationParameters(
     stimulus_start_time=1.5,
@@ -60,19 +88,14 @@ unrewarded_presentation = PresentationParameters(
     non_contingent_reward=False,
     timeout_duration=0,
     timeout_stimulus=null_stim,
-    post_response_time=3.0
+    post_response_time=3.0,
 )
 
 # We also define a distribution that Bonsai will sample to determine the pre stimulus time of each trial
 # We define the parameters of an exponential distribution here to sample at runtime when the workflow is run.
 pre_stimulus_distribution = distributions.ExponentialDistribution(
-    distribution_parameters=distributions.ExponentialDistributionParameters(
-        rate=1
-    ),
-    truncation_parameters=distributions.TruncationParameters(
-        min=0.5,
-        max=6
-    )
+    distribution_parameters=distributions.ExponentialDistributionParameters(rate=1),
+    truncation_parameters=distributions.TruncationParameters(min=0.5, max=6),
 )
 
 # Finally we build the full task logic definition here. A full experiment is composed of Blocks, TrialSets and Trials.
@@ -92,15 +115,17 @@ task_logic = AindBehaviorDynamicRoutingBonsaiTaskLogic(
                             Trial(stimulus=target_grating1, presentation_parameters=non_contingent_presentation),
                             Trial(stimulus=target_grating2, presentation_parameters=non_contingent_presentation),
                             Trial(stimulus=non_target_grating1, presentation_parameters=unrewarded_presentation),
-                            Trial(stimulus=non_target_grating2, presentation_parameters=unrewarded_presentation)
-                        ] * 37
+                            Trial(stimulus=non_target_grating2, presentation_parameters=unrewarded_presentation),
+                        ]
+                        * 37,
                     ),
                 ],
             )
         ],
-        pre_stimulus_time_distribution=pre_stimulus_distribution
+        pre_stimulus_time_distribution=pre_stimulus_distribution,
     )
 )
+
 
 # The last step is to compile our task logic definition into a named .json file that can be used to define task parameters in Bonsai.
 def main(path_seed: str = "./local/stage0_{schema}.json"):
