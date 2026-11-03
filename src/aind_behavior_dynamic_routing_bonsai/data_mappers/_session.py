@@ -2,15 +2,14 @@ import datetime
 import logging
 import os
 from pathlib import Path
-from typing import Any, Callable, Dict, Optional, Union
+from typing import Dict, Optional, Union
 
 import git
 import pydantic
-from aind_behavior_services.session import AindBehaviorSessionModel
+from aind_behavior_services.session import Session
 from aind_data_schema.core import acquisition
 from clabe.apps import CurriculumSuggestion
 from clabe.data_mapper import aind_data_schema as ads
-from clabe.launcher import Launcher, Promise
 
 from aind_behavior_dynamic_routing_bonsai.rig import AindBehaviorDynamicRoutingBonsaiRig
 from aind_behavior_dynamic_routing_bonsai.task_logic import AindBehaviorDynamicRoutingBonsaiTaskLogic
@@ -23,7 +22,7 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
 
     def __init__(
         self,
-        session_model: AindBehaviorSessionModel,
+        session_model: Session,
         rig_model: AindBehaviorDynamicRoutingBonsaiRig,
         task_logic_model: AindBehaviorDynamicRoutingBonsaiTaskLogic,
         repository: Union[os.PathLike, git.Repo] = Path("."),
@@ -52,35 +51,6 @@ class AindSessionDataMapper(ads.AindDataSchemaSessionDataMapper):
 
     def session_schema(self):
         return self.mapped
-
-    @classmethod
-    def build_runner(
-        cls,
-        curriculum_suggestion: Optional[Promise[Any, CurriculumSuggestion]] = None,
-    ) -> Callable[
-        [
-            Launcher[
-                AindBehaviorDynamicRoutingBonsaiRig, AindBehaviorSessionModel, AindBehaviorDynamicRoutingBonsaiTaskLogic
-            ]
-        ],
-        "AindSessionDataMapper",
-    ]:
-        def _new(
-            launcher: Launcher[
-                AindBehaviorDynamicRoutingBonsaiRig, AindBehaviorSessionModel, AindBehaviorDynamicRoutingBonsaiTaskLogic
-            ],
-        ) -> "AindSessionDataMapper":
-            new = cls(
-                session_model=launcher.get_session(strict=True),
-                rig_model=launcher.get_rig(strict=True),
-                task_logic_model=launcher.get_task_logic(strict=True),
-                repository=launcher.repository,
-                curriculum_suggestion=curriculum_suggestion.result if curriculum_suggestion is not None else None,
-            )
-            new.map()
-            return new
-
-        return _new
 
     @property
     def session_name(self) -> str:

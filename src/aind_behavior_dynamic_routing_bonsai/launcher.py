@@ -1,120 +1,141 @@
+import datetime
+import logging
 from pathlib import Path
-from typing import Any
 
 from aind_behavior_curriculum import TrainerState
-from aind_behavior_services.session import AindBehaviorSessionModel
-from clabe import resource_monitor
-from clabe.apps import (
-    AindBehaviorServicesBonsaiApp,
-    BonsaiAppSettings,
-    CurriculumApp,
-    CurriculumSettings,
-    CurriculumSuggestion,
-)
+from aind_behavior_services.session import Session
+from aind_behavior_services.utils import utcnow
+from clabe import resource_monitor, ui
+from clabe.apps import AindBehaviorServicesBonsaiApp, CurriculumApp, CurriculumSettings, CurriculumSuggestion
 from clabe.data_transfer.aind_watchdog import WatchdogDataTransferService, WatchdogSettings
-from clabe.launcher import (
-    DefaultBehaviorPicker,
-    DefaultBehaviorPickerSettings,
-    Launcher,
-    LauncherCliArgs,
-    Promise,
-    run_if,
-)
+from clabe.launcher import Launcher, LauncherCliArgs, experiment
+from clabe.session import SessionBuilder
+from clabe.stores import Kind, LocalFileStore, Store
 from pydantic_settings import CliApp
 
 from .data_mappers import AindRigDataMapper, AindSessionDataMapper
-from .data_mappers._utils import write_ads_mappers
 from .rig import AindBehaviorDynamicRoutingBonsaiRig
 from .task_logic import AindBehaviorDynamicRoutingBonsaiTaskLogic
 
+logger = logging.getLogger(__name__)
 
-def make_launcher(settings: LauncherCliArgs) -> Launcher:
-    monitor = resource_monitor.ResourceMonitor(
-        constrains=[
-            resource_monitor.available_storage_constraint_factory(settings.data_dir, 2e11),
-        ]
-    )
-    bonsai_app = AindBehaviorServicesBonsaiApp(BonsaiAppSettings(workflow=Path(r"./src/main.bonsai")))
-    trainer = CurriculumApp(settings=CurriculumSettings())
-    watchdog_settings = WatchdogSettings()  # type: ignore[call-arg]
-    picker = DefaultBehaviorPicker[
-        AindBehaviorDynamicRoutingBonsaiRig, AindBehaviorSessionModel, AindBehaviorDynamicRoutingBonsaiTaskLogic
-    ](
-        settings=DefaultBehaviorPickerSettings()  # type: ignore[call-arg]
-    )
-    launcher = Launcher(
-        rig=AindBehaviorDynamicRoutingBonsaiRig,
-        session=AindBehaviorSessionModel,
-        task_logic=AindBehaviorDynamicRoutingBonsaiTaskLogic,
-        settings=settings,
-    )
+_CONFIG_LIBRARY = Path(r"\\allen\aind\scratch\AindBehavior.db\AindBehaviorDynamicRoutingBonsai")
+_RIG = Kind.from_rig(AindBehaviorDynamicRoutingBonsaiRig)
+_TASK_LOGIC = Kind.from_task(AindBehaviorDynamicRoutingBonsaiTaskLogic)
+_TRAINER_STATE = Kind.from_trainer_state()
 
+
+@experiment(name="dynamic-routing-bonsai")
+async def dynamic_routing_bonsai_experiment(launcher: Launcher) -> None:
     # Get user input
-    launcher.register_callable(
-        [
-            picker.initialize,
-            picker.pick_session,
-            picker.pick_trainer_state,
-            picker.pick_rig,
-        ]
-    )
+    session = SessionBuilder(launcher).build()
+    store = LocalFileStore(_CONFIG_LIBRARY).scoped(subject=session.subject)
+    trainer_state = _resolve_trainer_state(store)
+    if trainer_state is not None and trainer_state.stage is not None:
+        task_logic = AindBehaviorDynamicRoutingBonsaiTaskLogic.model_validate_json(
+            trainer_state.stage.task.model_dump_json()
+        )
+    else:
+        task_logic = store.resolve(_TASK_LOGIC)
+    rig = store.resolve(_RIG)
+
+    launcher.register_session(session, rig.data_directory)
 
     # Check resources
-    launcher.register_callable(monitor.build_runner())
+    resource_monitor.ResourceMonitor(
+        constrains=[
+            resource_monitor.available_storage_constraint_factory(rig.data_directory, 2e11),
+        ]
+    ).run()
 
     # Run the task via Bonsai
-    launcher.register_callable(bonsai_app.build_runner(allow_std_error=True))
+    bonsai_app = AindBehaviorServicesBonsaiApp(
+        workflow=Path(r"./src/main.bonsai"),
+        temp_directory=launcher.temp_dir,
+        rig=rig,
+        session=session,
+        task=task_logic,
+    )
+    await bonsai_app.run_async()
+    session_end_time = utcnow()
 
     # Curriculum
-    suggestion = launcher.register_callable(
-        run_if(lambda: trainer_state_exists_predicate(picker.trainer_state))(
-            trainer.build_runner(input_trainer_state=Promise(lambda x: picker.trainer_state))
-        )
-    )
-    launcher.register_callable(
-        run_if(lambda: suggestion.result is not None)(lambda launcher: _dump_suggestion(launcher, suggestion))
-    )
-    launcher.register_callable(
-        run_if(lambda: suggestion.result is not None)(lambda launcher: picker.dump_model(launcher, suggestion.result))
-    )
+    suggestion = await _run_curriculum_if_applicable(launcher, store, trainer_state)
 
     # Mappers
-    session_mapper_promise = launcher.register_callable(
-        AindSessionDataMapper.build_runner(curriculum_suggestion=suggestion)
-    )
-    rig_mapper_promise = launcher.register_callable(AindRigDataMapper.build_runner())
-    launcher.register_callable(write_ads_mappers(session_mapper_promise, rig_mapper_promise))
+    _run_data_mappers(launcher, session, rig, task_logic, session_end_time, suggestion)
 
     # Watchdog
-    launcher.register_callable(
-        WatchdogDataTransferService.build_runner(
-            settings=watchdog_settings, aind_session_data_mapper=session_mapper_promise
+    launcher.copy_logs()
+    WatchdogDataTransferService(
+        source=launcher.session_directory,
+        settings=WatchdogSettings(),  # type: ignore[call-arg]
+        session=session,
+    ).transfer()
+
+
+def _resolve_trainer_state(store: Store) -> TrainerState | None:
+    try:
+        return store.resolve(_TRAINER_STATE)
+    except LookupError:
+        logger.info("No trainer state found for subject. Falling back to picking a task logic.")
+        return None
+
+
+async def _run_curriculum_if_applicable(
+    launcher: Launcher, store: Store, trainer_state: TrainerState | None
+) -> CurriculumSuggestion | None:
+    if trainer_state is None or trainer_state.is_on_curriculum is False or trainer_state.stage is None:
+        return None
+    logs_directory = launcher.session_directory / "Behavior" / "Logs"
+    logs_directory.mkdir(parents=True, exist_ok=True)
+    input_trainer_state_path = logs_directory / "trainer_state.json"
+    input_trainer_state_path.write_text(trainer_state.model_dump_json(indent=2), encoding="utf-8")
+
+    curriculum_app = CurriculumApp(
+        settings=CurriculumSettings(
+            input_trainer_state=input_trainer_state_path.resolve(),
+            data_directory=launcher.session_directory,
         )
     )
-    return launcher
+    await curriculum_app.run_async()
+    suggestion = curriculum_app.process_suggestion()
+    (logs_directory / "suggestion.json").write_text(suggestion.model_dump_json(indent=2), encoding="utf-8")
+    store.write(_TRAINER_STATE, suggestion.trainer_state)
+    return suggestion
 
 
-def _dump_suggestion(launcher: Launcher[Any, Any, Any], suggestion: Promise[Any, CurriculumSuggestion]) -> None:
-    with open(launcher.session_directory / "Behavior" / "Logs" / "suggestion.json", "w", encoding="utf-8") as f:
-        f.write(suggestion.result.model_dump_json(indent=2))
-
-
-def trainer_state_exists_predicate(input_trainer_state: TrainerState | Promise[Any, TrainerState]) -> bool:
-    if isinstance(input_trainer_state, Promise):
-        input_trainer_state = input_trainer_state.result
-    if input_trainer_state is None:
-        return False
-    if input_trainer_state.is_on_curriculum is False:
-        return False
-    if input_trainer_state.stage is None:
-        return False
-    return True
+def _run_data_mappers(
+    launcher: Launcher,
+    session: Session,
+    rig: AindBehaviorDynamicRoutingBonsaiRig,
+    task_logic: AindBehaviorDynamicRoutingBonsaiTaskLogic,
+    session_end_time: datetime.datetime,
+    suggestion: CurriculumSuggestion | None,
+) -> None:
+    try:
+        session_mapped = AindSessionDataMapper(
+            session_model=session,
+            rig_model=rig,
+            task_logic_model=task_logic,
+            repository=launcher.repository,
+            session_end_time=session_end_time,
+            curriculum_suggestion=suggestion,
+        ).map()
+        rig_mapped = AindRigDataMapper(rig_model=rig).map()
+        assert session_mapped is not None
+        session_mapped.instrument_id = rig_mapped.instrument_id
+        session_mapped.write_standard_file(output_directory=launcher.session_directory)
+        rig_mapped.write_standard_file(output_directory=launcher.session_directory)
+    except Exception as e:  # mapping failures must not discard completed session data
+        logger.error("Failed to map session metadata: %s", e)
+        ui.notify(f"Failed to map session metadata: {e}", ui.MessageLevel.ERROR)
 
 
 class ClabeCli(LauncherCliArgs):
     def cli_cmd(self):
-        launcher = make_launcher(self)
-        launcher.main()
+        launcher = Launcher(settings=self)
+        launcher.run_experiment(dynamic_routing_bonsai_experiment)
         return None
 
 

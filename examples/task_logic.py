@@ -1,5 +1,6 @@
 import os
 
+import aind_behavior_services.task.distributions as distributions
 from aind_behavior_curriculum import Stage, TrainerState
 
 from aind_behavior_dynamic_routing_bonsai.task_logic import (
@@ -15,10 +16,10 @@ from aind_behavior_dynamic_routing_bonsai.task_logic import (
 )
 
 grating1 = GratingStimulus(
-    stimulus_type="grating", angle=0, aperture=2, extent_x=360, extent_y=90, spatial_frequency=0.05, temporal_frequency=2
+    stimulus_type="grating", angle=0, aperture=2, extent_x=360, extent_y=90, spatial_frequency=0.05, temporal_frequency=2, phase=0
 )
 grating2 = GratingStimulus(
-    stimulus_type="grating", angle=90, aperture=2, extent_x=360, extent_y=90, spatial_frequency=0.05, temporal_frequency=2
+    stimulus_type="grating", angle=90, aperture=2, extent_x=360, extent_y=90, spatial_frequency=0.05, temporal_frequency=2, phase=0
 )
 timeout_stim = QuadStimulus(
     stimulus_type="quad", extent_x=90, extent_y=90, position_x=0, position_y=0, color_r=1, color_g=0, color_b=0, color_a=1
@@ -33,6 +34,7 @@ non_contingent_presentation = PresentationParameters(
     non_contingent_reward=True,
     timeout_duration=0,
     timeout_stimulus=timeout_stim,
+    post_response_time=3.0,
 )
 rewarded_presentation = PresentationParameters(
     stimulus_start_time=1.5,
@@ -43,6 +45,7 @@ rewarded_presentation = PresentationParameters(
     non_contingent_reward=False,
     timeout_duration=0,
     timeout_stimulus=timeout_stim,
+    post_response_time=3.0,
 )
 unrewarded_presentation = PresentationParameters(
     stimulus_start_time=1.5,
@@ -53,6 +56,12 @@ unrewarded_presentation = PresentationParameters(
     non_contingent_reward=False,
     timeout_duration=4.5,
     timeout_stimulus=timeout_stim,
+    post_response_time=3.0,
+)
+
+pre_stimulus_distribution = distributions.ExponentialDistribution(
+    distribution_parameters=distributions.ExponentialDistributionParameters(rate=1),
+    truncation_parameters=distributions.TruncationParameters(min=0.5, max=6),
 )
 
 task_logic = AindBehaviorDynamicRoutingBonsaiTaskLogic(
@@ -94,7 +103,8 @@ task_logic = AindBehaviorDynamicRoutingBonsaiTaskLogic(
                     )
                 ],
             ),
-        ]
+        ],
+        pre_stimulus_time_distribution=pre_stimulus_distribution,
     ),
 )
 

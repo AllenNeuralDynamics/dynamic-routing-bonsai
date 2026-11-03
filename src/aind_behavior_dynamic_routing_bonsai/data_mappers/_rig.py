@@ -1,11 +1,10 @@
 import logging
 import os
 from pathlib import Path
-from typing import Any, Callable, Optional
+from typing import Optional
 
 from aind_data_schema.core import instrument
 from clabe.data_mapper import aind_data_schema as ads
-from clabe.launcher import Launcher
 
 from aind_behavior_dynamic_routing_bonsai.rig import AindBehaviorDynamicRoutingBonsaiRig
 
@@ -46,17 +45,6 @@ class AindRigDataMapper(ads.AindDataSchemaRigDataMapper):
 
     def is_mapped(self) -> bool:
         return self._mapped is not None
-
-    @classmethod
-    def build_runner(cls) -> Callable[[Launcher[AindBehaviorDynamicRoutingBonsaiRig, Any, Any]], "AindRigDataMapper"]:
-        def _new(
-            launcher: Launcher[AindBehaviorDynamicRoutingBonsaiRig, Any, Any],
-        ) -> "AindRigDataMapper":
-            new = cls(rig_model=launcher.get_rig(strict=True))
-            new.map()
-            return new
-
-        return _new
 
     @classmethod
     def _map(cls, rig: AindBehaviorDynamicRoutingBonsaiRig) -> instrument.Instrument:
