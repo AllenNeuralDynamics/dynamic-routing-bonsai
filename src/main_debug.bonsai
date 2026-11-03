@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.9.0"
+<WorkflowBuilder Version="2.9.1"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:p1="clr-namespace:AindBehaviorDynamicRoutingBonsaiDataSchema;assembly=Extensions"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
@@ -14,6 +14,8 @@
                  xmlns:p5="clr-namespace:AllenNeuralDynamics.Core;assembly=AllenNeuralDynamics.Core"
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
                  xmlns:p6="clr-namespace:Harp.SoundCard;assembly=Harp.SoundCard"
+                 xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
+                 xmlns:al="clr-namespace:Bonsai.Audio;assembly=Bonsai.Audio"
                  xmlns:p7="clr-namespace:AllenNeuralDynamics.LicketySplit;assembly=AllenNeuralDynamics.LicketySplit"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:beh="clr-namespace:Harp.Behavior;assembly=Harp.Behavior"
@@ -34,7 +36,7 @@
         <Property Name="SessionPath" />
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:ReadSchemas.bonsai">
-        <TaskLogicPath>..\local\stage0_AindBehaviorDynamicRoutingBonsaiTaskLogic.json</TaskLogicPath>
+        <TaskLogicPath>..\local\stage2_AindBehaviorDynamicRoutingBonsaiTaskLogic.json</TaskLogicPath>
         <RigPath>..\local\AindBehaviorDynamicRoutingBonsaiRig.json</RigPath>
         <SessionPath>..\local\Session.json</SessionPath>
       </Expression>
@@ -152,7 +154,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="num:CreateRandom">
-                <num:Seed>7</num:Seed>
+                <num:Seed>6</num:Seed>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -746,6 +748,9 @@ Item3 as Right)</scr:Expression>
                   <Expression xsi:type="p1:MatchStimulus">
                     <p1:Type xsi:type="TypeMapping" TypeArguments="p1:GratingStimulus" />
                   </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\MulticastSoftwareEvent.bonsai">
+                    <EventName>VisualStimulusStart</EventName>
+                  </Expression>
                   <Expression xsi:type="rx:CreateObservable">
                     <Name>DrawGrating</Name>
                     <Workflow>
@@ -854,9 +859,9 @@ Item3 as Right)</scr:Expression>
                           <ExtentX>50</ExtentX>
                           <ExtentY>50</ExtentY>
                           <SpatialFrequency>0.04</SpatialFrequency>
-                          <TemporalFrequency>-2</TemporalFrequency>
-                          <Phase>90</Phase>
-                          <Angle>0</Angle>
+                          <TemporalFrequency>2</TemporalFrequency>
+                          <Phase>0</Phase>
+                          <Angle>90</Angle>
                           <SquareWave>false</SquareWave>
                           <Contrast>1</Contrast>
                           <DutyCycle xsi:nil="true" />
@@ -927,6 +932,9 @@ Item3 as Right)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="p1:MatchStimulus">
                     <p1:Type xsi:type="TypeMapping" TypeArguments="p1:QuadStimulus" />
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\MulticastSoftwareEvent.bonsai">
+                    <EventName>VisualStimulusStart</EventName>
                   </Expression>
                   <Expression xsi:type="rx:CreateObservable">
                     <Name>DrawQuad</Name>
@@ -1117,6 +1125,9 @@ Item3 as Right)</scr:Expression>
                   <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p4:Unit">
                     <rx:Name>StopDrawing</rx:Name>
                   </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\MulticastSoftwareEvent.bonsai">
+                    <EventName>VisualStimulusStop</EventName>
+                  </Expression>
                   <Expression xsi:type="rx:CreateObservable">
                     <Name>StopDrawing</Name>
                     <Workflow>
@@ -1194,35 +1205,44 @@ Item3 as Right)</scr:Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="0" To="3" Label="Source1" />
-                  <Edge From="0" To="9" Label="Source1" />
+                  <Edge From="0" To="4" Label="Source1" />
+                  <Edge From="0" To="12" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="7" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="7" Label="Source2" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="3" To="10" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
                   <Edge From="5" To="6" Label="Source1" />
-                  <Edge From="6" To="7" Label="Source3" />
+                  <Edge From="6" To="10" Label="Source2" />
                   <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source3" />
+                  <Edge From="10" To="11" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="GroupWorkflow">
-                <Name>AudioStimuli</Name>
-                <Workflow>
-                  <Nodes>
-                    <Expression xsi:type="SubscribeSubject">
+            <Expression xsi:type="GroupWorkflow">
+              <Name>AudioStimuli</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="SubscribeSubject">
                       <Name>RigSchema</Name>
-                    </Expression>
-                    <Expression xsi:type="MemberSelector">
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="MemberSelector">
                       <Selector>HarpSoundCard.PortName</Selector>
-                    </Expression>
-                    <Expression xsi:type="PropertyMapping">
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="PropertyMapping">
                       <PropertyMappings>
                         <Property Name="PortName" />
                       </PropertyMappings>
-                    </Expression>
-                    <Expression xsi:type="GroupWorkflow">
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="GroupWorkflow">
                       <Name>HarpSoundCard</Name>
                       <Workflow>
                         <Nodes>
@@ -1289,141 +1309,278 @@ Item3 as Right)</scr:Expression>
                           <Edge From="9" To="10" Label="Source1" />
                         </Edges>
                       </Workflow>
-                    </Expression>
-                    <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p1:Stimulus">
-                      <rx:Name>AudioStimulus</rx:Name>
-                    </Expression>
-                    <Expression xsi:type="p1:MatchStimulus">
-                      <p1:Type xsi:type="TypeMapping" TypeArguments="p1:AudioStimulus" />
-                    </Expression>
-                    <Expression xsi:type="rx:Sink">
-                      <Name>SoftwareEvent</Name>
-                      <Workflow>
-                        <Nodes>
-                          <Expression xsi:type="WorkflowInput">
-                            <Name>Source1</Name>
-                          </Expression>
-                          <Expression xsi:type="Combinator">
-                            <Combinator xsi:type="p5:CreateSoftwareEvent">
-                              <p5:EventName>SoftwareEvent</p5:EventName>
-                            </Combinator>
-                          </Expression>
-                          <Expression xsi:type="MulticastSubject">
-                            <Name>SoftwareEvent</Name>
-                          </Expression>
-                          <Expression xsi:type="WorkflowOutput" />
-                        </Nodes>
-                        <Edges>
-                          <Edge From="0" To="1" Label="Source1" />
-                          <Edge From="1" To="2" Label="Source1" />
-                          <Edge From="2" To="3" Label="Source1" />
-                        </Edges>
-                      </Workflow>
-                    </Expression>
-                    <Expression xsi:type="InputMapping">
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p1:Trial">
+                    <rx:Name>UpdateAudioStimulus</rx:Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Stimulus</Selector>
+                  </Expression>
+                  <Expression xsi:type="p1:MatchStimulus">
+                    <p1:Type xsi:type="TypeMapping" TypeArguments="p1:AudioStimulus" />
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>PresentationParameters</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="rx:CreateObservable">
+                    <Name>GenerateAudioStimulus</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Name>AudioParameters</scr:Name>
+                          <scr:Expression>new(
+Convert.ToInt32(Item2.StimulusDuration * 96000) as SampleCount,
+Item1.Frequency as Frequency,
+Item1.Phase as Phase,
+Item1.Volume * 0.0000001 as Amplitude)</scr:Expression>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="p2:CreateDiscreteUniform">
+                            <p2:Lower>-2147483646</p2:Lower>
+                            <p2:Upper>2147483646</p2:Upper>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Zip" />
+                        </Expression>
+                        <Expression xsi:type="InputMapping">
+                          <PropertyMappings>
+                            <Property Name="Count" Selector="Item1.SampleCount" />
+                          </PropertyMappings>
+                          <Selector>Item2</Selector>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="p2:SampleArray">
+                            <p2:Count>48000</p2:Count>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="dsp:ConvertFromArray">
+                            <dsp:Size>
+                              <dsp:Width>0</dsp:Width>
+                              <dsp:Height>0</dsp:Height>
+                            </dsp:Size>
+                            <dsp:Depth>S32</dsp:Depth>
+                            <dsp:Channels>1</dsp:Channels>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="rx:SelectMany">
+                          <Workflow>
+                            <Nodes>
+                              <Expression xsi:type="WorkflowInput">
+                                <Name>Source1</Name>
+                              </Expression>
+                              <Expression xsi:type="InputMapping">
+                                <PropertyMappings>
+                                  <Property Name="Frequency" Selector="Frequency" />
+                                  <Property Name="Phase" Selector="Phase" />
+                                  <Property Name="Amplitude" Selector="Amplitude" />
+                                  <Property Name="Offset" Selector="Amplitude" />
+                                  <Property Name="BufferLength" Selector="SampleCount" />
+                                </PropertyMappings>
+                                <Selector>it</Selector>
+                              </Expression>
+                              <Expression xsi:type="ExternalizedMapping">
+                                <Property Name="BufferLength" />
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="dsp:FunctionGenerator">
+                                  <dsp:BufferLength>48000</dsp:BufferLength>
+                                  <dsp:Frequency>70</dsp:Frequency>
+                                  <dsp:Waveform>Sine</dsp:Waveform>
+                                  <dsp:SampleRate>96000</dsp:SampleRate>
+                                  <dsp:Depth>F64</dsp:Depth>
+                                  <dsp:Amplitude>6.7999999999999993E-06</dsp:Amplitude>
+                                  <dsp:Offset>6.7999999999999993E-06</dsp:Offset>
+                                  <dsp:Phase>90</dsp:Phase>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="WorkflowOutput" />
+                            </Nodes>
+                            <Edges>
+                              <Edge From="0" To="1" Label="Source1" />
+                              <Edge From="1" To="3" Label="Source1" />
+                              <Edge From="2" To="3" Label="Source2" />
+                              <Edge From="3" To="4" Label="Source1" />
+                            </Edges>
+                          </Workflow>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Zip" />
+                        </Expression>
+                        <Expression xsi:type="Multiply" />
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Take">
+                            <rx:Count>1</rx:Count>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="3" Label="Source1" />
+                        <Edge From="1" To="7" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="3" To="4" Label="Source1" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="5" To="6" Label="Source1" />
+                        <Edge From="6" To="8" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source2" />
+                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Merge" />
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject">
+                    <Name>CurrentAudioStimulus</Name>
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p1:Stimulus">
+                    <rx:Name>AudioStimulus</rx:Name>
+                  </Expression>
+                  <Expression xsi:type="p1:MatchStimulus">
+                    <p1:Type xsi:type="TypeMapping" TypeArguments="p1:AudioStimulus" />
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\MulticastSoftwareEvent.bonsai">
+                    <EventName>AudioStimulusStart</EventName>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>CurrentAudioStimulus</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Item2</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="al:AudioPlayback">
+                      <al:SampleRate>96000</al:SampleRate>
+                      <al:State>Playing</al:State>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="InputMapping">
                       <PropertyMappings>
                         <Property Name="AttenuationLeft" Selector="Attenuation" />
                       </PropertyMappings>
-                    </Expression>
-                    <Expression xsi:type="p6:CreateMessage">
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="p6:CreateMessage">
                       <harp:MessageType>Write</harp:MessageType>
                       <harp:Payload xsi:type="p6:CreateAttenuationLeftPayload">
                         <p6:AttenuationLeft>200</p6:AttenuationLeft>
                       </harp:Payload>
-                    </Expression>
-                    <Expression xsi:type="InputMapping">
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="InputMapping">
                       <PropertyMappings>
                         <Property Name="AttenuationRight" Selector="Attenuation" />
                       </PropertyMappings>
-                    </Expression>
-                    <Expression xsi:type="p6:CreateMessage">
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="p6:CreateMessage">
                       <harp:MessageType>Write</harp:MessageType>
                       <harp:Payload xsi:type="p6:CreateAttenuationRightPayload">
                         <p6:AttenuationRight>0</p6:AttenuationRight>
                       </harp:Payload>
-                    </Expression>
-                    <Expression xsi:type="InputMapping">
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="InputMapping">
                       <PropertyMappings>
                         <Property Name="PlaySoundOrFrequency" Selector="WaveformIndex" />
                       </PropertyMappings>
-                    </Expression>
-                    <Expression xsi:type="p6:CreateMessage">
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="p6:CreateMessage">
                       <harp:MessageType>Write</harp:MessageType>
                       <harp:Payload xsi:type="p6:CreatePlaySoundOrFrequencyPayload">
                         <p6:PlaySoundOrFrequency>11</p6:PlaySoundOrFrequency>
                       </harp:Payload>
-                    </Expression>
-                    <Expression xsi:type="Combinator">
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="Combinator">
                       <Combinator xsi:type="rx:Merge" />
-                    </Expression>
-                    <Expression xsi:type="MulticastSubject">
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="MulticastSubject">
                       <Name>HarpSoundCardCommands</Name>
-                    </Expression>
-                    <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p4:Unit">
-                      <rx:Name>StopAudio</rx:Name>
-                    </Expression>
-                    <Expression xsi:type="Combinator">
-                      <Combinator xsi:type="StringProperty">
-                        <Value>StopAudio</Value>
-                      </Combinator>
-                    </Expression>
-                    <Expression xsi:type="rx:Sink">
-                      <Name>SoftwareEvent</Name>
-                      <Workflow>
-                        <Nodes>
-                          <Expression xsi:type="WorkflowInput">
-                            <Name>Source1</Name>
-                          </Expression>
-                          <Expression xsi:type="Combinator">
-                            <Combinator xsi:type="p5:CreateSoftwareEvent">
-                              <p5:EventName>SoftwareEvent</p5:EventName>
-                            </Combinator>
-                          </Expression>
-                          <Expression xsi:type="MulticastSubject">
-                            <Name>SoftwareEvent</Name>
-                          </Expression>
-                          <Expression xsi:type="WorkflowOutput" />
-                        </Nodes>
-                        <Edges>
-                          <Edge From="0" To="1" Label="Source1" />
-                          <Edge From="1" To="2" Label="Source1" />
-                          <Edge From="2" To="3" Label="Source1" />
-                        </Edges>
-                      </Workflow>
-                    </Expression>
-                    <Expression xsi:type="p6:CreateMessage">
-                      <harp:MessageType>Write</harp:MessageType>
-                      <harp:Payload xsi:type="p6:CreateStopPayload">
-                        <p6:Stop>0</p6:Stop>
-                      </harp:Payload>
-                    </Expression>
-                    <Expression xsi:type="MulticastSubject">
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p4:Unit">
+                    <rx:Name>StopAudio</rx:Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="StringProperty">
+                      <Value>StopAudio</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\MulticastSoftwareEvent.bonsai">
+                    <EventName>AudioStimulusStop</EventName>
+                  </Expression>
+                  <Expression xsi:type="p6:CreateMessage">
+                    <harp:MessageType>Write</harp:MessageType>
+                    <harp:Payload xsi:type="p6:CreateStopPayload">
+                      <p6:Stop>0</p6:Stop>
+                    </harp:Payload>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="MulticastSubject">
                       <Name>HarpSoundCardCommands</Name>
-                    </Expression>
-                  </Nodes>
-                  <Edges>
-                    <Edge From="0" To="1" Label="Source1" />
-                    <Edge From="1" To="2" Label="Source1" />
-                    <Edge From="2" To="3" Label="Source1" />
-                    <Edge From="4" To="5" Label="Source1" />
-                    <Edge From="5" To="6" Label="Source1" />
-                    <Edge From="6" To="7" Label="Source1" />
-                    <Edge From="6" To="9" Label="Source1" />
-                    <Edge From="6" To="11" Label="Source1" />
-                    <Edge From="7" To="8" Label="Source1" />
-                    <Edge From="8" To="13" Label="Source1" />
-                    <Edge From="9" To="10" Label="Source1" />
-                    <Edge From="10" To="13" Label="Source2" />
-                    <Edge From="11" To="12" Label="Source1" />
-                    <Edge From="12" To="13" Label="Source3" />
-                    <Edge From="13" To="14" Label="Source1" />
-                    <Edge From="15" To="16" Label="Source1" />
-                    <Edge From="16" To="17" Label="Source1" />
-                    <Edge From="17" To="18" Label="Source1" />
-                    <Edge From="18" To="19" Label="Source1" />
-                  </Edges>
-                </Workflow>
-              </Builder>
+                    </Builder>
+                  </Expression>
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="4" To="7" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="8" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source2" />
+                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="12" To="13" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source1" />
+                  <Edge From="14" To="16" Label="Source1" />
+                  <Edge From="15" To="16" Label="Source2" />
+                  <Edge From="16" To="17" Label="Source1" />
+                  <Edge From="17" To="18" Label="Source1" />
+                  <Edge From="18" To="19" Label="Source1" />
+                  <Edge From="18" To="21" Label="Source1" />
+                  <Edge From="18" To="23" Label="Source1" />
+                  <Edge From="19" To="20" Label="Source1" />
+                  <Edge From="20" To="25" Label="Source1" />
+                  <Edge From="21" To="22" Label="Source1" />
+                  <Edge From="22" To="25" Label="Source2" />
+                  <Edge From="23" To="24" Label="Source1" />
+                  <Edge From="24" To="25" Label="Source3" />
+                  <Edge From="25" To="26" Label="Source1" />
+                  <Edge From="27" To="28" Label="Source1" />
+                  <Edge From="28" To="29" Label="Source1" />
+                  <Edge From="29" To="30" Label="Source1" />
+                  <Edge From="30" To="31" Label="Source1" />
+                </Edges>
+              </Workflow>
             </Expression>
             <Expression xsi:type="Disable">
               <Builder xsi:type="GroupWorkflow">
@@ -2017,39 +2174,6 @@ Item3 as Right)</scr:Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\MulticastSoftwareEvent.bonsai">
               <EventName>Reward</EventName>
             </Expression>
-            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p1:Stimulus">
-              <rx:Name>AudioStimulus</rx:Name>
-            </Expression>
-            <Expression xsi:type="p1:MatchStimulus">
-              <p1:Type xsi:type="TypeMapping" TypeArguments="p1:AudioStimulus" />
-            </Expression>
-            <Expression xsi:type="rx:Sink">
-              <Name>SoftwareEvent</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="WorkflowInput">
-                    <Name>Source1</Name>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p5:CreateSoftwareEvent">
-                      <p5:EventName>SoftwareEvent</p5:EventName>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="MulticastSubject">
-                    <Name>SoftwareEvent</Name>
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                </Edges>
-              </Workflow>
-            </Expression>
-            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p4:Unit">
-              <rx:Name>StopAudio</rx:Name>
-            </Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
@@ -2060,8 +2184,6 @@ Item3 as Right)</scr:Expression>
             <Edge From="12" To="13" Label="Source1" />
             <Edge From="13" To="14" Label="Source1" />
             <Edge From="15" To="16" Label="Source1" />
-            <Edge From="17" To="18" Label="Source1" />
-            <Edge From="18" To="19" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -3546,44 +3668,7 @@ bitMasks:
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p10:SoftwareEventVisualizer">
                 <p10:Visible>true</p10:Visible>
-                <p10:SoftwareEvents>
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                  <p10:TimestampedOfSoftwareEvent />
-                </p10:SoftwareEvents>
+                <p10:SoftwareEvents />
                 <p10:TrialBreakEventName>TrialEnd</p10:TrialBreakEventName>
                 <p10:PlotHeight>500</p10:PlotHeight>
                 <p10:ShadedAreaPlotters>
@@ -3627,14 +3712,14 @@ bitMasks:
                     <p10:Marker>Diamond</p10:Marker>
                   </p10:PointPlotter>
                   <p10:PointPlotter>
-                    <p10:EventName>StimulusStart</p10:EventName>
+                    <p10:EventName>VisualStimulusStart</p10:EventName>
                     <p10:Color>Red</p10:Color>
                     <p10:YPosition>0.9</p10:YPosition>
                     <p10:MarkerSize>3</p10:MarkerSize>
                     <p10:Marker>Down</p10:Marker>
                   </p10:PointPlotter>
                   <p10:PointPlotter>
-                    <p10:EventName>StimulusStop</p10:EventName>
+                    <p10:EventName>VisualStimulusStop</p10:EventName>
                     <p10:Color>Red</p10:Color>
                     <p10:YPosition>0.1</p10:YPosition>
                     <p10:MarkerSize>3</p10:MarkerSize>
@@ -3644,6 +3729,20 @@ bitMasks:
                     <p10:EventName>Reward</p10:EventName>
                     <p10:Color>DodgerBlue</p10:Color>
                     <p10:YPosition>0.2</p10:YPosition>
+                    <p10:MarkerSize>3</p10:MarkerSize>
+                    <p10:Marker>Up</p10:Marker>
+                  </p10:PointPlotter>
+                  <p10:PointPlotter>
+                    <p10:EventName>AudioStimulusStart</p10:EventName>
+                    <p10:Color>Green</p10:Color>
+                    <p10:YPosition>0.9</p10:YPosition>
+                    <p10:MarkerSize>3</p10:MarkerSize>
+                    <p10:Marker>Down</p10:Marker>
+                  </p10:PointPlotter>
+                  <p10:PointPlotter>
+                    <p10:EventName>AudioStimulusStop</p10:EventName>
+                    <p10:Color>Green</p10:Color>
+                    <p10:YPosition>0.1</p10:YPosition>
                     <p10:MarkerSize>3</p10:MarkerSize>
                     <p10:Marker>Up</p10:Marker>
                   </p10:PointPlotter>
