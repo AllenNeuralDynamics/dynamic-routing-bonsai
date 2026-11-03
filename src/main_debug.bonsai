@@ -34,7 +34,7 @@
         <Property Name="SessionPath" />
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:ReadSchemas.bonsai">
-        <TaskLogicPath>..\local\stage0_AindBehaviorDynamicRoutingBonsaiTaskLogic.json</TaskLogicPath>
+        <TaskLogicPath>..\local\stage3_AindBehaviorDynamicRoutingBonsaiTaskLogic.json</TaskLogicPath>
         <RigPath>..\local\AindBehaviorDynamicRoutingBonsaiRig.json</RigPath>
         <SessionPath>..\local\Session.json</SessionPath>
       </Expression>
@@ -152,7 +152,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="num:CreateRandom">
-                <num:Seed>7</num:Seed>
+                <num:Seed>5</num:Seed>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -746,6 +746,9 @@ Item3 as Right)</scr:Expression>
                   <Expression xsi:type="p1:MatchStimulus">
                     <p1:Type xsi:type="TypeMapping" TypeArguments="p1:GratingStimulus" />
                   </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\MulticastSoftwareEvent.bonsai">
+                    <EventName>VisualStimulusStart</EventName>
+                  </Expression>
                   <Expression xsi:type="rx:CreateObservable">
                     <Name>DrawGrating</Name>
                     <Workflow>
@@ -854,9 +857,9 @@ Item3 as Right)</scr:Expression>
                           <ExtentX>50</ExtentX>
                           <ExtentY>50</ExtentY>
                           <SpatialFrequency>0.04</SpatialFrequency>
-                          <TemporalFrequency>-2</TemporalFrequency>
-                          <Phase>90</Phase>
-                          <Angle>0</Angle>
+                          <TemporalFrequency>2</TemporalFrequency>
+                          <Phase>0</Phase>
+                          <Angle>90</Angle>
                           <SquareWave>false</SquareWave>
                           <Contrast>1</Contrast>
                           <DutyCycle xsi:nil="true" />
@@ -927,6 +930,9 @@ Item3 as Right)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="p1:MatchStimulus">
                     <p1:Type xsi:type="TypeMapping" TypeArguments="p1:QuadStimulus" />
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\MulticastSoftwareEvent.bonsai">
+                    <EventName>VisualStimulusStart</EventName>
                   </Expression>
                   <Expression xsi:type="rx:CreateObservable">
                     <Name>DrawQuad</Name>
@@ -1117,6 +1123,9 @@ Item3 as Right)</scr:Expression>
                   <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p4:Unit">
                     <rx:Name>StopDrawing</rx:Name>
                   </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\MulticastSoftwareEvent.bonsai">
+                    <EventName>VisualStimulusStop</EventName>
+                  </Expression>
                   <Expression xsi:type="rx:CreateObservable">
                     <Name>StopDrawing</Name>
                     <Workflow>
@@ -1194,35 +1203,44 @@ Item3 as Right)</scr:Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="0" To="3" Label="Source1" />
-                  <Edge From="0" To="9" Label="Source1" />
+                  <Edge From="0" To="4" Label="Source1" />
+                  <Edge From="0" To="12" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="7" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="7" Label="Source2" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="3" To="10" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
                   <Edge From="5" To="6" Label="Source1" />
-                  <Edge From="6" To="7" Label="Source3" />
+                  <Edge From="6" To="10" Label="Source2" />
                   <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source3" />
+                  <Edge From="10" To="11" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="GroupWorkflow">
-                <Name>AudioStimuli</Name>
-                <Workflow>
-                  <Nodes>
-                    <Expression xsi:type="SubscribeSubject">
+            <Expression xsi:type="GroupWorkflow">
+              <Name>AudioStimuli</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="SubscribeSubject">
                       <Name>RigSchema</Name>
-                    </Expression>
-                    <Expression xsi:type="MemberSelector">
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="MemberSelector">
                       <Selector>HarpSoundCard.PortName</Selector>
-                    </Expression>
-                    <Expression xsi:type="PropertyMapping">
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="PropertyMapping">
                       <PropertyMappings>
                         <Property Name="PortName" />
                       </PropertyMappings>
-                    </Expression>
-                    <Expression xsi:type="GroupWorkflow">
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="GroupWorkflow">
                       <Name>HarpSoundCard</Name>
                       <Workflow>
                         <Nodes>
@@ -1289,141 +1307,117 @@ Item3 as Right)</scr:Expression>
                           <Edge From="9" To="10" Label="Source1" />
                         </Edges>
                       </Workflow>
-                    </Expression>
-                    <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p1:Stimulus">
-                      <rx:Name>AudioStimulus</rx:Name>
-                    </Expression>
-                    <Expression xsi:type="p1:MatchStimulus">
-                      <p1:Type xsi:type="TypeMapping" TypeArguments="p1:AudioStimulus" />
-                    </Expression>
-                    <Expression xsi:type="rx:Sink">
-                      <Name>SoftwareEvent</Name>
-                      <Workflow>
-                        <Nodes>
-                          <Expression xsi:type="WorkflowInput">
-                            <Name>Source1</Name>
-                          </Expression>
-                          <Expression xsi:type="Combinator">
-                            <Combinator xsi:type="p5:CreateSoftwareEvent">
-                              <p5:EventName>SoftwareEvent</p5:EventName>
-                            </Combinator>
-                          </Expression>
-                          <Expression xsi:type="MulticastSubject">
-                            <Name>SoftwareEvent</Name>
-                          </Expression>
-                          <Expression xsi:type="WorkflowOutput" />
-                        </Nodes>
-                        <Edges>
-                          <Edge From="0" To="1" Label="Source1" />
-                          <Edge From="1" To="2" Label="Source1" />
-                          <Edge From="2" To="3" Label="Source1" />
-                        </Edges>
-                      </Workflow>
-                    </Expression>
-                    <Expression xsi:type="InputMapping">
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p1:Stimulus">
+                    <rx:Name>AudioStimulus</rx:Name>
+                  </Expression>
+                  <Expression xsi:type="p1:MatchStimulus">
+                    <p1:Type xsi:type="TypeMapping" TypeArguments="p1:AudioStimulus" />
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\MulticastSoftwareEvent.bonsai">
+                    <EventName>AudioStimulusStart</EventName>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="InputMapping">
                       <PropertyMappings>
                         <Property Name="AttenuationLeft" Selector="Attenuation" />
                       </PropertyMappings>
-                    </Expression>
-                    <Expression xsi:type="p6:CreateMessage">
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="p6:CreateMessage">
                       <harp:MessageType>Write</harp:MessageType>
                       <harp:Payload xsi:type="p6:CreateAttenuationLeftPayload">
                         <p6:AttenuationLeft>200</p6:AttenuationLeft>
                       </harp:Payload>
-                    </Expression>
-                    <Expression xsi:type="InputMapping">
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="InputMapping">
                       <PropertyMappings>
                         <Property Name="AttenuationRight" Selector="Attenuation" />
                       </PropertyMappings>
-                    </Expression>
-                    <Expression xsi:type="p6:CreateMessage">
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="p6:CreateMessage">
                       <harp:MessageType>Write</harp:MessageType>
                       <harp:Payload xsi:type="p6:CreateAttenuationRightPayload">
                         <p6:AttenuationRight>0</p6:AttenuationRight>
                       </harp:Payload>
-                    </Expression>
-                    <Expression xsi:type="InputMapping">
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="InputMapping">
                       <PropertyMappings>
                         <Property Name="PlaySoundOrFrequency" Selector="WaveformIndex" />
                       </PropertyMappings>
-                    </Expression>
-                    <Expression xsi:type="p6:CreateMessage">
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="p6:CreateMessage">
                       <harp:MessageType>Write</harp:MessageType>
                       <harp:Payload xsi:type="p6:CreatePlaySoundOrFrequencyPayload">
                         <p6:PlaySoundOrFrequency>11</p6:PlaySoundOrFrequency>
                       </harp:Payload>
-                    </Expression>
-                    <Expression xsi:type="Combinator">
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="Combinator">
                       <Combinator xsi:type="rx:Merge" />
-                    </Expression>
-                    <Expression xsi:type="MulticastSubject">
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="MulticastSubject">
                       <Name>HarpSoundCardCommands</Name>
-                    </Expression>
-                    <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p4:Unit">
-                      <rx:Name>StopAudio</rx:Name>
-                    </Expression>
-                    <Expression xsi:type="Combinator">
-                      <Combinator xsi:type="StringProperty">
-                        <Value>StopAudio</Value>
-                      </Combinator>
-                    </Expression>
-                    <Expression xsi:type="rx:Sink">
-                      <Name>SoftwareEvent</Name>
-                      <Workflow>
-                        <Nodes>
-                          <Expression xsi:type="WorkflowInput">
-                            <Name>Source1</Name>
-                          </Expression>
-                          <Expression xsi:type="Combinator">
-                            <Combinator xsi:type="p5:CreateSoftwareEvent">
-                              <p5:EventName>SoftwareEvent</p5:EventName>
-                            </Combinator>
-                          </Expression>
-                          <Expression xsi:type="MulticastSubject">
-                            <Name>SoftwareEvent</Name>
-                          </Expression>
-                          <Expression xsi:type="WorkflowOutput" />
-                        </Nodes>
-                        <Edges>
-                          <Edge From="0" To="1" Label="Source1" />
-                          <Edge From="1" To="2" Label="Source1" />
-                          <Edge From="2" To="3" Label="Source1" />
-                        </Edges>
-                      </Workflow>
-                    </Expression>
-                    <Expression xsi:type="p6:CreateMessage">
-                      <harp:MessageType>Write</harp:MessageType>
-                      <harp:Payload xsi:type="p6:CreateStopPayload">
-                        <p6:Stop>0</p6:Stop>
-                      </harp:Payload>
-                    </Expression>
-                    <Expression xsi:type="MulticastSubject">
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p4:Unit">
+                    <rx:Name>StopAudio</rx:Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="StringProperty">
+                      <Value>StopAudio</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\MulticastSoftwareEvent.bonsai">
+                    <EventName>AudioStimulusStop</EventName>
+                  </Expression>
+                  <Expression xsi:type="p6:CreateMessage">
+                    <harp:MessageType>Write</harp:MessageType>
+                    <harp:Payload xsi:type="p6:CreateStopPayload">
+                      <p6:Stop>0</p6:Stop>
+                    </harp:Payload>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="MulticastSubject">
                       <Name>HarpSoundCardCommands</Name>
-                    </Expression>
-                  </Nodes>
-                  <Edges>
-                    <Edge From="0" To="1" Label="Source1" />
-                    <Edge From="1" To="2" Label="Source1" />
-                    <Edge From="2" To="3" Label="Source1" />
-                    <Edge From="4" To="5" Label="Source1" />
-                    <Edge From="5" To="6" Label="Source1" />
-                    <Edge From="6" To="7" Label="Source1" />
-                    <Edge From="6" To="9" Label="Source1" />
-                    <Edge From="6" To="11" Label="Source1" />
-                    <Edge From="7" To="8" Label="Source1" />
-                    <Edge From="8" To="13" Label="Source1" />
-                    <Edge From="9" To="10" Label="Source1" />
-                    <Edge From="10" To="13" Label="Source2" />
-                    <Edge From="11" To="12" Label="Source1" />
-                    <Edge From="12" To="13" Label="Source3" />
-                    <Edge From="13" To="14" Label="Source1" />
-                    <Edge From="15" To="16" Label="Source1" />
-                    <Edge From="16" To="17" Label="Source1" />
-                    <Edge From="17" To="18" Label="Source1" />
-                    <Edge From="18" To="19" Label="Source1" />
-                  </Edges>
-                </Workflow>
-              </Builder>
+                    </Builder>
+                  </Expression>
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="6" To="9" Label="Source1" />
+                  <Edge From="6" To="11" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="13" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="10" To="13" Label="Source2" />
+                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="12" To="13" Label="Source3" />
+                  <Edge From="13" To="14" Label="Source1" />
+                  <Edge From="15" To="16" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source1" />
+                  <Edge From="17" To="18" Label="Source1" />
+                  <Edge From="18" To="19" Label="Source1" />
+                </Edges>
+              </Workflow>
             </Expression>
             <Expression xsi:type="Disable">
               <Builder xsi:type="GroupWorkflow">
@@ -2017,39 +2011,6 @@ Item3 as Right)</scr:Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\MulticastSoftwareEvent.bonsai">
               <EventName>Reward</EventName>
             </Expression>
-            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p1:Stimulus">
-              <rx:Name>AudioStimulus</rx:Name>
-            </Expression>
-            <Expression xsi:type="p1:MatchStimulus">
-              <p1:Type xsi:type="TypeMapping" TypeArguments="p1:AudioStimulus" />
-            </Expression>
-            <Expression xsi:type="rx:Sink">
-              <Name>SoftwareEvent</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="WorkflowInput">
-                    <Name>Source1</Name>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p5:CreateSoftwareEvent">
-                      <p5:EventName>SoftwareEvent</p5:EventName>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="MulticastSubject">
-                    <Name>SoftwareEvent</Name>
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                </Edges>
-              </Workflow>
-            </Expression>
-            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p4:Unit">
-              <rx:Name>StopAudio</rx:Name>
-            </Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
@@ -2060,8 +2021,6 @@ Item3 as Right)</scr:Expression>
             <Edge From="12" To="13" Label="Source1" />
             <Edge From="13" To="14" Label="Source1" />
             <Edge From="15" To="16" Label="Source1" />
-            <Edge From="17" To="18" Label="Source1" />
-            <Edge From="18" To="19" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -3583,6 +3542,581 @@ bitMasks:
                   <p10:TimestampedOfSoftwareEvent />
                   <p10:TimestampedOfSoftwareEvent />
                   <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
+                  <p10:TimestampedOfSoftwareEvent />
                 </p10:SoftwareEvents>
                 <p10:TrialBreakEventName>TrialEnd</p10:TrialBreakEventName>
                 <p10:PlotHeight>500</p10:PlotHeight>
@@ -3627,14 +4161,14 @@ bitMasks:
                     <p10:Marker>Diamond</p10:Marker>
                   </p10:PointPlotter>
                   <p10:PointPlotter>
-                    <p10:EventName>StimulusStart</p10:EventName>
+                    <p10:EventName>VisualStimulusStart</p10:EventName>
                     <p10:Color>Red</p10:Color>
                     <p10:YPosition>0.9</p10:YPosition>
                     <p10:MarkerSize>3</p10:MarkerSize>
                     <p10:Marker>Down</p10:Marker>
                   </p10:PointPlotter>
                   <p10:PointPlotter>
-                    <p10:EventName>StimulusStop</p10:EventName>
+                    <p10:EventName>VisualStimulusStop</p10:EventName>
                     <p10:Color>Red</p10:Color>
                     <p10:YPosition>0.1</p10:YPosition>
                     <p10:MarkerSize>3</p10:MarkerSize>
@@ -3644,6 +4178,20 @@ bitMasks:
                     <p10:EventName>Reward</p10:EventName>
                     <p10:Color>DodgerBlue</p10:Color>
                     <p10:YPosition>0.2</p10:YPosition>
+                    <p10:MarkerSize>3</p10:MarkerSize>
+                    <p10:Marker>Up</p10:Marker>
+                  </p10:PointPlotter>
+                  <p10:PointPlotter>
+                    <p10:EventName>AudioStimulusStart</p10:EventName>
+                    <p10:Color>Green</p10:Color>
+                    <p10:YPosition>0.9</p10:YPosition>
+                    <p10:MarkerSize>3</p10:MarkerSize>
+                    <p10:Marker>Down</p10:Marker>
+                  </p10:PointPlotter>
+                  <p10:PointPlotter>
+                    <p10:EventName>AudioStimulusStop</p10:EventName>
+                    <p10:Color>Green</p10:Color>
+                    <p10:YPosition>0.1</p10:YPosition>
                     <p10:MarkerSize>3</p10:MarkerSize>
                     <p10:Marker>Up</p10:Marker>
                   </p10:PointPlotter>

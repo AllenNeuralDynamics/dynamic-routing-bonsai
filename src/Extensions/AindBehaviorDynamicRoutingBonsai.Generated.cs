@@ -568,9 +568,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     public partial class AudioStimulus : Stimulus
     {
     
-        private int _waveformIndex;
+        private double _frequency;
     
-        private double _attenuation;
+        private double _phase;
+    
+        private double _volume;
     
         public AudioStimulus()
         {
@@ -579,33 +581,59 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
         protected AudioStimulus(AudioStimulus other) : 
                 base(other)
         {
-            _waveformIndex = other._waveformIndex;
-            _attenuation = other._attenuation;
+            _frequency = other._frequency;
+            _phase = other._phase;
+            _volume = other._volume;
         }
     
-        [Newtonsoft.Json.JsonPropertyAttribute("waveform_index", Required=Newtonsoft.Json.Required.Always)]
-        public int WaveformIndex
+        /// <summary>
+        /// The frequency of the sin modulation
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("frequency", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The frequency of the sin modulation")]
+        public double Frequency
         {
             get
             {
-                return _waveformIndex;
+                return _frequency;
             }
             set
             {
-                _waveformIndex = value;
+                _frequency = value;
             }
         }
     
-        [Newtonsoft.Json.JsonPropertyAttribute("attenuation", Required=Newtonsoft.Json.Required.Always)]
-        public double Attenuation
+        /// <summary>
+        /// The phase of the sin modulation
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("phase", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The phase of the sin modulation")]
+        public double Phase
         {
             get
             {
-                return _attenuation;
+                return _phase;
             }
             set
             {
-                _attenuation = value;
+                _phase = value;
+            }
+        }
+    
+        /// <summary>
+        /// The target volume of the audio stimulus in dB
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("volume", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("The target volume of the audio stimulus in dB")]
+        public double Volume
+        {
+            get
+            {
+                return _volume;
+            }
+            set
+            {
+                _volume = value;
             }
         }
     
@@ -625,8 +653,9 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             {
                 stringBuilder.Append(", ");
             }
-            stringBuilder.Append("WaveformIndex = " + _waveformIndex + ", ");
-            stringBuilder.Append("Attenuation = " + _attenuation);
+            stringBuilder.Append("Frequency = " + _frequency + ", ");
+            stringBuilder.Append("Phase = " + _phase + ", ");
+            stringBuilder.Append("Volume = " + _volume);
             return true;
         }
     }
@@ -1277,7 +1306,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             _phase = other._phase;
         }
     
+        /// <summary>
+        /// Stimulus angle in degrees
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("angle", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Stimulus angle in degrees")]
         public double Angle
         {
             get
@@ -1290,7 +1323,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        /// <summary>
+        /// Aperture size of grating stimulus
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("aperture", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Aperture size of grating stimulus")]
         public double Aperture
         {
             get
@@ -1303,7 +1340,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        /// <summary>
+        /// Horizontal extent of the stimulus relative to view size
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("extent_x", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Horizontal extent of the stimulus relative to view size")]
         public double ExtentX
         {
             get
@@ -1316,7 +1357,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        /// <summary>
+        /// Vertical extent of the stimulus relative to view size
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("extent_y", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Vertical extent of the stimulus relative to view size")]
         public double ExtentY
         {
             get
@@ -1329,7 +1374,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        /// <summary>
+        /// Spatial frequency of the stimulus relative to view size
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("spatial_frequency", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Spatial frequency of the stimulus relative to view size")]
         public double SpatialFrequency
         {
             get
@@ -1342,7 +1391,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        /// <summary>
+        /// Temporal frequency of the stimulus relative to view size
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("temporal_frequency", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Temporal frequency of the stimulus relative to view size")]
         public double TemporalFrequency
         {
             get
@@ -1355,7 +1408,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        /// <summary>
+        /// Phase of the stimulus in degrees
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("phase", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Phase of the stimulus in degrees")]
         public double Phase
         {
             get
@@ -2007,7 +2064,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             _postResponseTime = other._postResponseTime;
         }
     
+        /// <summary>
+        /// Time (seconds) after trial start when stimulus should appear
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("stimulus_start_time", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Time (seconds) after trial start when stimulus should appear")]
         public double StimulusStartTime
         {
             get
@@ -2020,7 +2081,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        /// <summary>
+        /// Time (seconds) that stimulus should be presented for
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("stimulus_duration", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Time (seconds) that stimulus should be presented for")]
         public double StimulusDuration
         {
             get
@@ -2033,7 +2098,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        /// <summary>
+        /// Time (seconds) after trial start to begin the response window
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("response_window_start_time", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Time (seconds) after trial start to begin the response window")]
         public double ResponseWindowStartTime
         {
             get
@@ -2046,7 +2115,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        /// <summary>
+        /// Duration (seconds) of response window
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("response_window_duration", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Duration (seconds) of response window")]
         public double ResponseWindowDuration
         {
             get
@@ -2059,7 +2132,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        /// <summary>
+        /// Whether this trial has a reward available
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("rewarded", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Whether this trial has a reward available")]
         public bool Rewarded
         {
             get
@@ -2089,7 +2166,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        /// <summary>
+        /// Whether this trial is rewarded regardless of subject response
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("non_contingent_reward", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Whether this trial is rewarded regardless of subject response")]
         public bool NonContingentReward
         {
             get
@@ -2102,7 +2183,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        /// <summary>
+        /// Duration (seconds) of timeout if given
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("timeout_duration", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Duration (seconds) of timeout if given")]
         public double TimeoutDuration
         {
             get
@@ -2115,8 +2200,12 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        /// <summary>
+        /// Definition of timeout stimulus
+        /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("timeout_stimulus", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Definition of timeout stimulus")]
         public Stimulus TimeoutStimulus
         {
             get
@@ -2129,7 +2218,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        /// <summary>
+        /// Duration (seconds) of post-response period
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("post_response_time", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Duration (seconds) of post-response period")]
         public double PostResponseTime
         {
             get
@@ -2221,7 +2314,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             _colorA = other._colorA;
         }
     
+        /// <summary>
+        /// Horizontal extent of the stimulus relative to view size
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("extent_x", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Horizontal extent of the stimulus relative to view size")]
         public double ExtentX
         {
             get
@@ -2234,7 +2331,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        /// <summary>
+        /// Vertical extent of the stimulus relative to view size
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("extent_y", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Vertical extent of the stimulus relative to view size")]
         public double ExtentY
         {
             get
@@ -2247,7 +2348,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        /// <summary>
+        /// Horizontal position of the stimulus relative to view size
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("position_x", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Horizontal position of the stimulus relative to view size")]
         public double PositionX
         {
             get
@@ -2260,7 +2365,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        /// <summary>
+        /// Horizontal position of the stimulus relative to view size
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("position_y", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Horizontal position of the stimulus relative to view size")]
         public double PositionY
         {
             get
@@ -2273,7 +2382,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        /// <summary>
+        /// Stimulus red channel value
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("color_r", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Stimulus red channel value")]
         public double ColorR
         {
             get
@@ -2286,7 +2399,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        /// <summary>
+        /// Stimulus green channel value
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("color_g", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Stimulus green channel value")]
         public double ColorG
         {
             get
@@ -2299,7 +2416,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        /// <summary>
+        /// Stimulus blue channel value
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("color_b", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Stimulus blue channel value")]
         public double ColorB
         {
             get
@@ -2312,7 +2433,11 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        /// <summary>
+        /// Stimulus alpha channel value
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("color_a", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Stimulus alpha channel value")]
         public double ColorA
         {
             get
@@ -4032,6 +4157,8 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
     
         private int _repeats;
     
+        private int? _maxConsecutiveSameReward;
+    
         public TrialSet()
         {
             _availableTrials = new System.Collections.Generic.List<Trial>();
@@ -4041,6 +4168,7 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
         {
             _availableTrials = other._availableTrials;
             _repeats = other._repeats;
+            _maxConsecutiveSameReward = other._maxConsecutiveSameReward;
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -4070,6 +4198,25 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
             }
         }
     
+        /// <summary>
+        /// Maximum number of consecutive rewarded or unrewarded trials allowed when shuffling. If None, trials are shuffled without constraint.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("max_consecutive_same_reward")]
+        [System.ComponentModel.DescriptionAttribute("Maximum number of consecutive rewarded or unrewarded trials allowed when shufflin" +
+            "g. If None, trials are shuffled without constraint.")]
+        public int? MaxConsecutiveSameReward
+        {
+            get
+            {
+                return _maxConsecutiveSameReward;
+            }
+            set
+            {
+                _maxConsecutiveSameReward = value;
+            }
+        }
+    
         public System.IObservable<TrialSet> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new TrialSet(this)));
@@ -4083,7 +4230,8 @@ namespace AindBehaviorDynamicRoutingBonsaiDataSchema
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("AvailableTrials = " + _availableTrials + ", ");
-            stringBuilder.Append("Repeats = " + _repeats);
+            stringBuilder.Append("Repeats = " + _repeats + ", ");
+            stringBuilder.Append("MaxConsecutiveSameReward = " + _maxConsecutiveSameReward);
             return true;
         }
     
