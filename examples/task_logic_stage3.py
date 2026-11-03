@@ -11,7 +11,6 @@ from aind_behavior_dynamic_routing_bonsai.task_logic import (
     GratingStimulus,
     PresentationParameters,
     QuadStimulus,
-    AudioStimulus,
     Trial,
     TrialSet,
 )

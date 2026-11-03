@@ -8,10 +8,8 @@ from aind_behavior_dynamic_routing_bonsai.task_logic import (
     AindBehaviorDynamicRoutingBonsaiTaskParameters,
     AudioStimulus,
     Block,
-    GratingStimulus,
     PresentationParameters,
     QuadStimulus,
-    AudioStimulus,
     Trial,
     TrialSet,
 )
